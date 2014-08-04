@@ -1,0 +1,24 @@
+{
+    "name": "csgt/login",
+    "description": "",
+    "authors": [
+        {
+            "name": "CS",
+            "email": "info@cs.com.gt"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "4.2.*",
+        "pitchanon/facebook-connect": "dev-master"
+    },
+    "autoload": {
+        "classmap": [
+            "src/controllers"
+        ],
+        "psr-0": {
+            "Csgt\\Login\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
