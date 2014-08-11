@@ -6,11 +6,27 @@ Otp\Otp, Otp\GoogleAuthenticator, Base32\Base32, Hash, URL, Session, DB;
 class twostepController extends BaseController {
 	public function index() {		
 		return View::make('login::login')
-			->with('route', 'twostep.store')
+			->with('route', 'twostep.validate')
 			->with('mainPartial', 'twoStepPartial')
 			->with('footerPartial', 'twoStepPartialFooter');
 	}
 
+  public function validate() {
+		$otp    = new Otp();
+		$secret = DB::table('authusuarios')
+				->where('usuarioid', Auth::user()->usuarioid)
+				->pluck('twostepsecret');
+		$key    = Input::get('twostep');
+
+    if ($otp->checkTotp(Base32::decode($secret), $key)) {
+			return Redirect::intended('/');
+		} else {
+			return Redirect::to(URL::previous())->with('flashMessage', 'C&oacute;digo incorrecto.')->with('flashType', 'danger');
+		}
+	}
+	
+  
+  
 	public function store() {
 		$otp    = new Otp();
 		$secret = Input::get('s');

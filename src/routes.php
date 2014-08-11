@@ -2,7 +2,7 @@
 	
 	Route::get('qr/{secret}', 'Csgt\Login\twostepController@getQr');
 
-	//=== LOIGN
+	//=== LOGIN
 	Route::get('login','Csgt\Login\sessionsController@create');
 	Route::get('logout','Csgt\Login\sessionsController@destroy');
 	Route::resource('sessions', 'Csgt\Login\sessionsController', array('only'=>array('create','store','destroy')));
@@ -18,5 +18,6 @@
 
   //=== TWO STEP AUTH
   Route::resource('twostep', 'Csgt\Login\twostepController', array('only'=>array('index', 'store')));
+  Route::get('twostep/validate','Csgt\Login\twostepController@validate');
   Route::get('twostep/enable', 'Csgt\Login\twostepController@enable');
   
