@@ -1,6 +1,6 @@
 <?php namespace Csgt\Login;
 
-use BaseController, View, Auth, Redirect, Config, Validator, Input;
+use BaseController, View, Auth, Redirect, Config, Validator, Input, Session;
 
 class sessionsController extends BaseController {
 	public function create() {		
