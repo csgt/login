@@ -28,21 +28,20 @@ class twostepController extends BaseController {
   
   
 	public function store() {
-		$otp    = new Otp();
-		$secret = Input::get('s');
-		$key    = Input::get('txCodigo');
+    $response = array();
+		$otp      = new Otp();
+		$secret   = Input::get('s');
+		$key      = Input::get('txCodigo');
 
 		if ($otp->checkTotp(Base32::decode($secret), $key, 0)) {
 			DB::table('authusuarios')
 				->where('usuarioid', Auth::user()->usuarioid)
 				->update(array('twostepsecret'=>$secret));
-			/*$user = Authusuarios::find(Auth::user()->usuarioid);
-			$user->twostepsecret = $secret;
-			$user->save();*/
-			dd('EXITO!');
+      $response['result'] = true;
+			return json_encode($response);
 		} else {
-			//return Redirect::to(URL::previous())->with('flashMessage', 'C&oacute;digo incorrecto.')->with('flashType', 'danger');
-			dd('INTENTE DE NUEVO');
+      $response['result'] = false;
+			return json_encode($response);
 		}
 	}
 

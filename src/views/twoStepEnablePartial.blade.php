@@ -12,8 +12,23 @@
 <div class="text-center">{{ HTML::image($qr, 'Codigo', array('width'=>'150')) }}</div>
 
 <p>Después de escanear el código de barra, ingresa el código de verificación de seis dígitos que generó la aplicación Autenticador de Google.</p>
-
-{{ Form::open() }}
 	{{ Form::text('txCodigo', '', array('id'=>'txCodigo', 'class'=>'form-control')) }}
 	{{ Form::hidden('s', $secret)}}
-{{ Form::close() }}
+<script>
+  $(document).ready(function(){
+    $('#btnVerificar').click(function(){
+      $('#btnVerificar').attr('disabled','disabled');
+      $.post('/twostep', $('#frmLogin').serialize(), function(data){
+        obj = JSON.parse(data);
+        if (obj.result==false) {
+          alert('Cdigo incorrecto.');
+          $('#btnVerificar').removeAttr('disabled');
+        }
+        else {
+          alert('Autenticacion de 2 pasos fue habilitada.');
+          window.location = '/';
+        }
+      });
+    });
+  });
+</script>
