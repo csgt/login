@@ -19,8 +19,14 @@ class sessionsController extends BaseController {
     foreach (Config::get('login::camposextras') as $key=>$val)
       $attemptData[$key] = $val;
     
-		if(Auth::attempt($attemptData, Input::get('chkRecordarme')))
+		if(Auth::attempt($attemptData, Input::get('chkRecordarme'))){
+			if(Config::get('login::twostep')){
+				if(Auth::user()->twostepsecret <> ''){
+					return Redirect::to('twostep');
+				}
+			}
 			return Redirect::intended('/');
+		}
 
 		return Redirect::back()
       ->with('flashMessage', Config::get('login::usuario.titulo') . ' o ' . Config::get('login::password.titulo') . ' inv&aacute;lidos')

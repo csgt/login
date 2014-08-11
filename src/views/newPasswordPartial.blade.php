@@ -20,7 +20,7 @@
         data-bv-notempty="true" 
         data-bv-notempty-message="{{ Config::get('login::password.titulo').' es un campo requerido' }}"
         data-bv-stringlength="true"
-        data-bv-stringlength-min="2"
+        data-bv-stringlength-min="6"
         data-bv-stringlength-message="La {{Config::get('login::password.titulo')}} debe tener al menos 6 caracteres.">
     </div>
   </div>

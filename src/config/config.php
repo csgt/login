@@ -3,6 +3,19 @@ return array(
 
 	/*
 	|--------------------------------------------------------------------------
+	| Tabla
+	|--------------------------------------------------------------------------
+	|
+	| Nombre de la tabla en la base de datos que alberga a los usuarios
+	|
+	*/
+
+	'nombreapplicacion' => 'Core CS',
+	
+	'tabla' => 'authusuarios',
+
+	/*
+	|--------------------------------------------------------------------------
 	| Titulo Login
 	|--------------------------------------------------------------------------
 	|
@@ -11,7 +24,6 @@ return array(
 	*/
 
 	'titulo' => 'Inicio de Sesi&oacute;n',
-
 
 	/*
 	|--------------------------------------------------------------------------
@@ -60,6 +72,21 @@ return array(
 	*/
 
 	'botonguardarnueva' => 'Guardar Contrase&ntilde;a',
+
+	/*
+	|--------------------------------------------------------------------------
+	| Texto Signup
+	|--------------------------------------------------------------------------
+	|
+	| Texto que se muestra en boton de registrate
+	|
+	*/
+
+	'textosignup' => 'Ingresa tus datos',
+
+	'botonsignup' => 'Reg&iacute;strate',
+
+	'signupexitoso' => 'Usuario creado exitosamente',
 	
 	/*
 	|--------------------------------------------------------------------------
@@ -164,8 +191,9 @@ return array(
 	*/
 
 	'twostep' => array(
-		'habilitado' => false,
-		'titulo'     => ''
+		'habilitado' => true,
+		'titulo'     => 'Escribe el c&oacute;digo de verificaci&oacute;n generado por tu aplicaci&oacute;n para dispositivos m&oacute;viles de dos pasos.<br> (Google Authenticator)',
+		'boton'      => 'Verificar'
 	),
 
 	/*
@@ -207,28 +235,31 @@ return array(
 	'camposextraregistro' => array(
 		'nombre' => array(
 			'tipo'   => 'string',
-			'titulo' => 'Nombre'
+			'titulo' => 'Nombre',
+			'icono'  => 'glyphicon glyphicon-star'
 		),
-		'rol' => array(
+		'rolid' => array(
 			'tipo'       => 'combobox',
-			'combotabla' => 'authrol',
+			'combotabla' => 'authroles',
 			'combokey'   => 'rolid',
 			'comboval'   => 'nombre',
 			'combowhere' => 'rolid<>1',
-			'titulo'     => 'Rol'
+			'titulo'     => 'Rol',
+			'icono'      => 'glyphicon glyphicon-star'
 		),
 		'activo' => array(
 			'tipo'   => 'tinyint',
-			'titulo' => 'Usuario activo'
-		),
-		'pagoconciliado' => array(
-			'tipo'     => 'enum',
-			'titulo'   => 'Organiaci&oacute;n'
+			'titulo' => 'Usuario activo',
+			'icono'  => 'glyphicon glyphicon-star'
 		),
 		'notificarjuegos' => array(
 			'tipo'    => 'lista',
 			'titulo'  => 'Notificar Juegos',
-			'valores' => array('1', '0')
+			'valores' => array(
+				'1' => 'Si',
+				'0' => 'No'
+			),
+			'icono'  => 'glyphicon glyphicon-star'
 		),
 	)
 

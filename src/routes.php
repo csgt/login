@@ -1,4 +1,6 @@
 <?php
+	
+	Route::get('qr/{secret}', 'Csgt\Login\twostepController@getQr');
 
 	//=== LOIGN
 	Route::get('login','Csgt\Login\sessionsController@create');
@@ -12,3 +14,9 @@
 
 	//=== SIGNUP
 	Route::resource('signup', 'Csgt\Login\signupController', array('only'=>array('index','store')));	
+  Route::post('signup/checkEmail','Csgt\Login\signupController@validateEmail');
+
+  //=== TWO STEP AUTH
+  Route::resource('twostep', 'Csgt\Login\twostepController', array('only'=>array('index', 'store')));
+  Route::get('twostep/enable', 'Csgt\Login\twostepController@enable');
+  

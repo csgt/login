@@ -34,7 +34,11 @@
           @else
             <h3>{{Config::get('login::logo.alt')}}</h3>
           @endif
-          @include('login::'.$mainPartial)
+          @if(isset($extraFields))
+            @include('login::'.$mainPartial, array('extraFields' => $extraFields))
+          @else
+            @include('login::'.$mainPartial)
+          @endif
           @if(Session::get('flashMessage')) 
             <div class="alert alert-{{ Session::get('flashType')?Session::get('flashType'):'danger' }} alert-dismissable">
               <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
