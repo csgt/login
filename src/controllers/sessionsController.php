@@ -35,6 +35,7 @@ class sessionsController extends BaseController {
 
 	public function destroy() {
 		Auth::logout();
+    if(Session::has('menu')) Session::forget('menu');
 		return Redirect::to('/');
 	}
 }
