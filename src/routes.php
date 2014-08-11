@@ -18,6 +18,6 @@
 
   //=== TWO STEP AUTH
   Route::resource('twostep', 'Csgt\Login\twostepController', array('only'=>array('index', 'store')));
-  Route::get('twostep/validate','Csgt\Login\twostepController@validate');
+  Route::post('twostep/validate', array('as' => 'twostep.validate', 'uses' => 'Csgt\Login\twostepController@validate'));
   Route::get('twostep/enable', 'Csgt\Login\twostepController@enable');
   
