@@ -12,7 +12,7 @@
         "illuminate/support": "4.2.*",
         "pitchanon/facebook-connect": "dev-master",
         "christian-riesen/otp": "1.*",
-        "christian-riesen/base32": "dev-master"
+        "christian-riesen/base32": "1.*"
     },
     "autoload": {
         "classmap": [
