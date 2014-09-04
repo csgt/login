@@ -149,7 +149,7 @@ return array(
 	*/
 
 	'facebook' => array(
-		'habilitado' => true,
+		'habilitado' => false,
 		'titulo'     => 'Login con Facebook'
 	),
 
@@ -163,7 +163,7 @@ return array(
 	*/
 
 	'recordar' => array(
-		'habilitado' => false,
+		'habilitado' => true,
 		'titulo'     => 'Recu&eacute;rdame'
 	),
 
@@ -191,7 +191,7 @@ return array(
 	*/
 
 	'twostep' => array(
-		'habilitado' => true,
+		'habilitado' => false,
 		'titulo'     => 'Escribe el c&oacute;digo de verificaci&oacute;n generado por tu aplicaci&oacute;n para dispositivos m&oacute;viles de dos pasos.<br> (Google Authenticator)',
 		'boton'      => 'Verificar'
 	),
@@ -206,7 +206,7 @@ return array(
 	*/
 	
 	'registro' => array(
-		'habilitado' => true,
+		'habilitado' => false,
 		'titulo'     => 'Reg&iacute;strate'
 	),
 
