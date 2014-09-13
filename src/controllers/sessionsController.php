@@ -1,6 +1,7 @@
 <?php namespace Csgt\Login;
 
-use BaseController, View, Auth, Redirect, Config, Validator, Input, Session;
+use BaseController, View, Auth, Redirect, 
+	Config, Validator, Input, Session, DB, Request;
 
 class sessionsController extends BaseController {
 	public function create() {		
@@ -24,6 +25,16 @@ class sessionsController extends BaseController {
 				if(Auth::user()->twostepsecret <> ''){
 					return Redirect::to('twostep');
 				}
+			}
+			if (Config::get('login::logaccesos.habilitado')) {
+				DB::table(Config::get('login::logaccesos.tabla'))
+					->insert(
+							array(
+								Config::get('login::logaccesos.usuarioid')=>Auth::id(),
+								Config::get('login::logaccesos.fecha')=> date_create(),
+								Config::get('login::logaccesos.ip') => Request::getClientIp()
+							)
+						);	
 			}
 			return Redirect::intended('/');
 		}
