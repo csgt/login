@@ -1,7 +1,7 @@
 <?php namespace Csgt\Login;
 
 use BaseController, View, Auth, Redirect, 
-	Config, Validator, Input, Session, DB, Request;
+	Config, Validator, Input, Session, DB, Request, Hash;
 
 class sessionsController extends BaseController {
 	public function create() {		
@@ -12,10 +12,14 @@ class sessionsController extends BaseController {
 	}
 
 	public function store() {
-    $attemptData = array(
-			Config::get('login::usuario.campo') => Input::get(Config::get('login::usuario.campo')),
-			Config::get('login::password.campo') => Input::get(Config::get('login::password.campo'))
-		);
+		$tabla         = Config::get('login::tabla');
+		$tablaId       = Config::get('login::tablaid');
+		$campoUsuario  = Config::get('login::usuario.campo');
+		$valorUsuario  = Input::get(Config::get('login::usuario.campo'));
+		$campoPassword = Config::get('login::password.campo');
+		$valorPassword = Input::get(Config::get('login::password.campo'));
+
+    $attemptData   = array($campoUsuario => $valorUsuario, $campoPassword => $valorPassword);
  
     foreach (Config::get('login::camposextras') as $key=>$val)
       $attemptData[$key] = $val;
@@ -37,6 +41,21 @@ class sessionsController extends BaseController {
 						);	
 			}
 			return Redirect::intended('/');
+		}
+		else if(Config::get('login::migrarmd5')) {
+			$user = DB::table($tabla)
+				->where($campoUsuario, $valorUsuario)
+				->first();
+			if( $user && $user->password == md5($valorPassword)) {
+				DB::table($tabla)
+					->where($campoUsuario,$user->$campoUsuario)
+					->update(array($campoPassword => Hash::make($valorPassword)));
+					
+				Auth::loginUsingId($user->$tablaId);
+
+				return Redirect::intended('/');
+			}
+
 		}
 
 		return Redirect::back()

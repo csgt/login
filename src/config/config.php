@@ -14,6 +14,8 @@ return array(
 	
 	'tabla' => 'authusuarios',
 
+	'tablaid' => 'usuarioid',
+
 	/*
 	|--------------------------------------------------------------------------
 	| Titulo Login
@@ -199,6 +201,17 @@ return array(
 		'ip'				 => 'ip'
 	),
 
+	/*
+	|--------------------------------------------------------------------------
+	| Migrar de passwords con MD5
+	|--------------------------------------------------------------------------
+	|
+	| Determina si la tabla de usuarios tenia MD5 y ahora se migra a Hash
+	| Automaticamente busca Hash, luego MD5 y actualiza a Hash
+	|
+	*/
+
+	'migrarmd5' => false,
 
 	/*
 	|--------------------------------------------------------------------------
