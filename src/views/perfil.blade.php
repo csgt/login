@@ -56,35 +56,41 @@
       </div>
     </div>
     <div class="form-group">
-      <label for="password" class="col-sm-2 control-label">Password Nueva</label>
+      <label for="password" class="col-sm-2 control-label">{{ Config::get('login::password.titulo').' Nueva' }}</label>
       <div class="col-sm-5">
         <input 
-					type                      = "password" 
-					class                     = "form-control" 
-					name                      = "newpassword" 
-					id                        = "newpassword" 
-					placeholder               = "Password Nueva" 
-					autocomplete              = "off" 
-					data-bv-identical         = "true" 
-					data-bv-identical-field   = "newpassword2" 
-					data-bv-identical-message = "Las passwords no concuerdan">
+					type                         = "password" 
+					class                        = "form-control" 
+					name                         = "newpassword" 
+					id                           = "newpassword" 
+					placeholder                  = "{{ Config::get('login::password.titulo').' Nueva' }}" 
+					autocomplete                 = "off" 
+					data-bv-identical            = "true" 
+					data-bv-identical-field      = "newpassword2" 
+					data-bv-identical-message    = "Las passwords no concuerdan"
+					data-bv-stringlength         = "true"
+					data-bv-stringlength-min     = "6"
+					data-bv-stringlength-message = "La {{Config::get('login::password.titulo')}} debe tener al menos 6 caracteres.">
       </div>
        <div class="col-sm-5">
         <input 
-					type                      = "password" 
-					class                     = "form-control" 
-					name                      = "newpassword2" 
-					placeholder               = "Repetir Password Nueva" 
-					autocomplete              = "off" 
-					data-bv-identical         = "true" 
-					data-bv-identical-field   = "newpassword" 
-					data-bv-identical-message = "Las passwords no concuerdan">
+					type                         = "password" 
+					class                        = "form-control" 
+					name                         = "newpassword2" 
+					placeholder                  = "Repetir {{ Config::get('login::password.titulo').' Nueva'}}" 
+					autocomplete                 = "off" 
+					data-bv-identical            = "true" 
+					data-bv-identical-field      = "newpassword" 
+					data-bv-identical-message    = "Las passwords no concuerdan"
+					data-bv-stringlength         = "true"
+					data-bv-stringlength-min     = "6"
+					data-bv-stringlength-message = "La {{Config::get('login::password.titulo')}} debe tener al menos 6 caracteres.">
       </div>
     </div>
     <div class="form-group">
 	  	<div class="col-sm-2">&nbsp;</div>
 	    <div class="col-sm-10">
-	    	* Dejar en blanco para no cambiar contrase&ntilde;a.
+	    	* Dejar en blanco para no cambiar {{ Config::get('login::password.titulo') }}.
 	   	</div>
 	  </div>
     <div class="form-group">
