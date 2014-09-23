@@ -120,7 +120,8 @@ return array(
 		'habilitado' => true,
 		'titulo'     => 'Email',
 		'campo'      => 'email',
-		'tipo'       => 'email'
+		'tipo'       => 'email',
+		'editable'   => false
 	),
 
 	/*
@@ -138,7 +139,8 @@ return array(
 	'password' => array(
 		'habilitado' => true,
 		'titulo'     => 'Contrase&ntilde;a',
-		'campo'      => 'password'
+		'campo'      => 'password',
+		'editable'   => true
 	),
 	
 	/*
@@ -293,6 +295,22 @@ return array(
 			),
 			'icono'  => 'glyphicon glyphicon-star'
 		),
+	),
+
+	/*
+	|--------------------------------------------------------------------------
+	| Campos editar perfil
+	|--------------------------------------------------------------------------
+	|
+	| Campos para editar perfil
+	|
+	*/
+
+	'camposeditarperfil' => array(
+		'nombre' => array(
+			'titulo' => 'Nombre',
+			'campo'  => 'nombre'
+		)
 	)
 
 );

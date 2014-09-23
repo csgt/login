@@ -20,4 +20,8 @@
   Route::resource('twostep', 'Csgt\Login\twostepController', array('only'=>array('index', 'store')));
   Route::post('twostep/validate', array('as' => 'twostep.validate', 'uses' => 'Csgt\Login\twostepController@validate'));
   Route::get('twostep/enable', 'Csgt\Login\twostepController@enable');
+
+  //=== EDITAR PERFIL
+  Route::get('perfil/editar', 'Csgt\Login\perfilController@index');
+  Route::post('perfil/save', 'Csgt\Login\perfilController@save');
   
