@@ -153,8 +153,12 @@ return array(
 	*/
 
 	'facebook' => array(
-		'habilitado' => false,
-		'titulo'     => 'Login con Facebook'
+		'habilitado'   => true,
+		'campo'				 => 'facebookid',
+		'titulo'       => 'Login con Facebook',
+		'clientid'     => '1515160888729586',
+		'clientsecret' => '73cd14d425a1b75aeebfb556c78418e6',
+		'scope'        => array('email')
 	),
 
 	/*

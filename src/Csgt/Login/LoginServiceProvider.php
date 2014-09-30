@@ -17,8 +17,7 @@ class LoginServiceProvider extends ServiceProvider {
 	 *
 	 * @return void
 	 */
-	public function boot()
-	{
+	public function boot() {
 		$this->package('csgt/login');
     AliasLoader::getInstance()->alias('Login','Csgt\Login\Login');
     include __DIR__.'/../../routes.php';
@@ -29,9 +28,10 @@ class LoginServiceProvider extends ServiceProvider {
 	 *
 	 * @return void
 	 */
-	public function register()
-	{
-		//
+	public function register() {
+		$this->app['login'] = $this->app->share(function($app) {
+			return new Login();
+		});
 	}
 
 	/**
