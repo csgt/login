@@ -16,7 +16,7 @@ class oauthController extends BaseController {
 				$token = $fb->requestAccessToken( $code );
 	      // Send a request with it
 	      $result = json_decode($fb->request('/me'), true);
-	      dd($result);
+	      //dd($result);
 	      $usuarioid = DB::table(Config::get('login::tabla'))
 	      	->where(Config::get('login::facebook.campo'), $result['id'])->pluck(Config::get('login::tablaid'));
 	      if (!$usuarioid) {
