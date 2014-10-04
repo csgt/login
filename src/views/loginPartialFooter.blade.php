@@ -10,7 +10,7 @@
         @endif
       </div>
       <div class="col-xs-4 pull-right">
-        <button type="submit" class="btn btn-large btn-success pull-right">{{Config::get('login::botonlogin')}}</button>
+        <button type="submit" class="btn btn-large btn-success pull-right" autocomplete="off">{{Config::get('login::botonlogin')}}</button>
       </div>
     </div>
   </div>

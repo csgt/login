@@ -21,10 +21,22 @@ class sessionsController extends BaseController {
 
     $attemptData   = array($campoUsuario => $valorUsuario, $campoPassword => $valorPassword);
  
-    foreach (Config::get('login::camposextras') as $key=>$val)
-      $attemptData[$key] = $val;
+ 		if(Config::get('login::activo.habilitado')) {
+ 			$attempData[Config::get('login::activo.campo')] = Config::get('login::activo.default');
+ 		}
     
 		if(Auth::attempt($attemptData, Input::get('chkRecordarme'))){
+			//Chequear que el usuario este activo
+			$activo = Config::get('login::activo.campo');
+			if ($activo) {
+				if (Auth::user()->$activo==0) {
+					Auth::logout();
+					return Redirect::back()
+			      ->with('flashMessage', 'Usuario inactivo.  Consulte a su administrador')
+			      ->withInput();
+				}
+			}
+
 			if(Config::get('login::twostep')){
 				if(Auth::user()->twostepsecret <> ''){
 					return Redirect::to('twostep');

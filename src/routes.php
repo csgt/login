@@ -7,8 +7,9 @@
 	Route::get('logout','Csgt\Login\sessionsController@destroy');
 	Route::resource('sessions', 'Csgt\Login\sessionsController', array('only'=>array('create','store','destroy')));
 
-	//=== FACEBOOK
+	//=== OAUTH
 	Route::get('login/facebook', 'Csgt\Login\oauthController@facebook');
+	Route::get('login/google', 'Csgt\Login\oauthController@google');
 
 	//=== RESET
 	Route::get('password/reset/{token}', 'Csgt\Login\passwordResetController@reset');

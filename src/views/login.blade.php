@@ -6,6 +6,8 @@
     <meta name="author" content="Compuservice">
     <title>{{Config::get('login::titulo')}}</title>
     {{ HTML::style('css/bootstrap.min.css') }}
+    {{ HTML::style('css/font-awesome.min.css'); }}
+    {{ HTML::style('css/bootstrap-social.css'); }}
     {{ HTML::script('js/jquery.min.js') }}
     {{ HTML::script('js/bootstrapValidator.min.js') }}
     <style>

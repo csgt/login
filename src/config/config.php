@@ -145,6 +145,23 @@ return array(
 	
 	/*
 	|--------------------------------------------------------------------------
+	| Activo
+	|--------------------------------------------------------------------------
+	|
+	| Nombre de la columna en la tabla que indica si el usuario esta activo
+	|
+	|
+	*/
+
+	'activo' => array(
+		'habilitado' => true,
+		'titulo'     => 'Activo',
+		'campo'      => 'activo',
+		'default'    => 0
+	),
+
+	/*
+	|--------------------------------------------------------------------------
 	| Facebook Login
 	|--------------------------------------------------------------------------
 	|
@@ -153,12 +170,30 @@ return array(
 	*/
 
 	'facebook' => array(
-		'habilitado'   => true,
+		'habilitado'   => false,
 		'campo'				 => 'facebookid',
 		'titulo'       => 'Login con Facebook',
 		'clientid'     => '1515160888729586',
 		'clientsecret' => '73cd14d425a1b75aeebfb556c78418e6',
 		'scope'        => array('email')
+	),
+
+	/*
+	|--------------------------------------------------------------------------
+	| Google Login
+	|--------------------------------------------------------------------------
+	|
+	| Determina si el sistema soporta login con google.
+	|
+	*/
+
+	'google' => array(
+		'habilitado'   => false,
+		'campo'				 => 'googleid',
+		'titulo'       => 'Login con Google',
+		'clientid'     => '206429563319-epdrl3bpl4bftb53p0u7rrcis4uu4buj.apps.googleusercontent.com',
+		'clientsecret' => 'W2bMychWdiD8MFJEwipf5reC',
+		'scope'        =>  array('userinfo_email')
 	),
 
 	/*

@@ -1,5 +1,12 @@
 @if(Config::get('login::facebook.habilitado')) 
-  <div class="form-group"> <a href="login/facebook" class="btn btn-primary btn-block">{{Config::get('login::facebook.titulo')}}</a></div>
+  <a href="login/facebook" class="btn btn-social btn-block btn-facebook">
+    <i class="fa fa-facebook"></i>{{Config::get('login::facebook.titulo')}}
+  </a>
+@endif
+@if(Config::get('login::google.habilitado')) 
+  <a href="login/google" class="btn btn-social btn-block btn-google-plus">
+    <i class="fa fa-google-plus"></i>{{Config::get('login::google.titulo')}}
+  </a>
 @endif
 @if(Config::get('login::usuario.habilitado') && Config::get('login::password.habilitado'))
   <hr>
