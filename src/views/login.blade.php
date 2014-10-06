@@ -36,6 +36,7 @@
           @else
             <h3>{{Config::get('login::logo.alt')}}</h3>
           @endif
+          <br />
           @if(isset($extraFields))
             @include('login::'.$mainPartial, array('extraFields' => $extraFields))
           @else
