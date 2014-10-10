@@ -52,7 +52,7 @@ class sessionsController extends BaseController {
 							)
 						);	
 			}
-			return Redirect::intended('/');
+			return Redirect::intended(Config::get('login::redirectto'));
 		}
 		else if(Config::get('login::migrarmd5')) {
 			$user = DB::table($tabla)
@@ -65,7 +65,7 @@ class sessionsController extends BaseController {
 					
 				Auth::loginUsingId($user->$tablaId);
 
-				return Redirect::intended('/');
+				return Redirect::intended(Config::get('login::redirectto'));
 			}
 
 		}
