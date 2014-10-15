@@ -1,6 +1,7 @@
 @extends('template/template')
 
 @section('content')
+	<h3 class="text-primary">Editar Perfil</h3>
 	@if(Session::get('message'))
 		<div class="alert alert-{{ Session::get('type') }} alert-dismissable .mrgn-top">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
