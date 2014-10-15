@@ -44,7 +44,7 @@
 	    </div>
 	  </div>
 	  <div class="form-group">
-      <label for="password" class="col-sm-2 control-label">{{ Config::get('login::password.titulo').' Actual' }}</label>
+      <label for="password" class="col-sm-2 control-label">{{ Config::get('login::password.titulo').' Actual*' }}</label>
       <div class="col-sm-10">
         <input 
 					type         = "password" 
@@ -57,7 +57,7 @@
       </div>
     </div>
     <div class="form-group">
-      <label for="password" class="col-sm-2 control-label">{{ Config::get('login::password.titulo').' Nueva' }}</label>
+      <label for="password" class="col-sm-2 control-label">{{ Config::get('login::password.titulo').' Nueva*' }}</label>
       <div class="col-sm-5">
         <input 
 					type                         = "password" 
