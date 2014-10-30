@@ -48,7 +48,7 @@ class oauthController extends BaseController {
 				if ($activo) {
 					if (Auth::user()->$activo==0) {
 						Auth::logout();
-						return Redirect::back()
+						return Redirect::to('/login')
 				      ->with('flashMessage', 'Usuario inactivo.  Consulte a su administrador')
 				      ->withInput();
 					}
@@ -111,7 +111,7 @@ class oauthController extends BaseController {
 				if ($activo) {
 					if (Auth::user()->$activo==0) {
 						Auth::logout();
-						return Redirect::back()
+						return Redirect::to('/login')
 				      ->with('flashMessage', 'Usuario inactivo.  Consulte a su administrador')
 				      ->withInput();
 					}
