@@ -13,7 +13,7 @@
     <style>
       body { margin: 5px; }
       .form-signin { max-width: 400px;margin: 0 auto;display: block;margin-top: 30px; }
-      .form-control-feedback{ z-index: 2000; }
+      .form-control-feedback{ z-index: 2000; top:0;}
     </style>
     <script>
       $(document).ready(function(){
