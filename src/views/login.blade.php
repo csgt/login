@@ -5,11 +5,11 @@
     <meta name="description" content="Login Auth">
     <meta name="author" content="Compuservice">
     <title>{{Config::get('login::titulo')}}</title>
-    {{ HTML::style('css/bootstrap.min.css') }}
-    {{ HTML::style('css/font-awesome.min.css'); }}
-    {{ HTML::style('css/bootstrap-social.css'); }}
-    {{ HTML::script('js/jquery.min.js') }}
-    {{ HTML::script('js/bootstrapValidator.min.js') }}
+    {{ HTML::style('packages/csgt/components/css/bootstrap.min.css') }}
+    {{ HTML::style('packages/csgt/components/css/font-awesome.min.css'); }}
+    {{ HTML::style('packages/csgt/components/css/bootstrap-social.css'); }}
+    {{ HTML::script('packages/csgt/components/js/jquery.min.js') }}
+    {{ HTML::script('packages/csgt/components/js/bootstrapValidator.min.js') }}
     <style>
       body { margin: 5px; }
       .form-signin { max-width: 400px;margin: 0 auto;display: block;margin-top: 30px; }
