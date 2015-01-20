@@ -1,26 +1,16 @@
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="Login Auth">
-    <meta name="author" content="Compuservice">
-    <title>{{Config::get('login::titulo')}}</title>
-    {{ HTML::style('packages/csgt/components/css/bootstrap.min.css') }}
-    {{ HTML::style('packages/csgt/components/css/font-awesome.min.css'); }}
-    {{ HTML::style('packages/csgt/components/css/bootstrap-social.css'); }}
-    {{ HTML::script('packages/csgt/components/js/jquery.min.js') }}
-    {{ HTML::script('packages/csgt/components/js/bootstrapValidator.min.js') }}
-    <style>
-      body { margin: 5px; }
-      .form-signin { max-width: 400px;margin: 0 auto;display: block;margin-top: 30px; }
-      .form-control-feedback{ z-index: 2000; top:0 !important;}
-    </style>
-    <script>
-      $(document).ready(function(){
-        $(".alert").delay(5000).fadeOut('slow');
-      });
-    </script>
-  </head>
+@extends('template/template')
+
+@section('content')
+  <style>
+    body { margin: 5px; }
+    .form-signin { max-width: 400px;margin: 0 auto;display: block;margin-top: 30px; }
+    .form-control-feedback{ z-index: 2000; }
+  </style>
+  <script>
+    $(document).ready(function(){
+      $(".alert").delay(5000).fadeOut('slow');
+    });
+  </script>
   <body>
     <?php
       $params = array('id'=>'frmLogin');
@@ -65,5 +55,4 @@
         });
       });
     </script>
-  </body>
-</html>
+@stop
