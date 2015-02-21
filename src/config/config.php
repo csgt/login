@@ -159,7 +159,8 @@ return array(
 		'habilitado' => true,
 		'titulo'     => 'Activo',
 		'campo'      => 'activo',
-		'default'    => 0
+		'default'    => 0,
+		'texto'      => 'Usuario inactivo.  Consulte a su administrador'
 	),
 
 	/*

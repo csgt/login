@@ -32,7 +32,7 @@ class sessionsController extends BaseController {
 				if (Auth::user()->$activo==0) {
 					Auth::logout();
 					return Redirect::back()
-			      ->with('flashMessage', 'Usuario inactivo.  Consulte a su administrador')
+			      ->with('flashMessage', Config::get('login::activo.texto'))
 			      ->withInput();
 				}
 			}
