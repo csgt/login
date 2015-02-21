@@ -19,6 +19,7 @@
 	//=== SIGNUP
 	Route::resource('signup', 'Csgt\Login\signupController', array('only'=>array('index','store')));	
   Route::post('signup/checkEmail','Csgt\Login\signupController@validateEmail');
+  Route::get('signup/checkEmail','Csgt\Login\signupController@validateEmail');
 
   //=== TWO STEP AUTH
   Route::resource('twostep', 'Csgt\Login\twostepController', array('only'=>array('index', 'store')));
