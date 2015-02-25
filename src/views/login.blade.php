@@ -47,8 +47,8 @@
     <script>
       $(document).ready(function(){
         $('#frmLogin').bootstrapValidator({
+          live: 'submitted',
           feedbackIcons: {
-            live: 'submitted',
             valid: 'glyphicon glyphicon-ok',
             invalid: 'glyphicon glyphicon-remove',
             validating: 'glyphicon glyphicon-refresh'
