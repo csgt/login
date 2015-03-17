@@ -52,7 +52,13 @@ class sessionsController extends BaseController {
 							)
 						);	
 			}
-			return Redirect::intended(Config::get('login::redirectto'));
+
+			if(Config::get('login::redirectintended'))
+				return Redirect::intended(Config::get('login::redirectto'));
+
+			else
+				return Redirect::to(Config::get('login::redirectto'));
+			
 		}
 		else if(Config::get('login::migrarmd5')) {
 			$user = DB::table($tabla)

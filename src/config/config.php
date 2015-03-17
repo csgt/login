@@ -1,6 +1,8 @@
 <?php
 return array(
 
+	'redirectintended' => true,
+
 	'redirectto' => '/',
 
 	/*
