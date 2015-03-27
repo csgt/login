@@ -24,7 +24,10 @@ class oauthController extends BaseController {
 	      $usuarioid = DB::table(Config::get('login::tabla'))
 	      	->where(Config::get('login::facebook.campo'), $result['id'])->pluck(Config::get('login::tablaid'));
 	      if (!$usuarioid) {  //Si no existe valor para facebookid para este usuario
-	      	$campos = array(Config::get('login::facebook.campo')=>$result['id'], 'nombre'=>$result['name'],Config::get('login::usuario.campo')=>$result['email']);
+	      	$campos = array(
+	      		Config::get('login::facebook.campo')=>$result['id'], 
+	      		'nombre'=>$result['name'],
+	      		Config::get('login::usuario.campo')=>$result['email']);
 
 	      	$usuarioid = DB::table(Config::get('login::tabla'))
 	      		->where(Config::get('login::usuario.campo'), $result['email'])->pluck(Config::get('login::tablaid'));
@@ -32,6 +35,8 @@ class oauthController extends BaseController {
 	      	if (!$usuarioid) { //Si no existe el mail
 	      		if(Config::get('login::activo.habilitado')) {
 			 				$campos[Config::get('login::activo.campo')] = Config::get('login::activo.default');
+			 				$campos['created_at'] = date_create();
+			 				$campos['updated_at'] = date_create();
 			 			}
 
 	      		$usuarioid = DB::table(Config::get('login::tabla'))
@@ -104,6 +109,8 @@ class oauthController extends BaseController {
 	      	if (!$usuarioid) { //Si no existe el mail
 	      		if(Config::get('login::activo.habilitado')) {
 			 				$campos[Config::get('login::activo.campo')] = Config::get('login::activo.default');
+			 				$campos['created_at'] = date_create();
+			 				$campos['updated_at'] = date_create();
 			 			}
 	      		$usuarioid = DB::table(Config::get('login::tabla'))
 	      			->insertGetId($campos);
