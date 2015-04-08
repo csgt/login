@@ -14,7 +14,7 @@ class passwordResetController extends BaseController {
 	public function store() {
     Config::set('auth.reminder.email', 'login::mailReminder');
 		$result = Password::remind(array('email' => Input::get(Config::get('login::usuario.campo'))), function($message){
-			$message->subject('Reinicio de contrase&ntilde;a');
+			$message->subject('Reinicio de contraseña');
 		});
 
 		if($result == 'reminders.sent') {
