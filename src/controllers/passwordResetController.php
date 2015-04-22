@@ -13,10 +13,17 @@ class passwordResetController extends BaseController {
 
 	public function store() {
     Config::set('auth.reminder.email', 'login::mailReminder');
-		$result = Password::remind(array('email' => Input::get(Config::get('login::usuario.campo'))), function($message){
-			$message->subject('Reinicio de contraseña');
-		});
-
+		
+		try {
+    	$result = Password::remind(array('email' => Input::get(Config::get('login::usuario.campo'))), function($message){
+				$message->subject('Reinicio de contraseña');
+			});
+    } catch (Exception $e) {
+    	$status = 'No fue posible enviar el correo para reinicio de contraseña a: ' . Input::get(Config::get('login::usuario.campo'));
+			$flag   = 'error';
+			return Redirect::route('reset.create')->withStatus($status)->withFlag($flag);
+    }
+		
 		if($result == 'reminders.sent') {
 			return View::make('login::login')
 				->with('route', 'reset.store')
