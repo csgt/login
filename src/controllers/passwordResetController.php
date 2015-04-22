@@ -12,14 +12,22 @@ class passwordResetController extends BaseController {
 	}
 
 	public function store() {
+		$email = Input::get(Config::get('login::usuario.campo'));
+
     Config::set('auth.reminder.email', 'login::mailReminder');
 		
+	 	if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+	 		$status = 'El usuario ' . $email . ' no es una dirección de correo válida';
+			$flag   = 'error';
+			return Redirect::route('reset.create')->withStatus($status)->withFlag($flag);
+	  }
+
 		try {
-    	$result = Password::remind(array('email' => Input::get(Config::get('login::usuario.campo'))), function($message){
+    	$result = Password::remind(array('email' => $email), function($message){
 				$message->subject('Reinicio de contraseña');
 			});
     } catch (Exception $e) {
-    	$status = 'No fue posible enviar el correo para reinicio de contraseña a: ' . Input::get(Config::get('login::usuario.campo'));
+    	$status = 'No fue posible enviar el correo para reinicio de contraseña a: ' . $email;
 			$flag   = 'error';
 			return Redirect::route('reset.create')->withStatus($status)->withFlag($flag);
     }

@@ -103,7 +103,7 @@ return array(
 	|
 	*/
 
-	'textoolvidar' => 'Ingresa tu Email y se te enviaran instrucciones para reiniciar tu contrase&ntilde;a.',
+	'textoolvidar' => 'Ingresa tu Email y se te enviarán instrucciones para reiniciar tu contrase&ntilde;a.',
 
 	'textoolvidarexitoso' => 'Email de reinicio de contrase&ntilde;a enviado exitosamente. Revisa tu bandeja de entrada para m&aacute;s instrucciones.',
 
