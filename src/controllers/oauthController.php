@@ -1,6 +1,6 @@
 <?php namespace Csgt\Login;
 
-use BaseController, Redirect, Input, Exception, DB, Config, Auth;
+use BaseController, Redirect, Input, Exception, DB, Config, Auth, Request;
 
 class oauthController extends BaseController {
 	public function facebook() {
@@ -153,7 +153,7 @@ class oauthController extends BaseController {
 								)
 							);	
 				}
-				
+
 				return Redirect::intended('/');
 
     	}
