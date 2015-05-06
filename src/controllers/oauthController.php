@@ -60,6 +60,17 @@ class oauthController extends BaseController {
 				      ->withInput();
 					}
 				}
+
+				if (Config::get('login::logaccesos.habilitado')) {
+					DB::table(Config::get('login::logaccesos.tabla'))
+						->insert(
+								array(
+									Config::get('login::logaccesos.usuarioid')=>Auth::id(),
+									Config::get('login::logaccesos.fecha')=> date_create(),
+									Config::get('login::logaccesos.ip') => Request::getClientIp()
+								)
+							);	
+				}
 	     
 				return Redirect::intended('/');
 	      /*$message = 'Your unique facebook user id is: ' . $result['id'] . ' and your name is ' . $result['name'];
@@ -131,6 +142,18 @@ class oauthController extends BaseController {
 				      ->withInput();
 					}
 				}
+
+				if (Config::get('login::logaccesos.habilitado')) {
+					DB::table(Config::get('login::logaccesos.tabla'))
+						->insert(
+								array(
+									Config::get('login::logaccesos.usuarioid')=>Auth::id(),
+									Config::get('login::logaccesos.fecha')=> date_create(),
+									Config::get('login::logaccesos.ip') => Request::getClientIp()
+								)
+							);	
+				}
+				
 				return Redirect::intended('/');
 
     	}
