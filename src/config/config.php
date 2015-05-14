@@ -331,7 +331,6 @@ return array(
 			'icono'  => 'glyphicon glyphicon-star'
 		),
 		'icono'  => 'glyphicon glyphicon-star'
-		),
 	),
 
 	/*
