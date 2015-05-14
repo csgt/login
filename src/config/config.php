@@ -330,14 +330,7 @@ return array(
 			'titulo' => 'Usuario activo',
 			'icono'  => 'glyphicon glyphicon-star'
 		),
-		'notificarjuegos' => array(
-			'tipo'    => 'lista',
-			'titulo'  => 'Notificar Juegos',
-			'valores' => array(
-				'1' => 'Si',
-				'0' => 'No'
-			),
-			'icono'  => 'glyphicon glyphicon-star'
+		'icono'  => 'glyphicon glyphicon-star'
 		),
 	),
 
@@ -355,6 +348,14 @@ return array(
 			'titulo' => 'Nombre',
 			'campo'  => 'nombre'
 		)
-	)
+	),
+
+	'camposeditaradmin' => array(
+		'nombre' => array(
+			'titulo' => 'Nombre',
+			'campo'  => 'nombre'
+		)
+	),
+
 
 );
