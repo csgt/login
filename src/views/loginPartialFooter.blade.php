@@ -3,14 +3,14 @@
     <div class="row">
       <div class="col-xs-8 pull-left">
         @if(Config::get('login::olvido.habilitado')) 
-          <small><a href="{{URL::to('reset/create')}}">{{Config::get('login::olvido.titulo')}}</a></small><br>
+          <small><a href="{{URL::to('reset')}}">{{Config::get('login::olvido.titulo')}}</a></small><br>
         @endif
         @if(Config::get('login::registro.habilitado')) 
           <small><a href="{{URL::to('signup')}}">{{Config::get('login::registro.titulo')}}</a></small><br>
         @endif
       </div>
       <div class="col-xs-4 pull-right">
-        <button type="submit" class="btn btn-large btn-success pull-right" autocomplete="off">{{Config::get('login::botonlogin')}}</button>
+        <button type="submit" class="btn btn-large btn-warning btn-block" autocomplete="off">{{Config::get('login::botonlogin')}}</button>
       </div>
     </div>
   </div>

@@ -4,11 +4,15 @@ use BaseController, View, Auth, Redirect, Config,
 Validator, Input, Password, Session, Hash;
 
 class passwordResetController extends BaseController {
-	public function create() {
+	public function index() {
 		return View::make('login::login')
 			->with('route', 'reset.store')
 			->with('mainPartial', 'resetPartial')
 			->with('footerPartial', 'resetPartialFooter');
+	}
+
+	public function create() {
+		return self::index();
 	}
 
 	public function store() {

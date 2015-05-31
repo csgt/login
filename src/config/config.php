@@ -66,7 +66,7 @@ return array(
 	|
 	*/
 
-	'botonolvidar' => 'Reiniciar Contrase&ntilde;a',
+	'botonolvidar' => 'Reiniciar',
 
 	/*
 	|--------------------------------------------------------------------------

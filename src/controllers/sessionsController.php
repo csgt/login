@@ -4,11 +4,15 @@ use BaseController, View, Auth, Redirect,
 	Config, Validator, Input, Session, DB, Request, Hash;
 
 class sessionsController extends BaseController {
-	public function create() {		
+	public function index() {
 		return View::make('login::login')
 			->with('route', 'sessions.store')
 			->with('mainPartial', 'loginPartial')
 			->with('footerPartial', 'loginPartialFooter');
+	}
+
+	public function create() {		
+		return self::index();	
 	}
 
 	public function store() {
