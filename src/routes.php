@@ -27,6 +27,8 @@
   Route::get('twostep/enable', 'Csgt\Login\twostepController@enable');
 
   //=== EDITAR PERFIL
-  Route::get('perfil/editar', 'Csgt\Login\perfilController@index');
-  Route::post('perfil/save', 'Csgt\Login\perfilController@save');
+	Route::group(array('before' => array('auth')), function() {
+  	Route::get('perfil/editar', 'Csgt\Login\perfilController@index');
+  	Route::post('perfil/save', 'Csgt\Login\perfilController@save');
+	});
   
