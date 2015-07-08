@@ -1,9 +1,9 @@
 <?php namespace Csgt\Login\Http\Controllers;
 
-use BaseController, View, Auth, Redirect, Config, Validator, Input, 
+use View, Auth, Redirect, Config, Validator, Input, 
 Otp\Otp, Otp\GoogleAuthenticator, Base32\Base32, Hash, URL, Session, DB;
 
-class perfilController extends BaseController {
+class perfilController extends Controller {
 
 	public function index() {		
 		return view('csgtlogin::perfil');

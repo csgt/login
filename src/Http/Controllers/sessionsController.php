@@ -1,10 +1,9 @@
 <?php namespace Csgt\Login\Http\Controllers;
 
-use Illuminate\Routing\Controller as BaseController;
-use View, Auth, Redirect, 
+use Illuminate\Routing\Controller, View, Auth, Redirect, 
 	Config, Validator, Input, Session, DB, Request, Hash;
 
-class sessionsController extends BaseController {
+class sessionsController extends Controller {
 	public function index() {
 		return view('csgtlogin::login')
 			->with('route', 'sessions.store')
@@ -25,12 +24,13 @@ class sessionsController extends BaseController {
 		$valorPassword = Input::get(config('csgtlogin.password.campo'));
 
     $attemptData   = array($campoUsuario => $valorUsuario, $campoPassword => $valorPassword);
- 
+ 	
  		if(config('csgtlogin.activo.habilitado')) {
  			$attempData[config('csgtlogin.activo.campo')] = config('csgtlogin.activo.default');
  		}
     
 		if(Auth::attempt($attemptData, Input::get('chkRecordarme'))){
+
 			//Chequear que el usuario este activo
 			$activo = config('csgtlogin.activo.campo');
 			if ($activo) {
@@ -60,7 +60,6 @@ class sessionsController extends BaseController {
 
 			if(config('csgtlogin.redirectintended'))
 				return Redirect::intended(config('csgtlogin.redirectto'));
-
 			else
 				return Redirect::to(config('csgtlogin.redirectto'));
 			
@@ -76,9 +75,11 @@ class sessionsController extends BaseController {
 					
 				Auth::loginUsingId($user->$tablaId);
 
-				return Redirect::intended(config('csgtlogin.redirectto'));
+				if(config('csgtlogin.redirectintended'))
+					return Redirect::intended(config('csgtlogin.redirectto'));
+				else
+					return Redirect::to(config('csgtlogin.redirectto'));
 			}
-
 		}
 
 		return Redirect::back()

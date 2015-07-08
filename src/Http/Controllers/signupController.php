@@ -1,9 +1,9 @@
 <?php namespace Csgt\Login\Http\Controllers;
 
-use BaseController, View, Auth, Redirect, Config, 
+use View, Auth, Redirect, Config, 
 Validator, Input, Password, Session, Hash, DB;
 
-class signupController extends BaseController {
+class signupController extends Controller {
 	public function index() {
     $camposExtra = config('csgtlogin.camposextraregistro');
     $camposHTML  = '';

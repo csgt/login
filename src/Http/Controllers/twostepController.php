@@ -1,9 +1,9 @@
 <?php namespace Csgt\Login\Http\Controllers;
 
-use BaseController, View, Auth, Redirect, Config, Validator, Input, 
+use View, Auth, Redirect, Config, Validator, Input, 
 Otp\Otp, Otp\GoogleAuthenticator, Base32\Base32, Hash, URL, Session, DB;
 
-class twostepController extends BaseController {
+class twostepController extends Controller {
 	public function index() {		
 		return view('csgtlogin::login')
 			->with('route', 'twostep.validate')

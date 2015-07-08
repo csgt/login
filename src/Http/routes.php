@@ -3,9 +3,14 @@
 	Route::group(['namespace' => 'Csgt\Login\Http\Controllers'], function(){
 		//=== LOGIN
 		Route::get('login','sessionsController@create');
+		Route::get('auth/login','sessionsController@create');
 		
+		Route::post('auth/login', 'sessionsController@store');
+		Route::resource('sessions', 'sessionsController', array('only'=>array('index','create','store','destroy')));	
+
 		Route::get('logout','sessionsController@destroy');
-		Route::resource('sessions', 'sessionsController', array('only'=>array('index','create','store','destroy')));
+		Route::get('auth/logout','sessionsController@destroy');
+	
 
 		//=== OAUTH
 		Route::get('login/facebook', 'oauthController@facebook');
@@ -18,6 +23,7 @@
 		
 		//=== SIGNUP
 		Route::resource('signup', 'signupController', array('only'=>array('index','store')));	
+		Route::resource('auth/register', 'signupController', array('only'=>array('index','store')));	
 	  Route::post('signup/checkEmail','signupController@validateEmail');
 	  Route::get('signup/checkEmail','signupController@validateEmail');
 

@@ -1,8 +1,8 @@
 <?php namespace Csgt\Login\Http\Controllers;
 
-use BaseController, Redirect, Input, Exception, DB, Config, Auth, Request;
+use Redirect, Input, Exception, DB, Config, Auth, Request;
 
-class oauthController extends BaseController {
+class oauthController extends Controller {
 	public function facebook() {
 		if(!config('csgtlogin.facebook.habilitado')) {
 			return Redirect::to('/login')

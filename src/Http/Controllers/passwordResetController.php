@@ -1,9 +1,9 @@
 <?php namespace Csgt\Login\Http\Controllers;
 
-use BaseController, View, Auth, Redirect, Config, 
+use View, Auth, Redirect, Config, 
 Validator, Input, Password, Session, Hash;
 
-class passwordResetController extends BaseController {
+class passwordResetController extends Controller {
 	public function index() {
 		return view('csgtlogin::login')
 			->with('route', 'reset.store')
