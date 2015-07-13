@@ -1,6 +1,6 @@
 <?php namespace Csgt\Login\Http\Controllers;
 
-use View, Auth, Redirect, Config, Validator, Input, 
+use Illuminate\Routing\Controller, View, Auth, Redirect, Config, Validator, Input, 
 Otp\Otp, Otp\GoogleAuthenticator, Base32\Base32, Hash, URL, Session, DB;
 
 class perfilController extends Controller {

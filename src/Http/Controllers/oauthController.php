@@ -1,6 +1,6 @@
 <?php namespace Csgt\Login\Http\Controllers;
 
-use Redirect, Input, Exception, DB, Config, Auth, Request;
+use Illuminate\Routing\Controller, Redirect, Input, Exception, DB, Config, Auth, Request;
 
 class oauthController extends Controller {
 	public function facebook() {

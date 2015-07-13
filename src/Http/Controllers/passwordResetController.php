@@ -1,6 +1,6 @@
 <?php namespace Csgt\Login\Http\Controllers;
 
-use View, Auth, Redirect, Config, 
+use Illuminate\Routing\Controller, View, Auth, Redirect, Config, 
 Validator, Input, Password, Session, Hash;
 
 class passwordResetController extends Controller {
