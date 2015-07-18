@@ -11,6 +11,10 @@ class LoginServiceProvider extends ServiceProvider {
       $this->mergeConfigFrom(__DIR__ . '/config/csgtlogin.php', 'csgtlogin');
       $this->loadViewsFrom(__DIR__ . '/resources/views/','csgtlogin');
 
+      $this->publishes([
+        __DIR__.'/config/csgtcrud.php' => config_path('csgtcrud.php'),
+      ], 'config');
+
       if (!$this->app->routesAreCached()) {
         require __DIR__.'/Http/routes.php';
       }
