@@ -17,7 +17,8 @@ class passwordResetController extends Controller {
 
 	public function store() {
 		$email = Input::get(config('csgtlogin.usuario.campo'));
-
+		$email = trim($email);
+		
     Config::set('auth.reminder.email', 'login::mailReminder');
 		
 	 	if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
