@@ -12,7 +12,7 @@ class LoginServiceProvider extends ServiceProvider {
       $this->loadViewsFrom(__DIR__ . '/resources/views/','csgtlogin');
 
       $this->publishes([
-        __DIR__.'/config/csgtcrud.php' => config_path('csgtcrud.php'),
+        __DIR__.'/config/csgtlogin.php' => config_path('csgtlogin.php'),
       ], 'config');
 
       if (!$this->app->routesAreCached()) {
