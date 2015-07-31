@@ -103,7 +103,7 @@
 	{!! Form::close() !!}
 	<script type="text/javascript">
 		$(function() {
-			$('#frmPerfil').bootstrapValidator({
+			$('#frmPerfil').formValidation({
         message: 'El campo es requerido',
         excluded: [':disabled'],
         feedbackIcons: {

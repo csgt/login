@@ -47,7 +47,7 @@
     {!!Form::close()!!}
     <script>
       $(document).ready(function(){
-        $('#frmLogin').bootstrapValidator({
+        $('#frmLogin').formValidation({
           live: 'submitted',
           feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
