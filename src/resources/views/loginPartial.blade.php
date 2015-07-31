@@ -20,13 +20,13 @@
           'class'=>'form-control', 
           'placeholder'=>config('csgtlogin.usuario.titulo'), 
           'autofocus'=>true, 
-          'data-bv-notempty'=>'true', 
-          'data-bv-notempty-message'=>config('csgtlogin.usuario.titulo').' es un campo requerido'
+          'data-fv-notempty'=>'true', 
+          'data-fv-notempty-message'=>config('csgtlogin.usuario.titulo').' es un campo requerido'
         );
 
         if(config('csgtlogin.usuario.tipo') == 'email'){
-          $dataArray['data-bv-emailaddress'] = 'true';
-          $dataArray['data-bv-emailaddress-message'] = 'Email con formato incorrecto';
+          $dataArray['data-fv-emailaddress'] = 'true';
+          $dataArray['data-fv-emailaddress-message'] = 'Email con formato incorrecto';
         }
 
       ?>
@@ -38,7 +38,7 @@
       <span class="input-group-addon">
         <span class="glyphicon glyphicon-lock"></span>
       </span>
-      <input type="password" class="form-control" name="{!!config('csgtlogin.password.campo')!!}" id="{!!config('csgtlogin.password.campo')!!}" placeholder="{!!config('csgtlogin.password.titulo')!!}" data-bv-notempty="true" data-bv-notempty-message="{!! config('csgtlogin.password.titulo').' es un campo requerido' !!}">
+      <input type="password" class="form-control" name="{!!config('csgtlogin.password.campo')!!}" id="{!!config('csgtlogin.password.campo')!!}" placeholder="{!!config('csgtlogin.password.titulo')!!}" data-fv-notempty="true" data-fv-notempty-message="{!! config('csgtlogin.password.titulo').' es un campo requerido' !!}">
     </div>
   </div>
   @if(config('csgtlogin.recordar.habilitado')) 

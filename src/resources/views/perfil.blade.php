@@ -22,7 +22,7 @@
 						placeholder  = "{!! $campos['titulo'] !!}"  
 						value        = "{!! Auth::user()->$campos['campo'] !!}" 
 						autocomplete = "off" 
-		      	data-bv-notempty>
+		      	data-fv-notempty>
 				</div>
     	</div>
     @endforeach
@@ -38,9 +38,9 @@
 					placeholder  = "{!! config('csgtlogin.usuario.titulo') !!}"  
 					value        = "{!! Auth::user()->$campo !!}" 
 					autocomplete = "off" 
-	      	data-bv-notempty
+	      	data-fv-notempty
 	      	{!! (config('csgtlogin.usuario.editable')) ? ' ' : 'readonly="true" ' !!}
-	      	{!! (config('csgtlogin.usuario.tipo') == 'email') ? 'data-bv-emailAddress data-bv-emailAddress-message="Correo inválido"': '' !!}>
+	      	{!! (config('csgtlogin.usuario.tipo') == 'email') ? 'data-fv-emailAddress data-fv-emailAddress-message="Correo inválido"': '' !!}>
 	    </div>
 	  </div>
 	  <div class="form-group">
@@ -53,7 +53,7 @@
 					id           = "{!! config('csgtlogin.password.campo') !!}" 
 					placeholder  = "{!! config('csgtlogin.password.titulo').' Actual' !!}" 
 					autocomplete = "off" 
-        	data-bv-notempty>
+        	data-fv-notempty>
       </div>
     </div>
     <div class="form-group">
@@ -66,12 +66,12 @@
 					id                           = "newpassword" 
 					placeholder                  = "{!! config('csgtlogin.password.titulo').' Nueva' !!}" 
 					autocomplete                 = "off" 
-					data-bv-identical            = "true" 
-					data-bv-identical-field      = "newpassword2" 
-					data-bv-identical-message    = "Las passwords no concuerdan"
-					data-bv-stringlength         = "true"
-					data-bv-stringlength-min     = "6"
-					data-bv-stringlength-message = "La {!!config('csgtlogin.password.titulo')!!} debe tener al menos 6 caracteres.">
+					data-fv-identical            = "true" 
+					data-fv-identical-field      = "newpassword2" 
+					data-fv-identical-message    = "Las passwords no concuerdan"
+					data-fv-stringlength         = "true"
+					data-fv-stringlength-min     = "6"
+					data-fv-stringlength-message = "La {!!config('csgtlogin.password.titulo')!!} debe tener al menos 6 caracteres.">
       </div>
        <div class="col-sm-5">
         <input 
@@ -80,12 +80,12 @@
 					name                         = "newpassword2" 
 					placeholder                  = "Repetir {!! config('csgtlogin.password.titulo').' Nueva'!!}" 
 					autocomplete                 = "off" 
-					data-bv-identical            = "true" 
-					data-bv-identical-field      = "newpassword" 
-					data-bv-identical-message    = "Las passwords no concuerdan"
-					data-bv-stringlength         = "true"
-					data-bv-stringlength-min     = "6"
-					data-bv-stringlength-message = "La {!!config('csgtlogin.password.titulo')!!} debe tener al menos 6 caracteres.">
+					data-fv-identical            = "true" 
+					data-fv-identical-field      = "newpassword" 
+					data-fv-identical-message    = "Las passwords no concuerdan"
+					data-fv-stringlength         = "true"
+					data-fv-stringlength-min     = "6"
+					data-fv-stringlength-message = "La {!!config('csgtlogin.password.titulo')!!} debe tener al menos 6 caracteres.">
       </div>
     </div>
     <div class="form-group">

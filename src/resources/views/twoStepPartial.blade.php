@@ -7,8 +7,8 @@
       </span>
       <input type="text" class="form-control" name="twostep" id="twostep" 
         placeholder="Ingresar el c&oacute;digo" 
-        data-bv-notempty="true" 
-        data-bv-notempty-message="C&oacute;digo es requerido"
+        data-fv-notempty="true" 
+        data-fv-notempty-message="C&oacute;digo es requerido"
         >
     </div>
   </div>
