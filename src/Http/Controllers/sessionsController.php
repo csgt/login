@@ -6,6 +6,7 @@ use Illuminate\Routing\Controller, View, Auth, Redirect,
 class sessionsController extends Controller {
 	public function index() {
 		return view('csgtlogin::login')
+			->with('templateincludes', ['formvalidation'])
 			->with('route', 'sessions.store')
 			->with('mainPartial', 'loginPartial')
 			->with('footerPartial', 'loginPartialFooter');
