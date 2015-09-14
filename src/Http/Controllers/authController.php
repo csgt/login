@@ -1,6 +1,4 @@
-<?php
-
-namespace App\Http\Controllers\Auth;
+<?php namespace Csgt\Login\Http\Controllers;
 
 use Validator;
 use App\Http\Controllers\Controller;
@@ -10,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use DB, Config;
 
-class AuthController extends Controller {
+class authController extends Controller {
   protected $table = 'authusuarios';
   protected $redirectPath = '/';
 
