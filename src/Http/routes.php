@@ -2,6 +2,11 @@
 	
 	Route::group(['namespace' => 'Csgt\Login\Http\Controllers'], function(){
 		//=== LOGIN
+		Route::controllers([
+			'auth' => 'authController',
+			'password' => 'passwordController',
+		]);
+
 		//Route::get('login','sessionsController@create');
 	/*
 		Route::get('auth/login','sessionsController@create');
