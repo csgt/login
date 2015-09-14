@@ -1,60 +1,54 @@
-@extends('template/template')
+@if(config('csgtlogin.facebook.habilitado')) 
+  <a href="login/facebook" class="btn btn-social btn-block btn-facebook">
+    <i class="fa fa-facebook"></i>{!!config('csgtlogin.facebook.titulo')!!}
+  </a>
+@endif
+@if(config('csgtlogin.google.habilitado')) 
+  <a href="login/google" class="btn btn-social btn-block btn-google-plus">
+    <i class="fa fa-google-plus"></i>{!!config('csgtlogin.google.titulo')!!}
+  </a>
+@endif
+@if(config('csgtlogin.usuario.habilitado') && config('csgtlogin.password.habilitado'))
+  <hr>
+  <div class="form-group">
+    <div class="input-group">
+      <span class="input-group-addon">
+        <span class="glyphicon glyphicon-user"></span>
+      </span>
+      <?php
+        $dataArray = array(
+          'class'=>'form-control', 
+          'placeholder'=>trans('csgtlogin::login.usuario'), 
+          'autofocus'=>true, 
+          'data-fv-notempty'=>'true', 
+          'data-fv-notempty-message'=>trans('csgtlogin::login.usuario'). ' ' . trans('csgtlogin::validacion.requerido') );
 
-@section('content')
-  <style>
-    body { margin: 5px; }
-    .form-signin { max-width: 400px;margin: 0 auto;display: block;margin-top: 30px; }
-    .form-control-feedback{ z-index: 2000; }
-  </style>
-  <script>
-    $(document).ready(function(){
-      $(".alert").delay(5000).fadeOut('slow');
-    });
-  </script>
-  <body>
-    <?php
-      $params = array('id'=>'frmLogin');
-      if ($route) $params['route'] = $route;
-    ?>
+        if(config('csgtlogin.usuario.tipo') == 'email'){
+          $dataArray['data-fv-emailaddress'] = 'true';
+          $dataArray['data-fv-emailaddress-message'] = 'Email con formato incorrecto';
+        }
 
-    {!!Form::open($params) !!}
-      <div class="panel panel-default form-signin">
-        <div class="panel-body">
-          @if(config('csgtlogin.logo.habilitado')) 
-            <div class="text-center">
-              <img src="{!!config('csgtlogin.logo.path')!!}" alt="{!!config('csgtlogin.logo.alt')!!}">
-            </div>
-          @else
-            <h3>{!!config('csgtlogin.logo.alt')!!}</h3>
-          @endif
-          <br />
-          @if(isset($extraFields))
-            @include('csgtlogin::'.$mainPartial, array('extraFields' => $extraFields))
-          @else
-            @include('csgtlogin::'.$mainPartial)
-          @endif
-          @if(Session::get('flashMessage')) 
-            <div class="alert alert-{!! Session::get('flashType')?Session::get('flashType'):'danger' !!} alert-dismissable">
-              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-              {!!Session::get('flashMessage')!!}
-            </div>
-          @endif
-        </div>
-        @if($footerPartial != '')
-          @include('csgtlogin::'.$footerPartial)
-        @endif
+      ?>
+      {!! Form::text(config('csgtlogin.usuario.campo'), Input::old(config('csgtlogin.usuario.campo')), $dataArray) !!}
     </div>
-    {!!Form::close()!!}
-    <script>
-      $(document).ready(function(){
-        $('#frmLogin').formValidation({
-          live: 'submitted',
-          feedbackIcons: {
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
-          }
-        });
-      });
-    </script>
-@stop
+  </div>
+  <div class="form-group">
+    <div class="input-group">
+      <span class="input-group-addon">
+        <span class="glyphicon glyphicon-lock"></span>
+      </span>
+      <input type="password" class="form-control" name="{!!config('csgtlogin.password.campo')!!}" 
+        id="{!!config('csgtlogin.password.campo')!!}" 
+        placeholder="{{trans('csgtlogin::login.contrasena')}}" 
+        data-fv-notempty="true" 
+        data-fv-notempty-message="{{trans('csgtlogin::login.contrasena') . ' ' . trans('csgtlogin::validacion.requerido')}}">
+    </div>
+  </div>
+  @if(config('csgtlogin.recordar.habilitado')) 
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="chkRecordarme" id="chkRecordarme" /> {{ trans('csgtlogin::login.recuerdame') }}
+      </label>
+    </div>
+  @endif
+@endif

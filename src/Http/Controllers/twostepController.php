@@ -5,7 +5,7 @@ Otp\Otp, Otp\GoogleAuthenticator, Base32\Base32, Hash, URL, Session, DB;
 
 class twostepController extends Controller {
 	public function index() {		
-		return view('csgtlogin::login')
+		return view('csgtlogin::template')
 			->with('route', 'twostep.validate')
 			->with('mainPartial', 'twoStepPartial')
 			->with('footerPartial', 'twoStepPartialFooter');
@@ -49,7 +49,7 @@ class twostepController extends Controller {
 		$secret = GoogleAuthenticator::generateRandom();
 		$qr     = GoogleAuthenticator::getQrCodeUrl('totp', urlencode(config('csgtlogin.nombreapplicacion')).':'.Auth::user()->email, $secret);
 
-		return view('csgtlogin::login')
+		return view('csgtlogin::template')
 			->with('route', 'twostep.store')
 			->with('mainPartial', 'twoStepEnablePartial')
 			->with('footerPartial', 'twoStepPartialEnableFooter')

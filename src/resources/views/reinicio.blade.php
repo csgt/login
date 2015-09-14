@@ -1,5 +1,5 @@
 <hr>
-<p>{!! config('csgtlogin.textoolvidar') !!}</p>
+<p>{!! trans('csgtlogin::reinicio.texto') !!}</p>
 <div class="form-group">
   <div class="input-group">
     <span class="input-group-addon">
@@ -11,7 +11,7 @@
         'placeholder'=>config('csgtlogin.usuario.titulo'), 
         'autofocus'=>true, 
         'data-fv-notempty'=>'true', 
-        'data-fv-notempty-message'=>config('csgtlogin.usuario.titulo').' es un campo requerido'
+        'data-fv-notempty-message'=>config('csgtlogin.usuario.titulo') . ' ' . trans('csgtlogin::reinicio.texto')
       );
 
       if(config('csgtlogin.usuario.tipo') == 'email'){

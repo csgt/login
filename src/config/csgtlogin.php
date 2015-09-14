@@ -310,13 +310,13 @@ return array(
 	|
 	*/
 	
-	'camposextraregistro' => array(
-		'nombre' => array(
+	'camposextraregistro' => [
+		'nombre' => [
 			'tipo'   => 'string',
 			'titulo' => 'Nombre',
 			'icono'  => 'glyphicon glyphicon-star'
-		),
-		'rolid' => array(
+		],
+		'rolid' => [
 			'tipo'       => 'combobox',
 			'combotabla' => 'authroles',
 			'combokey'   => 'rolid',
@@ -324,14 +324,13 @@ return array(
 			'combowhere' => 'rolid<>1',
 			'titulo'     => 'Rol',
 			'icono'      => 'glyphicon glyphicon-star'
-		),
-		'activo' => array(
+		],
+		'activo' => [
 			'tipo'   => 'tinyint',
 			'titulo' => 'Usuario activo',
 			'icono'  => 'glyphicon glyphicon-star'
-		),
-		'icono'  => 'glyphicon glyphicon-star'
-	),
+		],
+	],
 
 	/*
 	|--------------------------------------------------------------------------
