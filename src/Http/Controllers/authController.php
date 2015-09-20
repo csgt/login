@@ -36,7 +36,7 @@ class authController extends Controller {
   }
 
   public function getLogout() {
-    if(Session::has('menu')) Session::forget('menu');
+    Session::flush();
     Auth::logout();
     return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/');
   }
