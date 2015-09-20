@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Auth;
 use DB, Config;
 
 class authController extends Controller {
@@ -34,11 +35,11 @@ class authController extends Controller {
       ->with('footerPartial', 'loginFooter');
   }
 
-   public function getLogout() {
-      Auth::logout();
-      if(Session::has('menu')) Session::forget('menu');
-      return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/');
-    }
+  public function getLogout() {
+    if(Session::has('menu')) Session::forget('menu');
+    Auth::logout();
+    return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/');
+  }
 
   //Override para mandar mensaje correcto de login failed
   protected function getFailedLoginMessage() {
