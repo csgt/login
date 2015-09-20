@@ -7,7 +7,7 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
-use DB, Config;
+use DB, Config, Session;
 
 class authController extends Controller {
   protected $table = 'authusuarios';
