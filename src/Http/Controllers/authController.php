@@ -34,9 +34,14 @@ class authController extends Controller {
       ->with('footerPartial', 'loginFooter');
   }
 
+   public function getLogout() {
+      Auth::logout();
+      if(Session::has('menu')) Session::forget('menu');
+      return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/');
+    }
+
   //Override para mandar mensaje correcto de login failed
   protected function getFailedLoginMessage() {
-
     return trans('csgtlogin::validacion.invalida');
   }
 

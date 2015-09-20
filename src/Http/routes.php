@@ -3,7 +3,7 @@
 	Route::group(['namespace' => 'Csgt\Login\Http\Controllers'], function(){
 		//=== LOGIN
 		Route::controllers([
-			'auth' => 'authController',
+			'auth'     => 'authController',
 			'password' => 'passwordController',
 		]);
 
