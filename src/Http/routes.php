@@ -7,7 +7,8 @@
 			'password' => 'passwordController',
 		]);
 
-		//Route::get('login','sessionsController@create');
+		Route::get('logout','authController@getLogout');
+		Route::get('login','authController@getLogin');
 	/*
 		Route::get('auth/login','sessionsController@create');
 		
