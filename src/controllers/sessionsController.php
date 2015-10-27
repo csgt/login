@@ -35,7 +35,7 @@ class sessionsController extends BaseController {
 			if ($activo) {
 				if (Auth::user()->$activo==0) {
 					Auth::logout();
-					return Redirect::back()
+					return Redirect::to('login')
 			      ->with('flashMessage', Config::get('login::activo.texto'))
 			      ->withInput();
 				}
@@ -80,7 +80,7 @@ class sessionsController extends BaseController {
 
 		}
 
-		return Redirect::back()
+		return Redirect::to('login')
       ->with('flashMessage', Config::get('login::usuario.titulo') . ' o ' . Config::get('login::password.titulo') . ' inv&aacute;lidos')
       ->withInput();
 	}
