@@ -20,7 +20,7 @@
 						id           = "{{ $campos['campo'] }}" 
 						name         = "{{ $campos['campo'] }}" 
 						placeholder  = "{{ $campos['titulo'] }}"  
-						value        = "{{ Auth::user()->$campos['campo'] }}" 
+						value        = "{{ Auth::user()->{$campos['campo']} }}" 
 						autocomplete = "off" 
 		      	data-bv-notempty>
 				</div>
