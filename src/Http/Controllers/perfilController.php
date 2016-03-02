@@ -29,13 +29,13 @@ class perfilController extends Controller {
 
 			Session::flash('message', 'Perfil actualizado exitosamente');
 			Session::flash('type', 'success');
-			return Redirect::to('perfil/editar');
+			return Redirect::to(Config::get('csgtlogin.redirecteditarperfil'));
 		}
 
 		else{
 			Session::flash('message', 'La contrase&ntilde actual no es correcta');
 			Session::flash('type', 'danger');
-			return Redirect::to('perfil/editar');
+			return Redirect::to(Config::get('csgtlogin.redirecteditarperfil'));
 		}
 	}
 

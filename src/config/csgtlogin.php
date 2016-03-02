@@ -5,6 +5,8 @@ return array(
 
 	'redirectto' => '/',
 
+	'redirecteditarperfil' => 'perfil/editar',
+
 	/*
 	|--------------------------------------------------------------------------
 	| Tabla
