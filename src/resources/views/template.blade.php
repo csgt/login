@@ -28,7 +28,7 @@
           @else
             @include('csgtlogin::'.$mainPartial)
           @endif
-          @if (count($errors) > 0)
+          @if (isset($errors))
             <div class="alert alert-danger">
               <ul>
                 @foreach ($errors->all() as $error)

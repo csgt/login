@@ -32,7 +32,7 @@
         }
 
       ?>
-      {!! Form::text(config('csgtlogin.usuario.campo'), Input::old(config('csgtlogin.usuario.campo')), $dataArray) !!}
+      {!! Form::text(config('csgtlogin.usuario.campo'), '', $dataArray) !!}
   </div>
 </div>
 <div class="form-group">

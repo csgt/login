@@ -1,6 +1,10 @@
 <?php
-	
-	Route::group(['namespace' => 'Csgt\Login\Http\Controllers'], function(){
+	$routedata = ['namespace' => 'Csgt\Login\Http\Controllers'];
+	if(config('csgtlogin.routeextras')) {
+		$routedata = array_merge($routedata, config('csgtlogin.routeextras'));
+	}
+
+	Route::group($routedata, function(){
 		//=== LOGIN
 		Route::controllers([
 			'auth'     => 'authController',

@@ -20,7 +20,7 @@
       }
 
     ?>
-    {!! Form::text(config('csgtlogin.usuario.campo'), Input::old(config('csgtlogin.usuario.campo')), $dataArray) !!}
+    {!! Form::text(config('csgtlogin.usuario.campo'), '', $dataArray) !!}
   </div>
   @if(Session::has('status'))
     <div class="alert alert-{!! (Session::get('flag') == 'error') ? 'danger':'success' !!} alert-dismissable">

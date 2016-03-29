@@ -18,9 +18,9 @@ class Login {
   }
 
   public function setConfig($service) {
-		$this->clientId     = config("csgtlogin::$service.clientid");
-		$this->clientSecret = config("csgtlogin::$service.clientsecret");
-		$this->scope        = config("csgtlogin::$service.scope", array());
+		$this->clientId     = config("csgtlogin.$service.clientid");
+		$this->clientSecret = config("csgtlogin.$service.clientsecret");
+		$this->scope        = config("csgtlogin.$service.scope", array());
   }
 
   public function createStorageInstance($storageName) {
