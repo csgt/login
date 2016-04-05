@@ -38,8 +38,8 @@
             </div>
           @endif
 
-          @if(Session::get('flashMessage')) 
-            <div class="alert alert-{!! Session::get('flashType')?Session::get('flashType'):'danger' !!} alert-dismissable">
+          @if(Session::has('flashMessage')) 
+            <div class="alert alert-{!! Session::has('flashType')?Session::get('flashType'):'danger' !!} alert-dismissable">
               <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
               {!!Session::get('flashMessage')!!}
             </div>
