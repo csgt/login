@@ -1,7 +1,8 @@
 <?php namespace Csgt\Login;
 
 use BaseController, View, Auth, Redirect, 
-	Config, Validator, Input, Session, DB, Request, Hash;
+	Config, Validator, Input, Session, DB, Request, 
+	Hash, Exception, Crypt;
 
 class sessionsController extends BaseController {
 	public function index() {
@@ -20,69 +21,72 @@ class sessionsController extends BaseController {
 		$tablaId       = Config::get('login::tablaid');
 		$campoUsuario  = Config::get('login::usuario.campo');
 		$valorUsuario  = Input::get(Config::get('login::usuario.campo'));
-		$campoPassword = Config::get('login::password.campo');
+		$campoPassword = Config::get('login::password.campo');            
 		$valorPassword = Input::get(Config::get('login::password.campo'));
+		$recordarme    = Input::get('chkRecordarme',0);
+		$recordarme    = ($recordarme==0?false:true);
+		$activo        = Config::get('login::activo.campo');
 
-    $attemptData   = array($campoUsuario => $valorUsuario, $campoPassword => $valorPassword);
- 
- 		if(Config::get('login::activo.habilitado')) {
- 			$attempData[Config::get('login::activo.campo')] = Config::get('login::activo.default');
- 		}
+    $attemptData   = [$campoUsuario => $valorUsuario, $campoPassword => $valorPassword];
     
-		if(Auth::attempt($attemptData, Input::get('chkRecordarme'))){
-			//Chequear que el usuario este activo
-			$activo = Config::get('login::activo.campo');
-			if ($activo) {
-				if (Auth::user()->$activo==0) {
-					Auth::logout();
-					return Redirect::to('login')
-			      ->with('flashMessage', Config::get('login::activo.texto'))
-			      ->withInput();
-				}
-			}
+    $logged = Auth::attempt($attemptData, $recordarme);
 
-			if(Config::get('login::twostep')){
-				if(Auth::user()->twostepsecret <> ''){
-					return Redirect::to('twostep');
-				}
-			}
-			if (Config::get('login::logaccesos.habilitado')) {
-				DB::table(Config::get('login::logaccesos.tabla'))
-					->insert(
-							array(
-								Config::get('login::logaccesos.usuarioid')=>Auth::id(),
-								Config::get('login::logaccesos.fecha')=> date_create(),
-								Config::get('login::logaccesos.ip') => Request::getClientIp()
-							)
-						);	
-			}
-
-			if(Config::get('login::redirectintended'))
-				return Redirect::intended(Config::get('login::redirectto'));
-
-			else
-				return Redirect::to(Config::get('login::redirectto'));
-			
-		}
-		else if(Config::get('login::migrarmd5')) {
-			$user = DB::table($tabla)
+    //Si no autenticó, pero tenemos migrate MD5, probamos a convertir la password
+    if (!$logged && Config::get('login::migrarmd5')) {
+    	$user = DB::table($tabla)
 				->where($campoUsuario, $valorUsuario)
 				->first();
 			if( $user && $user->password == md5($valorPassword)) {
 				DB::table($tabla)
 					->where($campoUsuario,$user->$campoUsuario)
-					->update(array($campoPassword => Hash::make($valorPassword)));
-					
+					->update(array($campoPassword => Hash::make($valorPassword)));		
 				Auth::loginUsingId($user->$tablaId);
-
-				return Redirect::intended(Config::get('login::redirectto'));
 			}
+    }
 
+    //Si en este punto no esta loggeado, credenciales incorrectas
+    if(!$logged) {
+    	return Redirect::to('login')
+	      ->with('flashMessage', Config::get('login::usuario.titulo') . ' o ' . Config::get('login::password.titulo') . ' inv&aacute;lidos')
+	      ->withInput();
+    }
+
+    //Si en el config incluye el campo activo, se valida en este punto.
+		if ($activo) {
+			if (Auth::user()->$activo==0) {
+				Auth::logout();
+				return Redirect::to('login')
+		      ->with('flashMessage', Config::get('login::activo.texto'))
+		      ->withInput();
+			}
 		}
 
-		return Redirect::to('login')
-      ->with('flashMessage', Config::get('login::usuario.titulo') . ' o ' . Config::get('login::password.titulo') . ' inv&aacute;lidos')
-      ->withInput();
+    //Si tiene 2 step authentication, entonces mostramos la pantalla de 2Step y mandamos attemptdata en el session
+		if(Config::get('login::twostep')){
+			
+			if(Auth::user()->twostepsecret <>'') {
+				Session::put('attemptdata', Crypt::encrypt(Auth::id()));
+				Auth::logout();
+				return Redirect::to('twostep');
+			}
+		}
+
+		//Si esta habilitado el log de accesos, hacemos el insert
+		try {
+			if (Config::get('login::logaccesos.habilitado')) {
+				DB::table(Config::get('login::logaccesos.tabla'))
+					->insert([
+						Config::get('login::logaccesos.usuarioid') => Auth::id(),
+						Config::get('login::logaccesos.fecha')     => date_create(),
+						Config::get('login::logaccesos.ip')        => Request::getClientIp()
+						]);
+			}	
+		} catch (Exception $e) {}
+		
+		if(Config::get('login::redirectintended'))
+			return Redirect::intended(Config::get('login::redirectto'));
+		else
+			return Redirect::to(Config::get('login::redirectto'));
 	}
 
 	public function destroy() {
