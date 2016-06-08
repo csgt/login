@@ -1,34 +1,12 @@
 
-  {!! Form::hidden('token', $token) !!}
-  <div class="form-group">
-    <div class="input-group">
-      <span class="input-group-addon">
-        <span class="glyphicon glyphicon-user"></span>
-      </span>
-      <?php
-          $dataArray = array(
-            'class'=>'form-control', 
-            'placeholder'=>trans('csgtlogin::login.usuario'), 
-            'autofocus'=>true, 
-            'data-fv-notempty'=>'true', 
-            'data-fv-notempty-message'=>trans('csgtlogin::login.usuario'). ' ' . trans('csgtlogin::validacion.requerido')
-          );
-
-          if(config('csgtlogin.usuario.tipo') == 'email'){
-            $dataArray['data-fv-emailaddress'] = 'true';
-            $dataArray['data-fv-emailaddress-message'] = trans('csgtlogin::validacion.emailformato');
-          }
-
-        ?>
-        {!! Form::text(config('csgtlogin.usuario.campo'), '', $dataArray) !!}
-    </div>
-  </div>
-
+  {{trans('csgtlogin::reinicio.cambiopass')}}
+  <br><br>
   <div class="form-group">
     <div class="input-group">
       <span class="input-group-addon">
         <span class="glyphicon glyphicon-lock"></span>
       </span>
+      <input type="hidden" name="id" value="{{$id}}">
       <input type="password" class="form-control" name="{!!config('csgtlogin.password.campo')!!}" id="{!!config('csgtlogin.password.campo')!!}" 
         autocomplete="false" autocomplete="off"
         placeholder="{{trans('csgtlogin::reinicio.nueva')}} {{trans('csgtlogin::login.contrasena')}}" 

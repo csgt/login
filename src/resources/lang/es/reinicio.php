@@ -8,5 +8,6 @@ return [
 			Estará disponible los siguientes :minutos minutos.',
 	'link'				=> 'este link',
 	'nueva'       => 'Nueva',
-
+	'cambiopass'  => 'Tu contraseña ha caducado.  Debes cambiarla para continuar.',
+	'botoncambio' => 'Cambiar contraseña',
 ];

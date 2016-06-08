@@ -42,11 +42,11 @@ return array(
 	|
 	*/
 
-	'logo' => array(
+	'logo' => [
 		'habilitado' => true,
 		'path'       => '/images/logo.png',
 		'alt'        => 'Logo'
-	),
+	],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -122,13 +122,12 @@ return array(
 	|
 	*/
 
-	'usuario' => array(
+	'usuario' => [
 		'habilitado' => true,
-		'titulo'     => 'Email',
 		'campo'      => 'email',
 		'tipo'       => 'email',
 		'editable'   => false
-	),
+	],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -142,12 +141,11 @@ return array(
 	|
 	*/
 
-	'password' => array(
+	'password' => [
 		'habilitado' => true,
-		'titulo'     => 'Contrase&ntilde;a',
 		'campo'      => 'password',
 		'editable'   => true
-	),
+	],
 	
 	/*
 	|--------------------------------------------------------------------------
@@ -159,13 +157,12 @@ return array(
 	|
 	*/
 
-	'activo' => array(
+	'activo' => [
 		'habilitado' => true,
 		'titulo'     => 'Activo',
 		'campo'      => 'activo',
 		'default'    => 0,
-		'texto'      => 'Usuario inactivo.  Consulte a su administrador'
-	),
+	],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -176,14 +173,14 @@ return array(
 	|
 	*/
 
-	'facebook' => array(
+	'facebook' => [
 		'habilitado'   => false,
 		'campo'				 => 'facebookid',
 		'titulo'       => 'Login con Facebook',
 		'clientid'     => '1515160888729586',
 		'clientsecret' => '73cd14d425a1b75aeebfb556c78418e6',
 		'scope'        => array('email')
-	),
+	],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -194,14 +191,14 @@ return array(
 	|
 	*/
 
-	'google' => array(
+	'google' => [
 		'habilitado'   => false,
 		'campo'				 => 'googleid',
 		'titulo'       => 'Login con Google',
 		'clientid'     => '206429563319-epdrl3bpl4bftb53p0u7rrcis4uu4buj.apps.googleusercontent.com',
 		'clientsecret' => 'W2bMychWdiD8MFJEwipf5reC',
-		'scope'        =>  array('userinfo_email')
-	),
+		'scope'        =>  ['userinfo_email']
+	],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -212,10 +209,9 @@ return array(
 	|
 	*/
 
-	'recordar' => array(
+	'recordar' => [
 		'habilitado' => true,
-		'titulo'     => 'Recu&eacute;rdame'
-	),
+	],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -226,10 +222,9 @@ return array(
 	|
 	*/
 
-	'olvido' => array(
+	'olvido' => [
 		'habilitado' => true,
-		'titulo'     => '&iquest;Olvidaste tu contrase&ntilde;a?'
-	),
+	],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -241,13 +236,13 @@ return array(
 	|
 	*/
 
-	'logaccesos' => array(
+	'logaccesos' => [
 		'habilitado' => false,
 		'tabla'      => 'logacceso',
 		'usuarioid'  => 'usuarioid',
 		'fecha'			 => 'fechalogin',
 		'ip'				 => 'ip'
-	),
+	],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -270,11 +265,11 @@ return array(
 	|
 	*/
 
-	'twostep' => array(
+	'twostep' => [
 		'habilitado' => false,
 		'titulo'     => 'Escribe el c&oacute;digo de verificaci&oacute;n generado por tu aplicaci&oacute;n para dispositivos m&oacute;viles de dos pasos.<br> (Google Authenticator)',
 		'boton'      => 'Verificar'
-	),
+	],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -285,10 +280,9 @@ return array(
 	|
 	*/
 	
-	'registro' => array(
+	'registro' => [
 		'habilitado' => false,
-		'titulo'     => 'Reg&iacute;strate'
-	),
+	],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -299,9 +293,9 @@ return array(
 	|
 	*/
 	
-	'camposextras' => array(
+	'camposextras' => [
 		'activo' => 1
-	),
+	],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -343,19 +337,19 @@ return array(
 	|
 	*/
 
-	'camposeditarperfil' => array(
-		'nombre' => array(
+	'camposeditarperfil' => [
+		'nombre' => [
 			'titulo' => 'Nombre',
 			'campo'  => 'nombre'
-		)
-	),
+		]
+	],
 
-	'camposeditaradmin' => array(
-		'nombre' => array(
+	'camposeditaradmin' => [
+		'nombre' => [
 			'titulo' => 'Nombre',
 			'campo'  => 'nombre'
-		)
-	),
+		]
+	],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -368,5 +362,21 @@ return array(
 	|
 	*/
 	'routeextras' => [],
+
+	/*
+	|--------------------------------------------------------------------------
+	| Vencimiento de passwords
+	|--------------------------------------------------------------------------
+	|
+	| Determina si pide cambio de password en una fecha estipulada,
+	| el campo dias determina cuantos dias de validez tiene. (0 significa que no se vence)
+	|
+	*/
+
+	'vencimiento' => [
+		'habilitado' 	=> true,
+		'campo' 			=> 'cambiarpassword',
+		'dias'        => 30,
+	],
 
 );

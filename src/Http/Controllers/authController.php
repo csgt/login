@@ -7,7 +7,7 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
-use DB, Config, Session;
+use DB, Config, Session, DateTime, DateTimeZone, Crypt;
 
 class authController extends Controller {
   protected $table = 'authusuarios';
@@ -33,6 +33,63 @@ class authController extends Controller {
       ->with('act', '/auth/login')
       ->with('mainPartial', 'login')
       ->with('footerPartial', 'loginFooter');
+  }
+
+  //Override para operar el login
+  public function postLogin(Request $request) {
+    $this->validate($request, [
+      $this->loginUsername() => 'required', 'password' => 'required',
+    ]);
+
+    // If the class is using the ThrottlesLogins trait, we can automatically throttle
+    // the login attempts for this application. We'll key this by the username and
+    // the IP address of the client making these requests into this application.
+    $throttles = $this->isUsingThrottlesLoginsTrait();
+
+    if ($throttles && $this->hasTooManyLoginAttempts($request)) {
+      return $this->sendLockoutResponse($request);
+    }
+
+    $credentials = $this->getCredentials($request);
+
+    if (Auth::attempt($credentials, $request->has('remember'))) {
+      if (config('csgtlogin.vencimiento.habilitado')) {
+        $campo = Auth::user()->{config('csgtlogin.vencimiento.campo')};
+        if ($campo == '') return $this->handleUserWasAuthenticated($request, $throttles);
+
+        $tz    = new DateTimeZone('America/Guatemala');
+        $fecha = DateTime::createFromFormat('Y-m-d H:i:s', $campo, $tz);
+
+        $ahora = new DateTime;
+        $ahora->setTimezone($tz);
+
+        if ($fecha>$ahora) return $this->handleUserWasAuthenticated($request, $throttles);
+
+        $id = Crypt::encrypt(Auth::id());
+        Auth::logout();
+
+        return view('csgtlogin::template')
+          ->with('templateincludes', ['formvalidation'])
+          ->with('act', '/newpassword/store')
+          ->with('mainPartial', 'nuevaPassword')
+          ->with('footerPartial', 'nuevaPasswordFooter')
+          ->with('id', $id);
+      }
+      return $this->handleUserWasAuthenticated($request, $throttles);
+    }
+
+    // If the login attempt was unsuccessful we will increment the number of attempts
+    // to login and redirect the user back to the login form. Of course, when this
+    // user surpasses their maximum number of attempts they will get locked out.
+    if ($throttles) {
+      $this->incrementLoginAttempts($request);
+    }
+
+    return redirect($this->loginPath())
+      ->withInput($request->only($this->loginUsername(), 'remember'))
+      ->withErrors([
+        $this->loginUsername() => $this->getFailedLoginMessage(),
+      ]);
   }
 
   public function getLogout() {

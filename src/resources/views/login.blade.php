@@ -47,7 +47,7 @@
   @if(config('csgtlogin.recordar.habilitado')) 
     <div class="checkbox">
       <label>
-        <input type="checkbox" name="chkRecordarme" id="chkRecordarme" /> {{ trans('csgtlogin::login.recuerdame') }}
+        <input type="checkbox" name="remember" id="remember" /> {{ trans('csgtlogin::login.recuerdame') }}
       </label>
     </div>
   @endif

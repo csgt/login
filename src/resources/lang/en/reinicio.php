@@ -8,5 +8,6 @@ return [
 			It will be available for the next  :minutos minutes.',
 	'link'				=> 'this link',
 	'nueva'       => 'New',
-
+	'cambiopass'  => 'Your current password has expired.  You need to change it before continuing.',
+	'botoncambio' => 'Change password',
 ];

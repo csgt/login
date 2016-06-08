@@ -52,4 +52,8 @@
 	  	Route::get('perfil/editar', 'perfilController@index');
 	  	Route::post('perfil/save', 'perfilController@save');
 		});
+
+		//=== NUEVA PASSWORD
+		Route::post('newpassword/store', 'newpasswordController@store');
+
   });
