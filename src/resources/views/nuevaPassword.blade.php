@@ -1,6 +1,7 @@
 
   {{trans('csgtlogin::reinicio.cambiopass')}}
   <br><br>
+  {!!config('csgtlogin.vencimiento.regex')!!}
   <div class="form-group">
     <div class="input-group">
       <span class="input-group-addon">
@@ -8,13 +9,13 @@
       </span>
       <input type="hidden" name="id" value="{{$id}}">
       <input type="password" class="form-control" name="{!!config('csgtlogin.password.campo')!!}" id="{!!config('csgtlogin.password.campo')!!}" 
-        autocomplete="false" autocomplete="off"
+        autocomplete="off" autocomplete="off"
         placeholder="{{trans('csgtlogin::reinicio.nueva')}} {{trans('csgtlogin::login.contrasena')}}" 
         data-fv-notempty="true" 
-        data-fv-notempty-message="{{trans('csgtlogin::login.contrasena') . ' ' . trans('csgtlogin::validacion.requerido')}}"
-        data-fv-stringlength="true"
-        data-fv-stringlength-min="6"
-        data-fv-stringlength-message="{{trans('csgtlogin::validacion.passwordlargo')}}">
+        data-fv-regexp="true"
+        data-fv-regexp-regexp="{!!config('csgtlogin.password.regex','^.{6,}$')!!}"
+        data-fv-regexp-message="{!!config('csgtlogin.password.regexmensaje',trans('csgtlogin::validacion.passwordlargo'))!!}"
+        data-fv-notempty-message="{{trans('csgtlogin::login.contrasena') . ' ' . trans('csgtlogin::validacion.requerido')}}">
     </div>
   </div>
   <div class="form-group">

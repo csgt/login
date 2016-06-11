@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	'redirectintended' => true,
 
@@ -24,17 +24,6 @@ return array(
 
 	/*
 	|--------------------------------------------------------------------------
-	| Titulo Login
-	|--------------------------------------------------------------------------
-	|
-	| Path hacia el titulo del html.
-	|
-	*/
-
-	'titulo' => 'Inicio de Sesi&oacute;n',
-
-	/*
-	|--------------------------------------------------------------------------
 	| Path al logo
 	|--------------------------------------------------------------------------
 	|
@@ -47,68 +36,6 @@ return array(
 		'path'       => '/images/logo.png',
 		'alt'        => 'Logo'
 	],
-
-	/*
-	|--------------------------------------------------------------------------
-	| Boton Login
-	|--------------------------------------------------------------------------
-	|
-	| Texto que se muestra en el boton de login
-	|
-	*/
-
-	'botonlogin' => 'Iniciar Sesi&oacute;n',
-
-	/*
-	|--------------------------------------------------------------------------
-	| Boton Olvidar
-	|--------------------------------------------------------------------------
-	|
-	| Texto que se muestra en boton de reinicio de pwd olvidada
-	|
-	*/
-
-	'botonolvidar' => 'Reiniciar',
-
-	/*
-	|--------------------------------------------------------------------------
-	| Boton Guardar Nueva password
-	|--------------------------------------------------------------------------
-	|
-	| Texto que se muestra en boton de guardar nueva pwd
-	|
-	*/
-
-	'botonguardarnueva' => 'Guardar Contrase&ntilde;a',
-
-	/*
-	|--------------------------------------------------------------------------
-	| Texto Signup
-	|--------------------------------------------------------------------------
-	|
-	| Texto que se muestra en boton de registrate
-	|
-	*/
-
-	'textosignup' => 'Ingresa tus datos',
-
-	'botonsignup' => 'Reg&iacute;strate',
-
-	'signupexitoso' => 'Usuario creado exitosamente',
-	
-	/*
-	|--------------------------------------------------------------------------
-	| Texto Olvidar
-	|--------------------------------------------------------------------------
-	|
-	| Texto que se muestra en boton de reinicio de pwd olvidada
-	|
-	*/
-
-	'textoolvidar' => 'Ingresa tu Email y se te enviarán instrucciones para reiniciar tu contrase&ntilde;a.',
-
-	'textoolvidarexitoso' => 'Email de reinicio de contrase&ntilde;a enviado exitosamente. Revisa tu bandeja de entrada para m&aacute;s instrucciones.',
-
 
 	/*
 	|--------------------------------------------------------------------------
@@ -135,7 +62,8 @@ return array(
 	|--------------------------------------------------------------------------
 	|
 	| Nombre de la columna en la tabla que alberga la password
-	| que se utiliza por el login para autenticar al usuario
+	| que se utiliza por el login para autenticar al usuario,
+	| aqui tambien se configura la regla minima de requerimiento para la password
 	|
 	| Puede ser password, secreto, etc.
 	|
@@ -144,7 +72,8 @@ return array(
 	'password' => [
 		'habilitado' => true,
 		'campo'      => 'password',
-		'editable'   => true
+		'editable'   => true,
+		'regex'      => '^.{6,}$',
 	],
 	
 	/*
@@ -179,7 +108,7 @@ return array(
 		'titulo'       => 'Login con Facebook',
 		'clientid'     => '1515160888729586',
 		'clientsecret' => '73cd14d425a1b75aeebfb556c78418e6',
-		'scope'        => array('email')
+		'scope'        => ['email']
 	],
 
 	/*
@@ -379,4 +308,4 @@ return array(
 		'dias'        => 30,
 	],
 
-);
+];
