@@ -9,4 +9,10 @@ return [
 	'registrate'        => 'Registrarme',
 	'usuario'						=> 'Email',
 	'contrasena'				=> 'Contraseña',
+	'contrasenaactual'  => 'Contraseña actual',
+	'contrasenanueva'   => 'Contraseña nueva',
+	'repetir'						=> 'Repetir',
+	'nombre'						=> 'Nombre',
+	'dejarenblanco'			=> 'Dejar en blanco para no cambiar contraseña',
+	'guardar'						=> 'Guardar',
 ];

@@ -11,7 +11,7 @@
 	{!! Form::open(array('url' => 'perfil/save', 'method' => 'POST', 'class'=>'form-horizontal', 'role'=>'form', 'id'=>'frmPerfil')) !!}
 		@foreach(config('csgtlogin.camposeditarperfil') as $campos)
 			<div class="form-group">
-				<label for="password" class="col-sm-2 control-label">{!! $campos['titulo'] !!}</label>
+				<label for="password" class="col-sm-2 control-label">{!! trans('csgtlogin::login.nombre') !!}</label>
 				<div class="col-sm-10">
 					<?php $campo = config('csgtlogin.usuario.campo'); ?>
 		      <input 
@@ -19,7 +19,7 @@
 						class        = "form-control" 
 						id           = "{!! $campos['campo'] !!}" 
 						name         = "{!! $campos['campo'] !!}" 
-						placeholder  = "{!! $campos['titulo'] !!}"  
+						placeholder  = "{!! trans('csgtlogin::login.nombre') !!}"  
 						value        = "{!! Auth::user()->{$campos['campo']} !!}" 
 						autocomplete = "off" 
 		      	data-fv-notempty>
@@ -27,7 +27,7 @@
     	</div>
     @endforeach
 		<div class="form-group">
-	    <label for="email" class="col-sm-2 control-label">{!! config('csgtlogin.usuario.titulo') !!}</label>
+	    <label for="email" class="col-sm-2 control-label">{!! trans('csgtlogin::login.usuario') !!}</label>
 	    <div class="col-sm-10">
 	    	<?php $campo = config('csgtlogin.usuario.campo'); ?>
 	      <input 
@@ -44,66 +44,64 @@
 	    </div>
 	  </div>
 	  <div class="form-group">
-      <label for="password" class="col-sm-2 control-label">{!! config('csgtlogin.password.titulo').' Actual*' !!}</label>
+      <label for="password" class="col-sm-2 control-label">{!! trans('csgtlogin::login.contrasenaactual') .'*' !!}</label>
       <div class="col-sm-10">
         <input 
 					type         = "password" 
 					class        = "form-control" 
 					name         = "{!! config('csgtlogin.password.campo') !!}" 
 					id           = "{!! config('csgtlogin.password.campo') !!}" 
-					placeholder  = "{!! config('csgtlogin.password.titulo').' Actual' !!}" 
+					placeholder  = "{!! trans('csgtlogin::login.contrasenaactual') !!}" 
 					autocomplete = "off" 
         	data-fv-notempty>
       </div>
     </div>
     <div class="form-group">
-      <label for="password" class="col-sm-2 control-label">{!! config('csgtlogin.password.titulo').' Nueva*' !!}</label>
+      <label for="password" class="col-sm-2 control-label">{!! trans('csgtlogin::login.contrasenanueva') .'*' !!}</label>
       <div class="col-sm-5">
         <input 
-					type                         = "password" 
-					class                        = "form-control" 
-					name                         = "newpassword" 
-					id                           = "newpassword" 
-					placeholder                  = "{!! config('csgtlogin.password.titulo').' Nueva' !!}" 
-					autocomplete                 = "off" 
-					data-fv-identical            = "true" 
-					data-fv-identical-field      = "newpassword2" 
-					data-fv-identical-message    = "Las passwords no concuerdan"
-					data-fv-stringlength         = "true"
-					data-fv-stringlength-min     = "6"
-					data-fv-stringlength-message = "La {!!config('csgtlogin.password.titulo')!!} debe tener al menos 6 caracteres.">
+					type                      = "password" 
+					class                     = "form-control" 
+					name                      = "newpassword" 
+					id                        = "newpassword" 
+					placeholder               = "{!! trans('csgtlogin::login.contrasenanueva') !!}" 
+					autocomplete              = "off" 
+					data-fv-identical         = "true" 
+					data-fv-identical-field   = "newpassword2" 
+					data-fv-identical-message = "{{trans('csgtlogin::validacion.passwordsdiferentes')}}"
+					data-fv-regexp            = "true"
+					data-fv-regexp-regexp     = "{!!config('csgtlogin.password.regex','^.{6,}$')!!}"
+					data-fv-regexp-message    = "{!!config('csgtlogin.password.regexmensaje',trans('csgtlogin::validacion.passwordlargo'))!!}">
       </div>
        <div class="col-sm-5">
         <input 
 					type                         = "password" 
 					class                        = "form-control" 
 					name                         = "newpassword2" 
-					placeholder                  = "Repetir {!! config('csgtlogin.password.titulo').' Nueva'!!}" 
+					placeholder                  = "{!! trans('csgtlogin::login.repetir') . ' ' . strtolower(trans('csgtlogin::login.contrasenanueva')) !!}" 
 					autocomplete                 = "off" 
 					data-fv-identical            = "true" 
 					data-fv-identical-field      = "newpassword" 
-					data-fv-identical-message    = "Las passwords no concuerdan"
-					data-fv-stringlength         = "true"
-					data-fv-stringlength-min     = "6"
-					data-fv-stringlength-message = "La {!!config('csgtlogin.password.titulo')!!} debe tener al menos 6 caracteres.">
+					data-fv-identical-message    = "{{trans('csgtlogin::validacion.passwordsdiferentes')}}">
       </div>
     </div>
     <div class="form-group">
 	  	<div class="col-sm-2">&nbsp;</div>
 	    <div class="col-sm-10">
-	    	* Dejar en blanco para no cambiar {!! config('csgtlogin.password.titulo') !!}.
+	    	* {!! trans('csgtlogin::login.dejarenblanco') !!}.
 	   	</div>
 	  </div>
     <div class="form-group">
 	    <div class="col-sm-2">&nbsp;</div>
 	    <div class="col-sm-10">
-	      {!! Form::submit('Guardar', array('class' => 'btn btn-primary')) !!}
+	      {!! Form::submit(trans('csgtlogin::login.guardar'), array('class' => 'btn btn-primary')) !!}
 	    </div>
 	  </div>
 	{!! Form::close() !!}
 	<script type="text/javascript">
 		$(function() {
 			$('#frmPerfil').formValidation({
+				live: 'submitted',
         message: 'El campo es requerido',
         excluded: [':disabled'],
         feedbackIcons: {
