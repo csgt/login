@@ -308,4 +308,20 @@ return [
 		'dias'        => 30,
 	],
 
+	/*
+	|--------------------------------------------------------------------------
+	| No repetir passwords
+	|--------------------------------------------------------------------------
+	|
+	| Determina si al cambiar la password no se puede repetir la misma
+	|
+	*/
+
+	'repetirpasswords' => [
+		'habilitado'    => true,
+		'tabla'         => 'historicopasswords',
+		'campousuario'  => 'usuarioid',
+		'campopassword' => 'password',
+	],
+
 ];

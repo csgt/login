@@ -19,7 +19,23 @@ class perfilController extends Controller {
 			$userarray = array();
 
 			if(Input::get('newpassword') <> '') {
-				$userarray[$campopassword] = Hash::make(Input::get('newpassword'));
+				$newpwd = Input::get('newpassword')
+
+				if($config('csgtlogin.repetirpasswords.habilitado')) {
+					$historiales = DB::table(config('csgtlogin.repetirpasswords.tabla'))
+						->where(config('csgtlogin.repetirpasswords.campousuario'), Auth::id())
+						->lists(config('csgtlogin.repetirpasswords.campopassword'))
+
+					foreach($historiales as $historial) {
+						if(Hash::check($newpwd, $historial)) {
+							Session::flash('message', trans('csgtlogin::reinicio.repetida'));
+							Session::flash('type', 'danger');
+							return Redirect::to(Config::get('csgtlogin.redirecteditarperfil'));	
+						}
+					}
+				}
+
+				$userarray[$campopassword] = Hash::make($newpwd);
 
 				//Si tienen vencimiento las passwords, se lo asignamos
 				if (config('csgtlogin.vencimiento.habilitado')) {
@@ -32,7 +48,6 @@ class perfilController extends Controller {
 						}
 						$userarray[config('csgtlogin.vencimiento.campo')] = $fecha;
 				}
-
 			}
 
 			if(config('csgtlogin.usuario.editable'))
@@ -47,12 +62,19 @@ class perfilController extends Controller {
 				->where(config('csgtlogin.tablaid'), Auth::id())
 				->update($userarray);
 
+			if(isset($userarray[$campopassword])) {
+				DB::table(config('csgtlogin.repetirpasswords.tabla'))->insert([
+					config('csgtlogin.repetirpasswords.campousuario')  => Auth::id(),
+					config('csgtlogin.repetirpasswords.campopassword') => $userarray[$campopassword],
+				]);
+			}
+
 			Session::flash('message', 'Perfil actualizado exitosamente');
 			Session::flash('type', 'success');
 			return Redirect::to(Config::get('csgtlogin.redirecteditarperfil'));
 		}
 
-		else{
+		else {
 			Session::flash('message', 'La contrase&ntilde actual no es correcta');
 			Session::flash('type', 'danger');
 			return Redirect::to(Config::get('csgtlogin.redirecteditarperfil'));

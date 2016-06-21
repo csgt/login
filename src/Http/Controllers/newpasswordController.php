@@ -28,12 +28,35 @@ class newpasswordController extends Controller {
  		else {
 			$fecha = Carbon::now('America/Guatemala')->addDays($dias);
 		}
-		$userarray['password'] = Hash::make(Input::get('password'));
+
+		$password = Input::get('password');
+
+		if($config('csgtlogin.repetirpasswords.habilitado')) {
+			$historiales = DB::table(config('csgtlogin.repetirpasswords.tabla'))
+				->where(config('csgtlogin.repetirpasswords.campousuario'), $id)
+				->lists(config('csgtlogin.repetirpasswords.campopassword'))
+
+			foreach($historiales as $historial) {
+				if(Hash::check($password, $historial)) {
+					Session::flash('message', trans('csgtlogin::reinicio.repetida'));
+					Session::flash('type', 'danger');
+					return Redirect::to('login');	
+				}
+			}
+		}
+
+		$userarray['password'] = Hash::make($password);
 		$userarray[config('csgtlogin.vencimiento.campo')] = $fecha;
 
 		DB::table(config('csgtlogin.tabla'))
 			->where(config('csgtlogin.tablaid'), $id)
 			->update($userarray);
+
+		DB::table(config('csgtlogin.repetirpasswords.tabla'))->insert([
+			config('csgtlogin.repetirpasswords.campousuario')  => $id,
+			config('csgtlogin.repetirpasswords.campopassword') => $userarray['password'],
+		]);
+
 		Auth::loginUsingId($id);
 		return Redirect::to('/');
 	}

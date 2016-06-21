@@ -10,4 +10,5 @@ return [
 	'nueva'       => 'New',
 	'cambiopass'  => 'Your current password has expired.  You need to change it before continuing.',
 	'botoncambio' => 'Change password',
+	'repetida'    => 'The password you entered was used recently so you cannot use it again',
 ];
