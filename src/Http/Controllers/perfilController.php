@@ -19,12 +19,12 @@ class perfilController extends Controller {
 			$userarray = array();
 
 			if(Input::get('newpassword') <> '') {
-				$newpwd = Input::get('newpassword')
+				$newpwd = Input::get('newpassword');
 
-				if($config('csgtlogin.repetirpasswords.habilitado')) {
+				if(config('csgtlogin.repetirpasswords.habilitado')) {
 					$historiales = DB::table(config('csgtlogin.repetirpasswords.tabla'))
 						->where(config('csgtlogin.repetirpasswords.campousuario'), Auth::id())
-						->lists(config('csgtlogin.repetirpasswords.campopassword'))
+						->lists(config('csgtlogin.repetirpasswords.campopassword'));
 
 					foreach($historiales as $historial) {
 						if(Hash::check($newpwd, $historial)) {
@@ -38,7 +38,7 @@ class perfilController extends Controller {
 				$userarray[$campopassword] = Hash::make($newpwd);
 
 				//Si tienen vencimiento las passwords, se lo asignamos
-				if (config('csgtlogin.vencimiento.habilitado')) {
+				if(config('csgtlogin.vencimiento.habilitado')) {
 						$dias = (int)config('csgtlogin.vencimiento.dias');
 				 		if ($dias == 0) {
 				 			$fecha = null;
@@ -66,16 +66,18 @@ class perfilController extends Controller {
 				DB::table(config('csgtlogin.repetirpasswords.tabla'))->insert([
 					config('csgtlogin.repetirpasswords.campousuario')  => Auth::id(),
 					config('csgtlogin.repetirpasswords.campopassword') => $userarray[$campopassword],
+					'created_at'                                       => date_create(),
+					'updated_at'                                       => date_create(),
 				]);
 			}
 
-			Session::flash('message', 'Perfil actualizado exitosamente');
+			Session::flash('message', trans('csgtlogin::registro.exito'));
 			Session::flash('type', 'success');
 			return Redirect::to(Config::get('csgtlogin.redirecteditarperfil'));
 		}
 
 		else {
-			Session::flash('message', 'La contrase&ntilde actual no es correcta');
+			Session::flash('message', trans('csgtlogin::registro.errorpwdvieja'));
 			Session::flash('type', 'danger');
 			return Redirect::to(Config::get('csgtlogin.redirecteditarperfil'));
 		}

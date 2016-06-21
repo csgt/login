@@ -7,7 +7,7 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
-use DB, Input, Crypt, Carbon\Carbon, Hash, Redirect;
+use DB, Input, Crypt, Carbon\Carbon, Hash, Redirect, Session;
 
 class newpasswordController extends Controller {
 
@@ -31,16 +31,15 @@ class newpasswordController extends Controller {
 
 		$password = Input::get('password');
 
-		if($config('csgtlogin.repetirpasswords.habilitado')) {
+		if(config('csgtlogin.repetirpasswords.habilitado')) {
 			$historiales = DB::table(config('csgtlogin.repetirpasswords.tabla'))
 				->where(config('csgtlogin.repetirpasswords.campousuario'), $id)
-				->lists(config('csgtlogin.repetirpasswords.campopassword'))
+				->lists(config('csgtlogin.repetirpasswords.campopassword'));
 
 			foreach($historiales as $historial) {
 				if(Hash::check($password, $historial)) {
-					Session::flash('message', trans('csgtlogin::reinicio.repetida'));
-					Session::flash('type', 'danger');
-					return Redirect::to('login');	
+					return Redirect::to('login')
+						->withErrors([trans('csgtlogin::reinicio.repetida')]);	
 				}
 			}
 		}
@@ -55,6 +54,8 @@ class newpasswordController extends Controller {
 		DB::table(config('csgtlogin.repetirpasswords.tabla'))->insert([
 			config('csgtlogin.repetirpasswords.campousuario')  => $id,
 			config('csgtlogin.repetirpasswords.campopassword') => $userarray['password'],
+			'created_at'                                       => date_create(),
+			'updated_at'                                       => date_create(),
 		]);
 
 		Auth::loginUsingId($id);
