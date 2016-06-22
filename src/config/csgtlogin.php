@@ -303,7 +303,7 @@ return [
 	*/
 
 	'vencimiento' => [
-		'habilitado' 	=> true,
+		'habilitado' 	=> false,
 		'campo' 			=> 'cambiarpassword',
 		'dias'        => 30,
 	],
