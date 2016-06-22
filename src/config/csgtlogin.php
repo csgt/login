@@ -318,7 +318,7 @@ return [
 	*/
 
 	'repetirpasswords' => [
-		'habilitado'    => true,
+		'habilitado'    => false,
 		'tabla'         => 'historicopasswords',
 		'campousuario'  => 'usuarioid',
 		'campopassword' => 'password',
