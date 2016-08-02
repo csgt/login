@@ -131,7 +131,7 @@ class authController extends Controller {
             $data->whereRaw($values['combowhere']);
           $data = $data->get();
           foreach ($data as $d){
-            $camposHTML .= '<option value="'.$d->$values['combokey'].'">'.$d->$values['comboval'].'</option>';
+            $camposHTML .= '<option value="'.$d->{$values['combokey']}.'">'.$d->{$values['comboval']}.'</option>';
           }
           $camposHTML .= "</select></div>";
           break;
