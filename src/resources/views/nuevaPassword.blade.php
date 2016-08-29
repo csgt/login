@@ -7,7 +7,6 @@
       <span class="input-group-addon">
         <span class="glyphicon glyphicon-lock"></span>
       </span>
-      <input type="hidden" name="id" value="{{$id}}">
       <input type="password" class="form-control" name="{!!config('csgtlogin.password.campo')!!}" id="{!!config('csgtlogin.password.campo')!!}" 
         autocomplete="off" autocomplete="off"
         placeholder="{{trans('csgtlogin::reinicio.nueva')}} {{trans('csgtlogin::login.contrasena')}}" 

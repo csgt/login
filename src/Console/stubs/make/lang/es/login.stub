@@ -1,0 +1,24 @@
+<?php
+
+return [
+	'iniciarsesion'    => 'Iniciar sesión',
+	'loginfacebook'    => 'Login con Facebook',
+	'logingoogle'      => 'Login con Google',
+	'nombre'           => 'Nombre',
+	'email'            => 'Email',
+	'password'         => 'Contraseña',
+	'login'            => 'Login',
+	'recuerdame'       => 'Recuérdame',
+	'olvidaste'        => '¿Olvidaste tu contraseña?',
+	'registrate'       => 'Registrate',
+	'reiniciar'        => 'Reiniciar Contraseña',
+	'reiniciarenviar'  => 'Enviar link de reinicio',
+	'regresar'         => 'Regresar',
+	'nuevapassword'    => 'Nueva contraseña',
+	'repetirpassword'  => 'Repetir contraseña',
+	'registro'         => 'Registro',
+	'actualizar'       => 'Actualizar contraseña',
+	'actualizarinfo'   => 'Tu contraseña ha expirado.  Necesitas actualizarla para continuar.',
+	'incorrect'        => 'Usuario incorrecto',
+	'passwordrepetida' => 'Esta contraseña ya fue utilizada con anterioridad'
+];

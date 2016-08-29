@@ -1,0 +1,24 @@
+<?php
+
+return [	
+		'iniciarsesion'    => 'Start Session',
+		'loginfacebook'    => 'Login with Facebook',
+		'logingoogle'      => 'Login with Google',
+		'nombre'           => 'Name',
+		'email'            => 'Email',
+		'password'         => 'Password',
+		'login'            => 'Login',
+		'recuerdame'       => 'Remember me',
+		'olvidaste'        => 'Forgot your password?',
+		'registrate'       => 'Register',
+		'reiniciar'        => 'Reset Password',
+		'reiniciarenviar'  => 'Send Password Reset Link',
+		'regresar'         => 'Go back',
+		'nuevapassword'    => 'New Password',
+		'repetirpassword'  => 'Repeat Password',
+		'registro'         => 'Register',
+		'actualizar'       => 'Update Password',
+		'actualizarinfo'   => 'Your password has expired.  You need to set a new password before continuing',
+		'incorrect'        => 'Incorrect user',
+		'passwordrepetida' => 'This password has already been used in the past'
+];

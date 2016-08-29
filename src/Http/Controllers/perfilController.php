@@ -6,6 +6,10 @@ use Base32\Base32, Hash, URL, Session, DB, Carbon\Carbon;
 
 class perfilController extends Controller {
 
+  public function __construct() {
+    $this->middleware(['web']);
+  }
+
 	public function index() {		
 		return view('csgtlogin::perfil')
 			->with('templateincludes',['formvalidation']);

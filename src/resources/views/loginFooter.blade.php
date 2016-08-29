@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-sm-6">
         @if(config('csgtlogin.olvido.habilitado')) 
-          <small><a href="/password/email">{{ trans('csgtlogin::login.olvidaste') }}</a></small><br>
+          <small><a href="/password/reset">{{ trans('csgtlogin::login.olvidaste') }}</a></small><br>
         @endif
         @if(config('csgtlogin.registro.habilitado')) 
           <small><a href="/auth/register">{{ trans('csgtlogin::login.registrate') }}</a></small><br>

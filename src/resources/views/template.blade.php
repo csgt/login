@@ -7,12 +7,8 @@
     .form-control-feedback{ z-index: 2000; }
   </style>
   <body>
-    <?php
-      $params = array('id'=>'frmLogin');
-      if ($act) $params['url'] = $act;
-    ?>
-
-    {!!Form::open($params) !!}
+    <form method="post" id="frmLogin" {{$act?"action=". $act :""}}>
+      {{ csrf_field() }}
       <div class="panel panel-default form-signin">
         <div class="panel-body">
           @if(config('csgtlogin.logo.habilitado')) 
@@ -28,15 +24,16 @@
           @else
             @include('csgtlogin::'.$mainPartial)
           @endif
-          @if (count($errors)>0)
-            <div class="alert alert-danger">
-              <ul>
-                @foreach ($errors->all() as $error)
-                  <li>{{ $error }}</li>
-                @endforeach
-              </ul>
-            </div>
-          @endif
+            @if ($errors->has('email'))
+              <div class="alert alert-danger">
+                <ul>
+                  @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                  @endforeach
+                </ul>
+              </div>
+            @endif
+
           @if(Session::has('flashMessage')) 
             <div class="alert alert-{!! Session::has('flashType')?Session::get('flashType'):'danger' !!} alert-dismissable">
               <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -48,7 +45,7 @@
           @include('csgtlogin::'.$footerPartial)
         @endif
     </div>
-    {!!Form::close()!!}
+    </form>
     <script>
       $(document).ready(function(){
         $('#frmLogin').formValidation({

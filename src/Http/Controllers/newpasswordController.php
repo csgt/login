@@ -10,7 +10,10 @@ use Illuminate\Support\Facades\Auth;
 use DB, Input, Crypt, Carbon\Carbon, Hash, Redirect, Session;
 
 class newpasswordController extends Controller {
-
+  public function __construct() {
+    $this->middleware(['web','guest']);
+  }
+  
 	public function store(){
 		$userarray = [];
 		$id = Input::get('id');

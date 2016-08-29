@@ -3,7 +3,13 @@
 use Illuminate\Routing\Controller, View, Auth, Redirect, Config, Validator, Input, 
 Otp\Otp, Otp\GoogleAuthenticator, Base32\Base32, Hash, URL, Session, DB;
 
+
 class twostepController extends Controller {
+
+	public function __construct() {
+    $this->middleware(['web','guest']);
+  }
+
 	public function index() {		
 		return view('csgtlogin::template')
 			->with('route', 'twostep.validate')

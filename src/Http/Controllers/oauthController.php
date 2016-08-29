@@ -5,7 +5,10 @@ use Socialite;
 
 class oauthController extends Controller {
 
-
+  public function __construct() {
+    $this->middleware(['web','guest']);
+  }
+  
   public function redirectToProvider($aProvider) {
     return Socialite::driver($aProvider)->redirect();
   }

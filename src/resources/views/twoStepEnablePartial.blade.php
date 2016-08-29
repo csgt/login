@@ -13,8 +13,8 @@
   <img src="{!!$qr!!}" alt="Codigo" width="150"></div>
 
 <p>Después de escanear el código de barra, ingresa el código de verificación de seis dígitos que generó la aplicación Autenticador de Google.</p>
-	{!! Form::text('txCodigo', '', array('id'=>'txCodigo', 'class'=>'form-control')) !!}
-	{!! Form::hidden('s', $secret)!!}
+  <form type="text" name="txCodigo" id="txCodigo" class="form-control">
+  <form type="hidden" name="s" value="{{$secret}}">
 <script>
   $(document).ready(function(){
     $('#btnVerificar').click(function(){
