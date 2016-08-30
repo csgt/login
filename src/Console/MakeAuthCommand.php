@@ -60,6 +60,11 @@ class MakeAuthCommand extends Command {
       $this->compileControllerStub('UpdatePasswordController.stub')
     );
 
+     file_put_contents(
+      app_path('Notifications/ResetPasswordNotification.php'),
+      $this->compileNotificationStub('ResetPasswordNotification.stub')
+    );
+
     /*
     //Deshabilitar temporalmente
     file_put_contents(
@@ -122,6 +127,14 @@ class MakeAuthCommand extends Command {
     }
   }
  
+  protected function compileNotificationStub($aPath) {
+    return str_replace(
+      '{{namespace}}',
+      $this->getAppNamespace(),
+      file_get_contents(__DIR__.'/stubs/make/notifications/' . $aPath)
+    );
+  }
+
   protected function compileControllerStub($aPath) {
     return str_replace(
       '{{namespace}}',

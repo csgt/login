@@ -1,3 +1,4 @@
+//=== CSGTAUTH
 Auth::routes();
 Route::get('logout','Auth\LoginController@logout');
 Route::get('updatepassword', 'Auth\UpdatePasswordController@showUpdatePasswordForm');
@@ -6,21 +7,16 @@ Route::post('updatepassword', 'Auth\UpdatePasswordController@update');
 Route::get('oauth/{provider}', 'oauthController@redirectToProvider');
 Route::get('oauth/{provider}/callback', 'oauthController@handleProviderCallback');
 
-Route::post('signup/validateemail','signupController@validateEmail');
-Route::get('signup/validateemail','signupController@validateEmail');
-
-//=== TWO STEP AUTH
+//TWO STEP AUTH
 Route::resource('twostep', 'twostepController', array('only'=>array('index', 'store')));
 Route::post('twostep/validate', array('as' => 'twostep.validate', 'uses' => 'twostepController@validate'));
 Route::get('twostep/enable', 'twostepController@enable');
 Route::get('qr/{secret}', 'twostepController@getQr');
 
-//=== EDITAR PERFIL
+//EDITAR PERFIL
 Route::group(array('before' => array('auth')), function() {
 	Route::get('perfil/editar', 'perfilController@index');
 	Route::post('perfil/save', 'perfilController@save');
 });
-
-//=== NUEVA PASSWORD
-Route::post('newpassword/store', 'newpasswordController@store');
 */
+//=== CSGTAUTH

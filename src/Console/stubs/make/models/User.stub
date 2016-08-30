@@ -4,6 +4,7 @@ namespace {{namespace}}Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use {{namespace}}Notifications\ResetPasswordNotification;
 
 class User extends Authenticatable {
 	
@@ -13,4 +14,8 @@ class User extends Authenticatable {
 	protected $primaryKey = 'usuarioid';
 	protected $hidden     = ['password','remember_token'];
 	protected $guarded    = ['usuarioid'];
+
+	public function sendPasswordResetNotification($token) {
+		$this->notify(new ResetPasswordNotification($token));
+	}
 }
