@@ -1,8 +1,10 @@
 //=== CSGTAUTH
 Auth::routes();
-Route::get('logout','Auth\LoginController@logout');
-Route::get('updatepassword', 'Auth\UpdatePasswordController@showUpdatePasswordForm');
-Route::post('updatepassword', 'Auth\UpdatePasswordController@update');
+Route::group(['namespace'=>'Auth'], function(){
+	Route::get('logout','LoginController@logout');
+	Route::get('updatepassword', 'UpdatePasswordController@showUpdatePasswordForm');
+	Route::post('updatepassword', 'UpdatePasswordController@update');
+});
 /*
 Route::get('oauth/{provider}', 'oauthController@redirectToProvider');
 Route::get('oauth/{provider}/callback', 'oauthController@handleProviderCallback');

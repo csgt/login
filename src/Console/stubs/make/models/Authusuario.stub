@@ -6,7 +6,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use {{namespace}}Notifications\ResetPasswordNotification;
 
-class User extends Authenticatable {
+class Authusuario extends Authenticatable {
 	
 	use Notifiable;
 

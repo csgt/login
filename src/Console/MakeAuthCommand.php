@@ -65,19 +65,18 @@ class MakeAuthCommand extends Command {
       $this->compileNotificationStub('ResetPasswordNotification.stub')
     );
 
-    /*
     //Deshabilitar temporalmente
     file_put_contents(
       base_path('routes/web.php'),
       file_get_contents(__DIR__.'/stubs/make/routes.stub'),
       FILE_APPEND
     );
-    */
+    
     if (file_exists(app_path('User.php'))) {
       unlink(app_path('User.php'));
     }
     file_put_contents(
-      app_path('Models/User.php'),
+      app_path('Models/Authusuario.php'),
       $this->compileModelStub()
     );
     /*
