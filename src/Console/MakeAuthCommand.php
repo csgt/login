@@ -146,7 +146,7 @@ class MakeAuthCommand extends Command {
     return str_replace(
       '{{namespace}}',
       $this->getAppNamespace(),
-      file_get_contents(__DIR__.'/stubs/make/models/User.stub')
+      file_get_contents(__DIR__.'/stubs/make/models/Authusuario.stub')
     );
   }
 }

@@ -22,6 +22,11 @@
     </div>
     <div class="clearfix"></div>
     <hr>
+    @if($errors->has('extra'))
+      @foreach ($errors->all() as $error)
+        <div class="alert alert-danger" role="alert">{{ $error }}</div>
+      @endforeach
+    @endif
     <div class="col-sm-12">
       <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
         <input type="text" class="form-control" name="email" placeholder="{{trans('login.email')}}" value="{{ old('email') }}" autofocus>

@@ -20,5 +20,6 @@ return [
 		'actualizar'       => 'Update Password',
 		'actualizarinfo'   => 'Your password has expired.  You need to set a new password before continuing',
 		'incorrect'        => 'Incorrect user',
-		'passwordrepetida' => 'This password has already been used in the past'
+		'passwordrepetida' => 'This password has already been used in the past',
+		'tokenmismatch'    => 'This form has expired.  Please try again.',
 ];

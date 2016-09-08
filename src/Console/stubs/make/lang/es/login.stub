@@ -20,5 +20,6 @@ return [
 	'actualizar'       => 'Actualizar contraseña',
 	'actualizarinfo'   => 'Tu contraseña ha expirado.  Necesitas actualizarla para continuar.',
 	'incorrect'        => 'Usuario incorrecto',
-	'passwordrepetida' => 'Esta contraseña ya fue utilizada con anterioridad'
+	'passwordrepetida' => 'Esta contraseña ya fue utilizada con anterioridad',
+	'tokenmismatch'    => 'Esta forma ha expirado.  Porfavor intente de nuevo.',
 ];
