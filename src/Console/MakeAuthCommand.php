@@ -106,6 +106,14 @@ class MakeAuthCommand extends Command {
     if (! is_dir(app_path('Models'))) {
       mkdir(app_path('Models'), 0755, true);
     }
+
+    if (! is_dir(app_path('Controllers/Auth'))) {
+      mkdir(app_path('Controllers/Auth'), 0755, true);
+    }
+
+    if (! is_dir(app_path('Notifications'))) {
+      mkdir(app_path('Notifications'), 0755, true);
+    }
   }
 
   protected function exportViews() {
