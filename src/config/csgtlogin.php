@@ -127,5 +127,18 @@ return [
 		'campousuario'  => 'usuarioid',
 		'campopassword' => 'password',
 	],
+
+	/*
+	|--------------------------------------------------------------------------
+	| Tipo de campo para login
+	|--------------------------------------------------------------------------
+	|
+	| Determina si el campo de login es un email o texto
+	|
+	*/
+
+	'usuario' => [
+		'tipo' => 'email',
+	]
 	
 ];

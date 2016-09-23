@@ -22,4 +22,6 @@ return [
 	'incorrect'        => 'Usuario incorrecto',
 	'passwordrepetida' => 'Esta contraseña ya fue utilizada con anterioridad',
 	'tokenmismatch'    => 'Esta forma ha expirado.  Porfavor intente de nuevo.',
+	'passwordmin'			 => 'La contraseña debe tener al menos 6 caracteres.',
+	'passwordnoigual'  => 'Las contraseñas no concuerdan.',
 ];

@@ -22,4 +22,6 @@ return [
 		'incorrect'        => 'Incorrect user',
 		'passwordrepetida' => 'This password has already been used in the past',
 		'tokenmismatch'    => 'This form has expired.  Please try again.',
+		'passwordmin'			 => 'The password must be at least 6 characters long.',
+		'passwordnoigual'  => 'Passwords don\'t match.',
 ];
