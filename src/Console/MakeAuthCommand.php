@@ -30,6 +30,8 @@ class MakeAuthCommand extends Command {
     'en/login.stub'      => 'en/login.php',
   ];
 
+  protected $routesFile = 'routes/core/auth.php';
+
   public function fire() {
     $this->createDirectories();
     $this->exportViews(); //Pendiente hasta terminar el login
@@ -65,11 +67,9 @@ class MakeAuthCommand extends Command {
       $this->compileNotificationStub('ResetPasswordNotification.stub')
     );
 
-    //Deshabilitar temporalmente
     file_put_contents(
-      base_path('routes/web.php'),
-      file_get_contents(__DIR__.'/stubs/make/routes.stub'),
-      FILE_APPEND
+      base_path($routesFile),
+      file_get_contents(__DIR__.'/stubs/make/routes.stub')
     );
     
     if (file_exists(app_path('User.php'))) {
