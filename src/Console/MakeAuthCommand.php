@@ -101,6 +101,10 @@ class MakeAuthCommand extends Command {
       mkdir(base_path('resources/views/auth/passwords'), 0755, true);
     }
 
+    if (! is_dir(base_path('routes/core'))) {
+      mkdir(base_path('routes/core'), 0755, true);
+    }
+
     if (! is_dir(app_path('Models'))) {
       mkdir(app_path('Models'), 0755, true);
     }
