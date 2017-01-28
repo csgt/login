@@ -155,4 +155,8 @@ class MakeAuthCommand extends Command {
       file_get_contents(__DIR__.'/stubs/make/models/Authusuario.stub')
     );
   }
+
+  protected function getAppNamespace(){
+    return 'App\'';
+  }
 }
