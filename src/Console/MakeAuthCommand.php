@@ -3,10 +3,8 @@
 namespace Csgt\Login\Console;
 
 use Illuminate\Console\Command;
-use Illuminate\Console\AppNamespaceDetectorTrait;
 
 class MakeAuthCommand extends Command {
-  use AppNamespaceDetectorTrait;
 
   protected $signature = 'make:csgtauth';
 
