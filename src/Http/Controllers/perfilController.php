@@ -10,12 +10,18 @@ class perfilController extends Controller {
     $this->middleware(['web']);
   }
 
-	public function index() {		
+	public function index() {	
+		if (Auth::guest()) {
+			dd('Usuario no autenticado');
+		}	
 		return view('csgtlogin::perfil')
 			->with('templateincludes',['formvalidation']);
 	}
 
 	public function save() {
+		if (Auth::guest()) {
+			dd('Usuario no autenticado');
+		}	
 		$campopassword = config('csgtlogin.password.campo');
 		$campousuario  = config('csgtlogin.usuario.campo');
 
