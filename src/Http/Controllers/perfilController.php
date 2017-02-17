@@ -6,12 +6,18 @@ use Base32\Base32, Hash, URL, Session, DB, Carbon\Carbon;
 
 class perfilController extends Controller {
 
-	public function index() {		
+	public function index() {
+		if (Auth::guest()) {
+			dd('Usuario no autenticado');
+		}		
 		return view('csgtlogin::perfil')
 			->with('templateincludes',['formvalidation']);
 	}
 
 	public function save() {
+		if (Auth::guest()) {
+			dd('Usuario no autenticado');
+		}	
 		$campopassword = config('csgtlogin.password.campo');
 		$campousuario  = config('csgtlogin.usuario.campo');
 
