@@ -66,13 +66,15 @@ class perfilController extends Controller {
 				->where(config('csgtlogin.tablaid'), Auth::id())
 				->update($userarray);
 
-			if(isset($userarray[$campopassword])) {
-				DB::table(config('csgtlogin.repetirpasswords.tabla'))->insert([
-					config('csgtlogin.repetirpasswords.campousuario')  => Auth::id(),
-					config('csgtlogin.repetirpasswords.campopassword') => $userarray[$campopassword],
-					'created_at'                                       => date_create(),
-					'updated_at'                                       => date_create(),
-				]);
+			if(config('csgtlogin.repetirpasswords.habilitado')) {
+				if(isset($userarray[$campopassword])) {
+					DB::table(config('csgtlogin.repetirpasswords.tabla'))->insert([
+						config('csgtlogin.repetirpasswords.campousuario')  => Auth::id(),
+						config('csgtlogin.repetirpasswords.campopassword') => $userarray[$campopassword],
+						'created_at'                                       => date_create(),
+						'updated_at'                                       => date_create(),
+					]);
+				}
 			}
 
 			Session::flash('message', trans('csgtlogin::registro.exito'));
