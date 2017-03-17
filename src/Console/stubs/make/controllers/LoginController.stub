@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
-use DB, Config, Session, DateTime, DateTimeZone, Crypt;
+use DateTime, DateTimeZone, Crypt;
 
 class LoginController extends Controller {
   protected $table = 'authusuarios';
