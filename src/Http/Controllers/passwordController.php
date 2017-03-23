@@ -38,9 +38,11 @@ class passwordController extends Controller {
     if (is_null($token)) {
       throw new NotFoundHttpException;
     }
-    $id = DB::table(config('csgtlogin.tabla'))
-      ->where('remember_token', $token)
-      ->pluck(config('csgtlogin.repetirpasswords.campousuario'));
+
+    $id = DB::table('authusuarios AS a')
+      ->join('password_resets AS r', 'a.email', 'r.email')
+      ->where('r.token', $token)
+      ->pluck('usuarioid');
 
     if (!$id) {
       dd('El link es inválido. Intente de nuevo.');
