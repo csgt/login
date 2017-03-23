@@ -39,7 +39,7 @@ class passwordController extends Controller {
       throw new NotFoundHttpException;
     }
     $id = DB::table(config('csgtlogin.tabla'))
-      ->where('token', $token)
+      ->where('remember_token', $token)
       ->pluck(config('csgtlogin.repetirpasswords.campousuario'));
 
     if (!$id) {
