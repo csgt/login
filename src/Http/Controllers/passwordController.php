@@ -40,7 +40,7 @@ class passwordController extends Controller {
     }
 
     $id = DB::table('authusuarios AS a')
-      ->join('password_resets AS r', 'a.email', 'r.email')
+      ->join('password_resets AS r', 'a.email', '=','r.email')
       ->where('r.token', $token)
       ->pluck('usuarioid');
 
