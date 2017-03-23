@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
-use DB;
+use DB, Crypt;
 
 class passwordController extends Controller {
   /*
