@@ -37,12 +37,20 @@ class passwordController extends Controller {
     if (is_null($token)) {
       throw new NotFoundHttpException;
     }
+    $id = DB::table(config('csgtlogin.tabla'))
+      ->where('token', $token)
+      ->pluck(config('csgtlogin.repetirpasswords.campousuario'));
+      
+    if (!$id) {
+      dd('El link es inválido. Intente de nuevo.');
+    }
+
     return view('csgtlogin::template')
       ->with('act','')
       ->with('templateincludes', ['formvalidation'])
       ->with('mainPartial', 'nuevaPassword')
       ->with('footerPartial', 'nuevaPasswordFooter')
-      ->with('token', $token);
+      ->with('id', Crypt::encrypt($id));
   }
 
   /**
