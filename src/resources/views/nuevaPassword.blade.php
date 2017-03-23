@@ -7,6 +7,7 @@
       <span class="input-group-addon">
         <span class="glyphicon glyphicon-lock"></span>
       </span>
+      <input type="hidden" name="email" value="{{$email}}">
       <input type="hidden" name="token" value="{{$token}}">
       <input type="password" class="form-control" name="{!!config('csgtlogin.password.campo')!!}" id="{!!config('csgtlogin.password.campo')!!}" 
         autocomplete="off" autocomplete="off"
