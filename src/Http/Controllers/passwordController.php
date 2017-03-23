@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
-use DB, Crypt;
+use Input;
 
 class passwordController extends Controller {
   /*
@@ -38,7 +38,7 @@ class passwordController extends Controller {
     if (is_null($token)) {
       throw new NotFoundHttpException;
     }
-
+/*
     $id = DB::table('authusuarios AS a')
       ->join('password_resets AS r', 'a.email', '=','r.email')
       ->where('r.token', $token)
@@ -47,13 +47,14 @@ class passwordController extends Controller {
     if (!$id) {
       dd('El link es inválido. Intente de nuevo.');
     }
-
+*/
     return view('csgtlogin::template')
       ->with('act','')
       ->with('templateincludes', ['formvalidation'])
       ->with('mainPartial', 'nuevaPassword')
       ->with('footerPartial', 'nuevaPasswordFooter')
-      ->with('id', Crypt::encrypt($id));
+      ->with('email', Input::get('email'))
+      ->with('token', $token);
   }
 
   /**
