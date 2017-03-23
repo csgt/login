@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use DB;
 
 class passwordController extends Controller {
   /*
@@ -40,7 +41,7 @@ class passwordController extends Controller {
     $id = DB::table(config('csgtlogin.tabla'))
       ->where('token', $token)
       ->pluck(config('csgtlogin.repetirpasswords.campousuario'));
-      
+
     if (!$id) {
       dd('El link es inválido. Intente de nuevo.');
     }
