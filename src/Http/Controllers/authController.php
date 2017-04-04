@@ -105,13 +105,20 @@ class authController extends Controller {
 
   //Override para mandar mensaje correcto de error
   protected function sendLockoutResponse(Request $request) {
-    $seconds = (int) Cache::get($this->getLoginLockExpirationKey($request)) - time();
+    $seconds = $this->limiter()->availableIn(
+      $this->throttleKey($request)
+    );
+
     $message = trans('csgtlogin::validacion.throttle', ['segundos' => $seconds]);
+    $errors = [$this->username() => $message];
+
+    if ($request->expectsJson()) {
+      return response()->json($errors, 423);
+    }
+
     return redirect($this->loginPath())
-        ->withInput($request->only($this->loginUsername(), 'remember'))
-        ->withErrors([
-            $this->loginUsername() => $message,
-        ]);
+        ->withInput($request->only($this->username(), 'remember'))
+        ->withErrors($errors);
   }
 
   //Override para vista correcta de registro
