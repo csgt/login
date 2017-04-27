@@ -13,6 +13,7 @@ class MakeAuthCommand extends Command {
   protected $views = [
     'auth/login.stub'            => 'auth/login.blade.php',
     'auth/register.stub'         => 'auth/register.blade.php',
+    'auth/profile.stub'          => 'auth/profile.blade.php',
     'auth/passwords/email.stub'  => 'auth/passwords/email.blade.php',
     'auth/passwords/reset.stub'  => 'auth/passwords/reset.blade.php',
     'auth/passwords/update.stub' => 'auth/passwords/update.blade.php',
@@ -60,7 +61,12 @@ class MakeAuthCommand extends Command {
       $this->compileControllerStub('UpdatePasswordController.stub')
     );
 
-     file_put_contents(
+    file_put_contents(
+      app_path('Http/Controllers/Auth/ProfileController.php'),
+      $this->compileControllerStub('ProfileController.stub')
+    );
+
+    file_put_contents(
       app_path('Notifications/ResetPasswordNotification.php'),
       $this->compileNotificationStub('ResetPasswordNotification.stub')
     );

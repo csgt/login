@@ -1,0 +1,43 @@
+<?php
+
+namespace {{namespace}}Http\Controllers\Auth;
+
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Auth, Validator,Hash;
+
+class ProfileController extends Controller {
+	public function index() {
+		$me = Auth::user();
+		return view('auth.profile')
+			->with('me', $me);
+	}
+
+	public function store(Request $request) {
+
+		$validator = Validator::make($request->all(), [
+			'passwordactual' => 'required|min:6',
+      'password'       => 'required|confirmed|min:6',
+    ]);
+
+    $validator->after(function ($validator) use ($request) {
+    	if (!Hash::check($request->passwordactual, Auth::user()->password)) { 
+		  	$validator->errors()->add('passwordactual', trans('login.passwordincorrecta'));
+			}
+		});
+
+    if ($validator->fails()) {
+      $this->throwValidationException($request, $validator);
+    }
+
+    $user = Auth::user();
+    $user->password = Hash::make($request->password);
+    $user->nombre   = $request->nombre;
+    $user->save();
+
+    session()->flash('message', trans('login.perfilactualizado'));
+		session()->flash('type', 'info');
+
+    return redirect()->to('/');
+	}
+}
