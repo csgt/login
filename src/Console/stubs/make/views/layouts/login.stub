@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="Compuservice">
-    <title>Login Aplicacion L5.3</title>
+    <title>Login - {{config('app.name')}}</title>
     <link type="text/css" rel="stylesheet" href="/packages/csgt/components/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="/packages/csgt/components/css/font-awesome.min.css">
     <link type="text/css" rel="stylesheet" href="/css/AdminLTE.min.css">
