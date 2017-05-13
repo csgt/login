@@ -48,7 +48,7 @@ return [
 	|
 	*/
 	'facebook' => [
-		'habilitado'   => true,
+		'habilitado'   => false,
 		'campo'				 => 'facebookid',
 		'titulo'       => 'Login con Facebook',
 		'clientid'     => '1515160888729586',
