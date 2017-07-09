@@ -7,8 +7,8 @@
     <meta name="description" content="">
     <meta name="author" content="Compuservice">
     <title>Login - {{config('app.name')}}</title>
-    <link type="text/css" rel="stylesheet" href="/packages/csgt/components/css/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="/packages/csgt/components/css/font-awesome.min.css">
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="/css/font-awesome.min.css">
     <link type="text/css" rel="stylesheet" href="/css/AdminLTE.min.css">
     <link type="text/css" rel="stylesheet" href="/css/skins/{{config('csgtlogin.adminlte-skin','skin-black')}}.min.css">
     <style type="text/css">

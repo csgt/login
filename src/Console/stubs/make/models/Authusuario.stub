@@ -18,4 +18,18 @@ class Authusuario extends Authenticatable {
 	public function sendPasswordResetNotification($token) {
 		$this->notify(new ResetPasswordNotification($token));
 	}
+
+	public function authroles(){
+		return $this->belongsToMany('App\Models\Cancerbero\Authrol','authusuarioroles', 'usuarioid','rolid');
+	}
+
+	public function avatar($aCampo) {
+		if ($aCampo) {
+			return $aCampo;
+		}
+		else {
+			return base64_encode(file_get_contents(public_path() . '/images/user-generic.jpg'));
+		}
+	}
+
 }
