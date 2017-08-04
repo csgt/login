@@ -23,9 +23,9 @@ class Authusuario extends Authenticatable {
 		return $this->belongsToMany('App\Models\Cancerbero\Authrol','authusuarioroles', 'usuarioid','rolid');
 	}
 
-	public function avatar($aCampo) {
-		if ($aCampo) {
-			return $aCampo;
+	public function getAvatarAttribute($value) {
+		if ($value) {
+			return $value;
 		}
 		else {
 			return base64_encode(file_get_contents(public_path() . '/images/user-generic.jpg'));
