@@ -58,6 +58,8 @@ class authController extends Controller {
         $campo = Auth::user()->{config('csgtlogin.vencimiento.campo')};
         if ($campo == '') return $this->handleUserWasAuthenticated($request, $throttles);
 
+        $email = Auth::user()->email;
+
         $tz    = new DateTimeZone('America/Guatemala');
         $fecha = DateTime::createFromFormat('Y-m-d H:i:s', $campo, $tz);
 
@@ -74,6 +76,7 @@ class authController extends Controller {
           ->with('act', '/newpassword/store')
           ->with('mainPartial', 'nuevaPassword')
           ->with('footerPartial', 'nuevaPasswordFooter')
+          ->with('email', $email)
           ->with('id', $id);
       }
       return $this->handleUserWasAuthenticated($request, $throttles);
