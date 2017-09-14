@@ -46,7 +46,7 @@ class ProfileController extends Controller {
 		});
 
     if ($validator->fails()) {
-      $this->throwValidationException($request, $validator);
+    	return redirect()->back()->withErrors($validator);
     }
 
 

@@ -52,7 +52,7 @@
           <div class="attachment-block clearfix">
             <div class="col-sm-12">
               @if($me->avatar)
-                <img src="data:image/png;base64,{{Auth::user()->avatar(Auth::user()->avatar)}}" class="img-circle pull-right" alt="Usuario">
+                <img src="data:image/png;base64,{{Auth::user()->avatar}}" class="img-circle pull-right" alt="Usuario">
               @else
                 <img src="/images/user-generic.jpg" class="img-circle pull-right" alt="Usuario">
               @endif
