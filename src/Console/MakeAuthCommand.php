@@ -31,7 +31,7 @@ class MakeAuthCommand extends Command {
 
   protected $routesFile = 'routes/core/auth.php';
 
-  public function fire() {
+  public function handle() {
     $this->createDirectories();
     $this->exportViews(); //Pendiente hasta terminar el login
     $this->exportLangs();
@@ -75,7 +75,7 @@ class MakeAuthCommand extends Command {
       base_path($this->routesFile),
       file_get_contents(__DIR__.'/stubs/make/routes.stub')
     );
-    
+
     if (file_exists(app_path('User.php'))) {
       unlink(app_path('User.php'));
     }
@@ -87,7 +87,7 @@ class MakeAuthCommand extends Command {
     $respuestas = ['s','n'];
     $respuesta = '';
     while (!in_array($respuesta, $respuestas)) {
-      $respuesta = $this->ask('Habilitar Facebook? (s/n)'); 
+      $respuesta = $this->ask('Habilitar Facebook? (s/n)');
     }
     $this->error($respuesta);
     */
@@ -141,7 +141,7 @@ class MakeAuthCommand extends Command {
       );
     }
   }
- 
+
   protected function compileNotificationStub($aPath) {
     return str_replace(
       '{{namespace}}',
