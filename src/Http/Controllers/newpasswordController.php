@@ -14,17 +14,17 @@ class newpasswordController extends Controller {
 	public function store(){
 		$userarray = [];
 		
-		$id = DB::table(config('csgtlogin.tabla'))
-			->where('email', Input::get('email'))
-			->pluck(config('csgtlogin.tablaid'));
+		// $id = DB::table(config('csgtlogin.tabla'))
+		// 	->where('email', Input::get('email'))
+		// 	->pluck(config('csgtlogin.tablaid'));
 
-		// $id = Input::get('id');
-		// try {
-		// 	$id = Crypt::decrypt($id);
-		// } 
-		// catch (Exception $e) {
-		// 	return Redirect::to('login');	
-		// }
+		$id = Input::get('id');
+		try {
+			$id = Crypt::decrypt($id);
+		} 
+		catch (Exception $e) {
+			return Redirect::to('login');	
+		}
  
  		$dias = (int)config('csgtlogin.vencimiento.dias');
  		if ($dias == 0) {
