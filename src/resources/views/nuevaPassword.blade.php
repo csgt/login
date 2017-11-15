@@ -8,7 +8,13 @@
         <span class="glyphicon glyphicon-lock"></span>
       </span>
       <input type="hidden" name="email" value="{{$email}}">
-      <input type="hidden" name="token" value="{{$token}}">
+      @if (!empty($token))
+        <input type="hidden" name="token" value="{{$token}}">
+      @endif
+      @if (!empty($id))
+        <input type="hidden" name="id" value="{{$id}}">
+      @endif
+
       <input type="password" class="form-control" name="{!!config('csgtlogin.password.campo')!!}" id="{!!config('csgtlogin.password.campo')!!}" 
         autocomplete="off" autocomplete="off"
         placeholder="{{trans('csgtlogin::reinicio.nueva')}} {{trans('csgtlogin::login.contrasena')}}" 
