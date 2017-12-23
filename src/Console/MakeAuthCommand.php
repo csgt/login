@@ -4,13 +4,13 @@ namespace Csgt\Login\Console;
 
 use Illuminate\Console\Command;
 
-class MakeAuthCommand extends Command {
+class MakeAuthCommand extends Command
+{
+    protected $signature = 'make:csgtauth';
 
-  protected $signature = 'make:csgtauth';
+    protected $description = 'Vistas & rutas para autenticación, registro & perfil';
 
-  protected $description = 'Vistas & rutas para autenticación, registro & perfil';
-
-  protected $views = [
+    protected $views = [
     'auth/login.stub'            => 'auth/login.blade.php',
     'auth/register.stub'         => 'auth/register.blade.php',
     'auth/profile.stub'          => 'auth/profile.blade.php',
@@ -20,7 +20,7 @@ class MakeAuthCommand extends Command {
     'layouts/login.stub'         => 'layouts/login.blade.php',
   ];
 
-  protected $langs = [
+    protected $langs = [
     'es/auth.stub'       => 'es/auth.php',
     'es/pagination.stub' => 'es/pagination.php',
     'es/passwords.stub'  => 'es/passwords.php',
@@ -29,144 +29,157 @@ class MakeAuthCommand extends Command {
     'en/login.stub'      => 'en/login.php',
   ];
 
-  protected $routesFile = 'routes/core/auth.php';
+    protected $routesFile = 'routes/core/auth.php';
 
-  public function handle() {
-    $this->createDirectories();
-    $this->exportViews(); //Pendiente hasta terminar el login
-    $this->exportLangs();
+    public function handle()
+    {
+        $this->createDirectories();
+        $this->exportViews(); //Pendiente hasta terminar el login
+        $this->exportLangs();
 
-    file_put_contents(
+        file_put_contents(
       app_path('Http/Controllers/Auth/LoginController.php'),
       $this->compileControllerStub('LoginController.stub')
     );
 
-    file_put_contents(
+        file_put_contents(
       app_path('Http/Controllers/Auth/RegisterController.php'),
       $this->compileControllerStub('RegisterController.stub')
     );
 
-    file_put_contents(
+        file_put_contents(
       app_path('Http/Controllers/Auth/ForgotPasswordController.php'),
       $this->compileControllerStub('ForgotPasswordController.stub')
     );
 
-    file_put_contents(
+        file_put_contents(
       app_path('Http/Controllers/Auth/ResetPasswordController.php'),
       $this->compileControllerStub('ResetPasswordController.stub')
     );
 
-    file_put_contents(
+        file_put_contents(
       app_path('Http/Controllers/Auth/UpdatePasswordController.php'),
       $this->compileControllerStub('UpdatePasswordController.stub')
     );
 
-    file_put_contents(
+        file_put_contents(
       app_path('Http/Controllers/Auth/ProfileController.php'),
       $this->compileControllerStub('ProfileController.stub')
     );
 
-    file_put_contents(
+        file_put_contents(
+      app_path('Http/Controllers/Auth/OAuthController.php'),
+      $this->compileControllerStub('OAuthController.stub')
+    );
+
+        file_put_contents(
       app_path('Notifications/ResetPasswordNotification.php'),
       $this->compileNotificationStub('ResetPasswordNotification.stub')
     );
 
-    file_put_contents(
+        file_put_contents(
       base_path($this->routesFile),
       file_get_contents(__DIR__.'/stubs/make/routes.stub')
     );
 
-    if (file_exists(app_path('User.php'))) {
-      unlink(app_path('User.php'));
-    }
-    file_put_contents(
+        if (file_exists(app_path('User.php'))) {
+            unlink(app_path('User.php'));
+        }
+        file_put_contents(
       app_path('Models/Authusuario.php'),
       $this->compileModelStub()
     );
-    /*
-    $respuestas = ['s','n'];
-    $respuesta = '';
-    while (!in_array($respuesta, $respuestas)) {
-      $respuesta = $this->ask('Habilitar Facebook? (s/n)');
-    }
-    $this->error($respuesta);
-    */
-    $this->info('Vistas & rutas de autenticación generadas correctamente.');
-  }
-
-  protected function createDirectories() {
-    if (! is_dir(base_path('resources/lang/es'))) {
-      mkdir(base_path('resources/lang/es'), 0755, true);
+        /*
+        $respuestas = ['s','n'];
+        $respuesta = '';
+        while (!in_array($respuesta, $respuestas)) {
+          $respuesta = $this->ask('Habilitar Facebook? (s/n)');
+        }
+        $this->error($respuesta);
+        */
+        $this->info('Vistas & rutas de autenticación generadas correctamente.');
     }
 
-    if (! is_dir(base_path('resources/views/layouts'))) {
-      mkdir(base_path('resources/views/layouts'), 0755, true);
+    protected function createDirectories()
+    {
+        if (! is_dir(base_path('resources/lang/es'))) {
+            mkdir(base_path('resources/lang/es'), 0755, true);
+        }
+
+        if (! is_dir(base_path('resources/views/layouts'))) {
+            mkdir(base_path('resources/views/layouts'), 0755, true);
+        }
+
+        if (! is_dir(base_path('resources/views/auth/passwords'))) {
+            mkdir(base_path('resources/views/auth/passwords'), 0755, true);
+        }
+
+        if (! is_dir(base_path('routes/core'))) {
+            mkdir(base_path('routes/core'), 0755, true);
+        }
+
+        if (! is_dir(app_path('Models'))) {
+            mkdir(app_path('Models'), 0755, true);
+        }
+
+        if (! is_dir(app_path('Controllers/Auth'))) {
+            mkdir(app_path('Controllers/Auth'), 0755, true);
+        }
+
+        if (! is_dir(app_path('Notifications'))) {
+            mkdir(app_path('Notifications'), 0755, true);
+        }
     }
 
-    if (! is_dir(base_path('resources/views/auth/passwords'))) {
-      mkdir(base_path('resources/views/auth/passwords'), 0755, true);
-    }
-
-    if (! is_dir(base_path('routes/core'))) {
-      mkdir(base_path('routes/core'), 0755, true);
-    }
-
-    if (! is_dir(app_path('Models'))) {
-      mkdir(app_path('Models'), 0755, true);
-    }
-
-    if (! is_dir(app_path('Controllers/Auth'))) {
-      mkdir(app_path('Controllers/Auth'), 0755, true);
-    }
-
-    if (! is_dir(app_path('Notifications'))) {
-      mkdir(app_path('Notifications'), 0755, true);
-    }
-  }
-
-  protected function exportViews() {
-    foreach ($this->views as $key => $value) {
-      copy(
+    protected function exportViews()
+    {
+        foreach ($this->views as $key => $value) {
+            copy(
         __DIR__.'/stubs/make/views/'.$key,
         base_path('resources/views/'.$value)
       );
+        }
     }
-  }
 
-  protected function exportLangs() {
-    foreach ($this->langs as $key => $value) {
-      copy(
+    protected function exportLangs()
+    {
+        foreach ($this->langs as $key => $value) {
+            copy(
         __DIR__.'/stubs/make/lang/'.$key,
         base_path('resources/lang/'.$value)
       );
+        }
     }
-  }
 
-  protected function compileNotificationStub($aPath) {
-    return str_replace(
+    protected function compileNotificationStub($aPath)
+    {
+        return str_replace(
       '{{namespace}}',
       $this->getAppNamespace(),
       file_get_contents(__DIR__.'/stubs/make/notifications/' . $aPath)
     );
-  }
+    }
 
-  protected function compileControllerStub($aPath) {
-    return str_replace(
+    protected function compileControllerStub($aPath)
+    {
+        return str_replace(
       '{{namespace}}',
       $this->getAppNamespace(),
       file_get_contents(__DIR__.'/stubs/make/controllers/' . $aPath)
     );
-  }
+    }
 
-  protected function compileModelStub() {
-    return str_replace(
+    protected function compileModelStub()
+    {
+        return str_replace(
       '{{namespace}}',
       $this->getAppNamespace(),
       file_get_contents(__DIR__.'/stubs/make/models/Authusuario.stub')
     );
-  }
+    }
 
-  protected function getAppNamespace(){
-    return 'App\\';
-  }
+    protected function getAppNamespace()
+    {
+        return 'App\\';
+    }
 }
