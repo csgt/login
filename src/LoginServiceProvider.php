@@ -14,8 +14,6 @@ class LoginServiceProvider extends ServiceProvider {
     $this->publishes([
       __DIR__.'/config/csgtlogin.php' => config_path('csgtlogin.php'),
     ], 'config');
-    
-    AliasLoader::getInstance()->alias('Login','Csgt\Login\Login');
   }
 
   public function register() {

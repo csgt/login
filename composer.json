@@ -20,5 +20,12 @@
       "Csgt\\Login\\": "src"
     }
   },
-  "minimum-stability" : "stable"
+  "minimum-stability" : "stable",
+   "extra": {
+        "laravel": {
+            "providers": [
+                "Csgt\\Login\\LoginServiceProvider"
+            ]
+        }
+    }
 }
