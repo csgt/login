@@ -14,7 +14,7 @@
       }
     ?>
 
-    <form action="{{ $act ? $act : '' }}" class="form-horitzontal" role="form" method="POST"></form>
+    <form action="{{ $act }}" method="POST" role="form" id="frmLogin" class="form-horizontal">
       <div class="panel panel-default form-signin">
         <div class="panel-body">
           @if(config('csgtlogin.logo.habilitado'))
@@ -50,7 +50,7 @@
           @include('csgtlogin::'.$footerPartial)
         @endif
     </div>
-    </body>
+    </form>
     <script>
       $(document).ready(function(){
         $('#frmLogin').formValidation({
