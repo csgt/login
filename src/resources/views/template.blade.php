@@ -14,7 +14,8 @@
       }
     ?>
 
-    <form action="{{ $act }}" method="POST" role="form" id="frmLogin" class="form-horizontal">
+    <form class="form-horizontal" role="form" method="POST" action="{{ $act }}">
+      {!! csrf_field() !!}
       <div class="panel panel-default form-signin">
         <div class="panel-body">
           @if(config('csgtlogin.logo.habilitado'))
