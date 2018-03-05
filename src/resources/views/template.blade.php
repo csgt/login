@@ -8,14 +8,16 @@
   </style>
   <body>
     <?php
-      $params = array('id'=>'frmLogin');
-      if ($act) $params['url'] = $act;
+      $params = ['id'=>'frmLogin'];
+      if ($act) {
+          $params['url'] = $act;
+      }
     ?>
 
-    {!!Form::open($params) !!}
+    <form action="{{ $act ? $act : '' }}" class="form-horitzontal" role="form" method="POST"></form>
       <div class="panel panel-default form-signin">
         <div class="panel-body">
-          @if(config('csgtlogin.logo.habilitado')) 
+          @if(config('csgtlogin.logo.habilitado'))
             <div class="text-center">
               <img src="{!!config('csgtlogin.logo.path')!!}" alt="{{trans('csgtlogin::login.logoalt')}}">
             </div>
@@ -37,7 +39,7 @@
               </ul>
             </div>
           @endif
-          @if(Session::has('flashMessage')) 
+          @if(Session::has('flashMessage'))
             <div class="alert alert-{!! Session::has('flashType')?Session::get('flashType'):'danger' !!} alert-dismissable">
               <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
               {!!Session::get('flashMessage')!!}
@@ -48,7 +50,7 @@
           @include('csgtlogin::'.$footerPartial)
         @endif
     </div>
-    {!!Form::close()!!}
+    </body>
     <script>
       $(document).ready(function(){
         $('#frmLogin').formValidation({
