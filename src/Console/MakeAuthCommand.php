@@ -85,10 +85,7 @@ class MakeAuthCommand extends Command
         if (file_exists(app_path('User.php'))) {
             unlink(app_path('User.php'));
         }
-        file_put_contents(
-      app_path('Models/Authusuario.php'),
-      $this->compileModelStub()
-    );
+
         /*
         $respuestas = ['s','n'];
         $respuesta = '';
@@ -122,8 +119,8 @@ class MakeAuthCommand extends Command
             mkdir(app_path('Models'), 0755, true);
         }
 
-        if (! is_dir(app_path('Controllers/Auth'))) {
-            mkdir(app_path('Controllers/Auth'), 0755, true);
+        if (! is_dir(app_path('Http/Controllers/Auth'))) {
+            mkdir(app_path('Http/Controllers/Auth'), 0755, true);
         }
 
         if (! is_dir(app_path('Notifications'))) {
