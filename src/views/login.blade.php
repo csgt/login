@@ -12,7 +12,7 @@
     });
   </script>
   <body>
-    <form class="form-horizontal" id="frmLogin" role="form" method="POST" {{ ($route? "route=" . $route . "'":"") }}>
+    <form class="form-horizontal" id="frmLogin" role="form" method="POST" {{ ($route? URL::route($route) : "") }}>
       <div class="panel panel-default form-signin">
         <div class="panel-body">
           @if(Config::get('login::logo.habilitado'))
