@@ -12,16 +12,13 @@
     });
   </script>
   <body>
-    <?php
-      $params = array('id'=>'frmLogin');
-      if ($route) $params['route'] = $route;
-    ?>
-    {{Form::open($params) }}
+    <form class="form-horizontal" id="frmLogin" role="form" method="POST" {{ ($route? "route=" . $route . "'":"") }}>
+      {{ csrf_field() }}
       <div class="panel panel-default form-signin">
         <div class="panel-body">
-          @if(Config::get('login::logo.habilitado')) 
+          @if(Config::get('login::logo.habilitado'))
             <div class="text-center">
-              {{HTML::image(Config::get('login::logo.path'),Config::get('login::logo.alt'))}}
+              <img src="{{Config::get('login::logo.path')}}" alt="{{Config::get('login::logo.alt')}}">
             </div>
           @else
             <h3>{{Config::get('login::logo.alt')}}</h3>
@@ -32,7 +29,7 @@
           @else
             @include('login::'.$mainPartial)
           @endif
-          @if(Session::get('flashMessage')) 
+          @if(Session::get('flashMessage'))
             <div class="alert alert-{{ Session::get('flashType')?Session::get('flashType'):'danger' }} alert-dismissable">
               <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
               {{Session::get('flashMessage')}}
