@@ -2,10 +2,10 @@
   <div class="panel-footer">
     <div class="row">
       <div class="col-sm-6">
-        @if(Config::get('login::olvido.habilitado')) 
+        @if(Config::get('login::olvido.habilitado'))
           <small><a href="{{URL::to('reset')}}">{{Config::get('login::olvido.titulo')}}</a></small><br>
         @endif
-        @if(Config::get('login::registro.habilitado')) 
+        @if(Config::get('login::registro.habilitado'))
           <small><a href="{{URL::to('signup')}}">{{Config::get('login::registro.titulo')}}</a></small><br>
         @endif
       </div>

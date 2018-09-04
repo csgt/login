@@ -2,7 +2,7 @@
 
 return [
 	'actualizar'         => 'Update Password',
-	'actualizarinfo'     => 'Your password has expired.  You need to set a new password before continuing',	
+	'actualizarinfo'     => 'Your password has expired.  You need to set a new password before continuing',
 	'email'              => 'Email',
 	'guardar'            => 'Save',
 	'iniciarsesion'      => 'Start Session',

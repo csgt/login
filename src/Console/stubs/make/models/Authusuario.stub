@@ -7,7 +7,7 @@ use Illuminate\Notifications\Notifiable;
 use {{namespace}}Notifications\ResetPasswordNotification;
 
 class Authusuario extends Authenticatable {
-	
+
 	use Notifiable;
 
 	protected $table      = 'authusuarios';

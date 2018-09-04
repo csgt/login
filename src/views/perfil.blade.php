@@ -13,15 +13,15 @@
 			<div class="form-group">
 				<label for="password" class="col-sm-4 control-label">{{ $campos['titulo'] }}</label>
 				<div class="col-sm-8">
-					<?php $campo = Config::get('login::usuario.campo'); ?>
-		      <input 
-						type         = "text" 
-						class        = "form-control" 
-						id           = "{{ $campos['campo'] }}" 
-						name         = "{{ $campos['campo'] }}" 
-						placeholder  = "{{ $campos['titulo'] }}"  
-						value        = "{{ Auth::user()->{$campos['campo']} }}" 
-						autocomplete = "off" 
+					<?php $campo = Config::get('login::usuario.campo');?>
+		      <input
+						type         = "text"
+						class        = "form-control"
+						id           = "{{ $campos['campo'] }}"
+						name         = "{{ $campos['campo'] }}"
+						placeholder  = "{{ $campos['titulo'] }}"
+						value        = "{{ Auth::user()->{$campos['campo']} }}"
+						autocomplete = "off"
 		      	data-bv-notempty>
 				</div>
     	</div>
@@ -29,15 +29,15 @@
 		<div class="form-group">
 	    <label for="email" class="col-sm-4 control-label">{{ Config::get('login::usuario.titulo') }}</label>
 	    <div class="col-sm-8">
-	    	<?php $campo = Config::get('login::usuario.campo'); ?>
-	      <input 
-					type         = "text" 
-					class        = "form-control" 
-					id           = "{{ Config::get('login::usuario.campo') }}" 
-					name         = "{{ Config::get('login::usuario.campo') }}" 
-					placeholder  = "{{ Config::get('login::usuario.titulo') }}"  
-					value        = "{{ Auth::user()->$campo }}" 
-					autocomplete = "off" 
+	    	<?php $campo = Config::get('login::usuario.campo');?>
+	      <input
+					type         = "text"
+					class        = "form-control"
+					id           = "{{ Config::get('login::usuario.campo') }}"
+					name         = "{{ Config::get('login::usuario.campo') }}"
+					placeholder  = "{{ Config::get('login::usuario.titulo') }}"
+					value        = "{{ Auth::user()->$campo }}"
+					autocomplete = "off"
 	      	data-bv-notempty
 	      	{{ (Config::get('login::usuario.editable')) ? ' ' : 'readonly="true" ' }}
 	      	{{ (Config::get('login::usuario.tipo') == 'email') ? 'data-bv-emailAddress data-bv-emailAddress-message="Correo inválido"': '' }}>
@@ -56,42 +56,42 @@
 	  <div class="form-group">
       <label for="password" class="col-sm-4 control-label">{{ Config::get('login::password.titulo').' Actual*' }}</label>
       <div class="col-sm-8">
-        <input 
-					type         = "password" 
-					class        = "form-control" 
-					name         = "{{ Config::get('login::password.campo') }}" 
-					id           = "{{ Config::get('login::password.campo') }}" 
-					placeholder  = "{{ Config::get('login::password.titulo').' Actual' }}" 
-					autocomplete = "off" 
+        <input
+					type         = "password"
+					class        = "form-control"
+					name         = "{{ Config::get('login::password.campo') }}"
+					id           = "{{ Config::get('login::password.campo') }}"
+					placeholder  = "{{ Config::get('login::password.titulo').' Actual' }}"
+					autocomplete = "off"
         	data-bv-notempty>
       </div>
     </div>
     <div class="form-group">
       <label for="password" class="col-sm-4 control-label">{{ Config::get('login::password.titulo').' Nueva*' }}</label>
       <div class="col-sm-4">
-        <input 
-					type                         = "password" 
-					class                        = "form-control" 
-					name                         = "newpassword" 
-					id                           = "newpassword" 
-					placeholder                  = "{{ Config::get('login::password.titulo').' Nueva' }}" 
-					autocomplete                 = "off" 
-					data-bv-identical            = "true" 
-					data-bv-identical-field      = "newpassword2" 
+        <input
+					type                         = "password"
+					class                        = "form-control"
+					name                         = "newpassword"
+					id                           = "newpassword"
+					placeholder                  = "{{ Config::get('login::password.titulo').' Nueva' }}"
+					autocomplete                 = "off"
+					data-bv-identical            = "true"
+					data-bv-identical-field      = "newpassword2"
 					data-bv-identical-message    = "Las passwords no concuerdan"
 					data-bv-stringlength         = "true"
 					data-bv-stringlength-min     = "6"
 					data-bv-stringlength-message = "La {{Config::get('login::password.titulo')}} debe tener al menos 6 caracteres.">
       </div>
        <div class="col-sm-4">
-        <input 
-					type                         = "password" 
-					class                        = "form-control" 
-					name                         = "newpassword2" 
-					placeholder                  = "Repetir {{ Config::get('login::password.titulo').' Nueva'}}" 
-					autocomplete                 = "off" 
-					data-bv-identical            = "true" 
-					data-bv-identical-field      = "newpassword" 
+        <input
+					type                         = "password"
+					class                        = "form-control"
+					name                         = "newpassword2"
+					placeholder                  = "Repetir {{ Config::get('login::password.titulo').' Nueva'}}"
+					autocomplete                 = "off"
+					data-bv-identical            = "true"
+					data-bv-identical-field      = "newpassword"
 					data-bv-identical-message    = "Las passwords no concuerdan"
 					data-bv-stringlength         = "true"
 					data-bv-stringlength-min     = "6"

@@ -40,7 +40,7 @@ class ProfileController extends Controller {
 		$validator = Validator::make($request->all(), $reglas, $mensajes);
 
     $validator->after(function ($validator) use ($request) {
-    	if (!Hash::check($request->passwordactual, Auth::user()->password)) { 
+    	if (!Hash::check($request->passwordactual, Auth::user()->password)) {
 		  	$validator->errors()->add('passwordactual', trans('login.passwordincorrecta'));
 			}
 		});

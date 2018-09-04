@@ -47,7 +47,7 @@ class RegisterController extends Controller {
     if (config('csgtlogin.registro.habilitado', false) == false) {
       dd('Registro no habilitado.');
     }
-    
+
     return User::create([
         'nombre'   => $data['nombre'],
         'email'    => $data['email'],
