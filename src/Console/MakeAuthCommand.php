@@ -33,6 +33,8 @@ class MakeAuthCommand extends Command
         'es/pagination.stub' => 'es/pagination.php',
         'es/passwords.stub'  => 'es/passwords.php',
         'es/validation.stub' => 'es/validation.php',
+        'es/login.stub'      => 'es/login.php',
+        'en/login.stub'      => 'en/login.php',
     ];
 
     /**
