@@ -2,6 +2,7 @@
 namespace Csgt\Login\Console;
 
 use Illuminate\Console\Command;
+use Illuminate\Console\DetectsApplicationNamespace;
 
 class MakeAuthCommand extends Command
 {
