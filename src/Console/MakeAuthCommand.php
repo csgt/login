@@ -1,10 +1,11 @@
 <?php
 namespace Csgt\Login\Console;
 
-use Illuminate\Auth\Console\AuthMakeCommand;
+use Illuminate\Console\Command;
 
-class MakeAuthCommand extends AuthMakeCommand
+class MakeAuthCommand extends Command
 {
+    use DetectsApplicationNamespace;
 
     /**
      * The name and signature of the console command.
@@ -58,6 +59,11 @@ class MakeAuthCommand extends AuthMakeCommand
         $this->info('Authentication scaffolding generated successfully.');
     }
 
+    /**
+     * Create the directories for the files.
+     *
+     * @return void
+     */
     protected function createDirectories()
     {
         if (!is_dir($directory = resource_path('lang/es'))) {
@@ -73,6 +79,32 @@ class MakeAuthCommand extends AuthMakeCommand
         }
     }
 
+    /**
+     * Export the authentication views.
+     *
+     * @return void
+     */
+    protected function exportViews()
+    {
+        foreach ($this->views as $key => $value) {
+            if (file_exists($view = resource_path('views/' . $value)) && !$this->option('force')) {
+                if (!$this->confirm("The [{$value}] view already exists. Do you want to replace it?")) {
+                    continue;
+                }
+            }
+
+            copy(
+                __DIR__ . '/stubs/make/views/' . $key,
+                $view
+            );
+        }
+    }
+
+    /**
+     * Export the authentication langs.
+     *
+     * @return void
+     */
     protected function exportLangs()
     {
         foreach ($this->langs as $key => $value) {
