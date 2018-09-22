@@ -1,72 +1,75 @@
 @extends('layouts.login', ['icon' => 'user'])
 @section('content')
-<form class="form-horizontal" role="form" method="POST" action="{{ route('login') }}">
+<p class="login-box-msg">{{trans('login.login')}}</p>
+@if($errors->has('extra'))
+    @foreach ($errors->all() as $error)
+        <div class="alert alert-danger" role="alert">{{ $error }}</div>
+    @endforeach
+@endif
+<form method="POST" action="{{ route('login') }}">
+
     {{ csrf_field() }}
-    <h3>{{trans('login.login')}}</h3>
-    <div class="clearfix"></div>
-    <div class="col-sm-12">
-        @if(config('csgtlogin.facebook.enabled', false))
-            <div class="form-group">
-                <a href="/oauth/facebook" class="btn btn-social btn-block btn-facebook">
-                    <i class="fa fa-facebook"></i>{{trans('login.login_facebook')}}
-                </a>
-            </div>
-        @endif
-        @if(config('csgtlogin.google.enabled', false))
-            <div class="form-group">
-                <a href="/oauth/google" class="btn btn-social btn-block btn-google-plus">
-                    <i class="fa fa-google-plus"></i>{{trans('login.login_google')}}
-                </a>
-            </div>
-        @endif
+
+    <div class="input-group mb-3 {{ $errors->has('email') ? 'has-error' : '' }}">
+        <input type="email" name="email" class="form-control" placeholder="{{trans('login.email')}}" value="{{ old('email') }}" autocomplete="username">
+        <div class="input-group-append">
+            <span class="fa fa-envelope input-group-text"></span>
+        </div>
     </div>
-    <div class="clearfix"></div>
-    <hr>
-    @if($errors->has('extra'))
-        @foreach ($errors->all() as $error)
-            <div class="alert alert-danger" role="alert">{{ $error }}</div>
-        @endforeach
+    @if ($errors->has('email'))
+        <span class="help-block">
+            <strong>{{ $errors->first('email') }}</strong>
+        </span>
     @endif
-    <div class="col-sm-12">
-        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-            <input type="text" class="form-control" name="email" placeholder="{{trans('login.email')}}" value="{{ old('email') }}" autofocus>
-            @if ($errors->has('email'))
-                <span class="help-block">
-                    <strong>{{ $errors->first('email') }}</strong>
-                </span>
-            @endif
+
+    <div class="input-group mb-3 {{ $errors->has('password') ? ' has-error' : '' }}">
+        <input type="password" name="password" class="form-control" placeholder="{{trans('login.password')}}" autocomplete="current-password">
+        <div class="input-group-append">
+            <span class="fa fa-lock input-group-text"></span>
         </div>
     </div>
-    <div class="col-sm-12">
-        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-            <input type="password" class="form-control" name="password" placeholder="{{trans('login.password')}}">
-            @if ($errors->has('password'))
-                <span class="help-block">
-                    <strong>{{ $errors->first('password') }}</strong>
-                </span>
-            @endif
-        </div>
-    </div>
+    @if ($errors->has('password'))
+        <span class="help-block">
+            <strong>{{ $errors->first('password') }}</strong>
+        </span>
+    @endif
+
     <div class="row">
-        <div class="col-xs-6 text-left">
+        <div class="col">
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" name="remember">{{trans('login.remember_me')}}
+                    <input type="checkbox" name="remember"> {{trans('login.remember_me')}}
                 </label>
             </div>
         </div>
-        <div class="col-xs-6">
-            <input type="submit" class="btn btn-primary btn-block" value="{{trans('login.login')}}">
+        <div class="col">
+            <button type="submit" class="btn btn-primary btn-block btn-flat">{{trans('login.login')}}</button>
         </div>
     </div>
-    <a class="btn btn-link btn-forgot" href="{{ url('/password/reset') }}">
-        <small>{{trans('login.forgot_password')}}</small>
-    </a>
-    <br>
-    @if(config('csgtlogin.registration.enabled', false))
-        <a class="btn btn-link btn-forgot" href="{{ url('/register') }}">
-            <small>{{trans('login.register')}}</small>
+</form>
+
+<div class="social-auth-links text-center mb-3">
+@if(config('csgtlogin.facebook.enabled', false) || config('csgtlogin.google.enabled', false))
+    <p>- o -</p>
+    @if(config('csgtlogin.facebook.enabled', false))
+        <a href="#" class="btn btn-block btn-primary">
+            <i class="far fa-facebook mr-2"></i> Sign in using Facebook
         </a>
     @endif
-</form>
+    @if(config('csgtlogin.google.enabled', false))
+        <a href="#" class="btn btn-block btn-danger">
+            <i class="far fa-google-plus mr-2"></i> Sign in using Google+
+        </a>
+    @endif
+@endif
+</div>
+
+<p class="mb-1">
+    <a href="{{ url('/password/reset') }}">{{trans('login.forgot_password')}}</a>
+</p>
+@if(config('csgtlogin.registration.enabled', false))
+    <p class="mb-0">
+        <a href="{{ url('/register') }}" class="text-center">{{trans('login.register')}}</a>
+    </p>
+@endif
 @endsection
