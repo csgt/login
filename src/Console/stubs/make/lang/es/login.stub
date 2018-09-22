@@ -19,4 +19,6 @@ return [
     'password'        => 'Contraseña',
     'register'        => 'Register',
     'remember_me'     => 'Recuérdame',
+    'return'          => 'Regresar',
+    'send_link'       => 'Enviar enlace de reinicio'
 ];

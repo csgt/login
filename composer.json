@@ -8,7 +8,6 @@
     }
   ],
   "require": {
-    "illuminate/support": "~5.1",
     "php" : ">=7.0.0"
   },
   "autoload": {

@@ -1,4 +1,4 @@
-@extends('layouts.login', ['icon' => 'fa fa-user'])
+@extends('layouts.login', ['icon' => 'user'])
 @section('content')
 <form class="form-horizontal" role="form" method="POST" action="{{ route('login') }}">
     {{ csrf_field() }}

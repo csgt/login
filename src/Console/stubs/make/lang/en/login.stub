@@ -19,5 +19,7 @@ return [
     'password'        => 'Password',
     'register'        => 'Register',
     'remember_me'     => 'Remember me',
+    'return'          => 'Return',
+    'send_link'       => 'Send reset link'
 
 ];
