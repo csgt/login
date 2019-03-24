@@ -8,9 +8,9 @@
     <i class="fa fa-google-plus"></i>{{Config::get('login::google.titulo')}}
   </a>
 @endif
-@if(Config::get('login::graph.habilitado'))
+@if(Config::get('login::microsoft.habilitado'))
   <a href="login/graph" class="btn btn-social btn-block btn-microsoft">
-    <i class="fa fa-microsoft"></i>{{Config::get('login::graph.titulo')}}
+    <i class="fa fa-windows"></i>{{Config::get('login::microsoft.titulo')}}
   </a>
 @endif
 @if(Config::get('login::usuario.habilitado') && Config::get('login::password.habilitado'))

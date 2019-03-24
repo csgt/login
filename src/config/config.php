@@ -198,7 +198,7 @@ return [
         'titulo'       => 'Login con Google',
         'clientid'     => '206429563319-epdrl3bpl4bftb53p0u7rrcis4uu4buj.apps.googleusercontent.com',
         'clientsecret' => 'W2bMychWdiD8MFJEwipf5reC',
-        'scope'        => ['userinfo_email'],
+        'scope'        => ['basic'],
     ],
 
     /*
@@ -210,7 +210,7 @@ return [
     |
      */
 
-    'graph'               => [
+    'microsoft'           => [
         'habilitado'   => false,
         'campo'        => 'graphid',
         'titulo'       => 'Login con Outlook',
