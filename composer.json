@@ -3,12 +3,12 @@
   "description": "",
   "authors": [
     {
-      "name": "CS",
-      "email": "software@cs.com.gt"
+      "name": "Softlogic",
+      "email": "software@softlogic.com.gt"
     }
   ],
   "require": {
-    "php" : ">=7.0.0"
+    "php" : ">=7.2"
   },
   "autoload": {
     "psr-4": {
