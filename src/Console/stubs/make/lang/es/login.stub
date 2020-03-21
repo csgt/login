@@ -11,16 +11,18 @@ return [
     |
      */
 
-    'name'            => 'Nombre',
     'email'           => 'Email',
     'forgot_password' => '¿Olvidaste tu contraseña?',
     'login'           => 'Iniciar sesión',
-    'login_facebook'  => 'Login with Facebook',
-    'login_google'    => 'Login with Google',
+    'login_facebook'  => 'Login con Facebook',
+    'login_google'    => 'Login con Google',
+    'name'            => 'Nombre',
+    'new_password'    => 'Nueva contraseña',
     'password'        => 'Contraseña',
-    'repeat_password' => 'Repetir contraseña',
     'register'        => 'Registrar',
     'remember_me'     => 'Recuérdame',
+    'repeat_password' => 'Repetir contraseña',
+    'reset_password'  => 'Reiniciar contraseña',
     'return'          => 'Regresar',
     'send_link'       => 'Enviar enlace de reinicio'
 ];

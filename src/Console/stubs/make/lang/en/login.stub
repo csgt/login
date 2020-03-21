@@ -11,17 +11,18 @@ return [
     |
      */
 
-    'name'            => 'Name',
     'email'           => 'Email',
     'forgot_password' => 'Forgot password',
     'login'           => 'Login',
     'login_facebook'  => 'Login with Facebook',
     'login_google'    => 'Login with Google',
+    'name'            => 'Name',
+    'new_password'    => 'New password',
     'password'        => 'Password',
-    'repeat_password' => 'Repeat password',
     'register'        => 'Register',
     'remember_me'     => 'Remember me',
+    'repeat_password' => 'Repeat password',
+    'reset_password'  => 'Reset password',
     'return'          => 'Return',
     'send_link'       => 'Send reset link',
-
 ];
