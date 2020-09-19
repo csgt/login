@@ -20,7 +20,7 @@ if ($act) {
         <div class="panel-body">
           @if(config('csgtlogin.logo.habilitado'))
             <div class="text-center">
-              <img src="{!!config('csgtlogin.logo.path')!!}" alt="{{trans('csgtlogin::login.logoalt')}}" class="responsive">
+              <img src="{!!config('csgtlogin.logo.path')!!}" alt="{{trans('csgtlogin::login.logoalt')}}" width="100%">
             </div>
           @else
             <h3>{{lang('csgtmenu::login.logoalt')}}</h3>
