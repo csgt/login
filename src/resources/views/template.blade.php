@@ -8,11 +8,11 @@
   </style>
   <body>
     <?php
-      $params = ['id'=>'frmLogin'];
-      if ($act) {
-          $params['url'] = $act;
-      }
-    ?>
+$params = ['id' => 'frmLogin'];
+if ($act) {
+    $params['url'] = $act;
+}
+?>
 
     <form class="form-horizontal" role="form" method="POST" action="{{ $act }}">
       {!! csrf_field() !!}
@@ -20,7 +20,7 @@
         <div class="panel-body">
           @if(config('csgtlogin.logo.habilitado'))
             <div class="text-center">
-              <img src="{!!config('csgtlogin.logo.path')!!}" alt="{{trans('csgtlogin::login.logoalt')}}">
+              <img src="{!!config('csgtlogin.logo.path')!!}" alt="{{trans('csgtlogin::login.logoalt')}}" class="responsive">
             </div>
           @else
             <h3>{{lang('csgtmenu::login.logoalt')}}</h3>
