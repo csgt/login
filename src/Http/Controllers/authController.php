@@ -79,6 +79,14 @@ class authController extends Controller {
           ->with('email', $email)
           ->with('id', $id);
       }
+
+      foreach (config('csgtlogin.camposextras') as $campo => $valor) {
+          if (Auth::user()->{$campo} != $valor) {
+              Session::flush();
+              Auth::logout();
+          }
+      }
+
       return $this->handleUserWasAuthenticated($request, $throttles);
     }
 
@@ -119,7 +127,7 @@ class authController extends Controller {
     //No funciona expectsJson()
    /* if ($request->expectsJson()) {
       return response()->json($errors, 423);
-    } */ 
+    } */
 
     return redirect($this->loginPath())
         ->withInput($request->only($this->loginUsername(), 'remember'))
@@ -156,7 +164,7 @@ class authController extends Controller {
             $camposHTML .= '<option value="'.$key.'">'.$val.'</option>';
           $camposHTML .= "</select></div>";
           break;
-      }      
+      }
     }
 
     return view('csgtlogin::template')
@@ -170,7 +178,7 @@ class authController extends Controller {
   public function redirectToProvider($aProvider) {
     return Socialite::driver($aProvider)->redirect();
   }
-  
+
   /**
    * Create a new authentication controller instance.
    *
