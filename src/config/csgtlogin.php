@@ -1,4 +1,5 @@
 <?php
+
 return [
 
     'redirectintended' => true,
@@ -10,9 +11,9 @@ return [
     |
     | Skin LTE a utilizar por default.  skin-XXXXX
     |
-    */
+     */
 
-    'adminlte-skin' => 'skin-blue',
+    'adminlte-skin'    => 'skin-blue',
 
     /*
     |--------------------------------------------------------------------------
@@ -21,10 +22,10 @@ return [
     |
     | Ruta a la cual se le envia al usuario luego de un registro o un login.
     |
-    */
+     */
 
-    'redirectto'     => '/',
-    'redirectlogout' => '/',
+    'redirectto'       => '/',
+    'redirectlogout'   => '/',
 
     /*
     |--------------------------------------------------------------------------
@@ -33,9 +34,9 @@ return [
     |
     | Determina si el sistema soporta el registro de usuarios.
     |
-    */
+     */
 
-    'registro' => [
+    'registro'         => [
         'habilitado' => false,
     ],
 
@@ -46,14 +47,14 @@ return [
     |
     | Determina si el sistema soporta login con facebook.
     |
-    */
-    'facebook' => [
+     */
+    'facebook'         => [
         'habilitado'   => false,
         'campo'        => 'facebookid',
         'titulo'       => 'Login con Facebook',
         'clientid'     => '112233',
         'clientsecret' => 'xxyyzz',
-        'scope'        => ['email']
+        'scope'        => ['email'],
     ],
 
     /*
@@ -63,14 +64,14 @@ return [
     |
     | Determina si el sistema soporta login con google.
     |
-    */
-    'google' => [
+     */
+    'google'           => [
         'habilitado'   => false,
         'campo'        => 'googleid',
         'titulo'       => 'Login con Google',
         'clientid'     => 'xxyyzz.apps.googleusercontent.com',
         'clientsecret' => 'aabbcc',
-        'scope'        =>  ['userinfo_email']
+        'scope'        => ['userinfo_email'],
     ],
 
     /*
@@ -80,8 +81,8 @@ return [
     |
     | Determina si el sistema soporta two step authentication.
     |
-    */
-    'twostep' => [
+     */
+    'twostep'          => [
         'habilitado' => false,
     ],
 
@@ -94,8 +95,8 @@ return [
     | Se agregan middlewares o cualquier otra configuracion en el route group
     | 'routeextras' => ['middleware'=>'subdomain.setup', 'domain' => '{cliente}.dominio.localdev']
     |
-    */
-    'routeextras' => [],
+     */
+    'routeextras'      => [],
 
     /*
     |--------------------------------------------------------------------------
@@ -106,8 +107,8 @@ return [
     | el campo es de tipo datetime nullable
     | el campo dias determina cuantos dias de validez tiene. (0 significa que no se vence)
     |
-    */
-    'vencimiento' => [
+     */
+    'vencimiento'      => [
         'habilitado' => false,
         'campo'      => 'cambiarpassword',
         'dias'       => 30,
@@ -120,7 +121,7 @@ return [
     |
     | Determina si al cambiar la password no se puede repetir la misma
     |
-    */
+     */
     'repetirpasswords' => [
         'habilitado'    => false,
         'tabla'         => 'authhistoricopasswords',
@@ -135,10 +136,10 @@ return [
     |
     | Determina si el campo de login es un email o texto
     |
-    */
+     */
 
-    'usuario' => [
+    'usuario'          => [
         'tipo' => 'email',
-    ]
+    ],
 
 ];

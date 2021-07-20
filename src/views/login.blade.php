@@ -13,11 +13,11 @@
   </script>
   <body>
     <?php
-      $params = ['id'=>'frmLogin'];
-      if ($route) {
-          $params['route'] = $route;
-      }
-    ?>
+$params = ['id' => 'frmLogin'];
+if ($route) {
+    $params['route'] = $route;
+}
+?>
     {{Form::open($params) }}
 
       <div class="panel panel-default form-signin">

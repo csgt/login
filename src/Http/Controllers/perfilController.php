@@ -1,98 +1,113 @@
-<?php namespace Csgt\Login\Http\Controllers;
+<?php
+namespace Csgt\Login\Http\Controllers;
 
-use Illuminate\Routing\Controller, View, Auth, Redirect;
-use Config, Validator, Input,  Otp\Otp, Otp\GoogleAuthenticator;
-use Base32\Base32, Hash, URL, Session, DB, Carbon\Carbon;
+use DB;
+use Auth;
+use Hash;
+use View;
+use Input;
+use Config;
+use Session;
+use Redirect;
+use Carbon\Carbon;
+use Illuminate\Routing\Controller;
 
-class perfilController extends Controller {
+class perfilController extends Controller
+{
 
-  public function __construct() {
-    $this->middleware(['web']);
-  }
+    public function __construct()
+    {
+        $this->middleware(['web']);
+    }
 
-	public function index() {	
-		if (Auth::guest()) {
-			dd('Usuario no autenticado');
-		}	
-		return view('csgtlogin::perfil')
-			->with('templateincludes',['formvalidation']);
-	}
+    public function index()
+    {
+        if (Auth::guest()) {
+            dd('Usuario no autenticado');
+        }
 
-	public function save() {
-		if (Auth::guest()) {
-			dd('Usuario no autenticado');
-		}	
-		$campopassword = config('csgtlogin.password.campo');
-		$campousuario  = config('csgtlogin.usuario.campo');
+        return view('csgtlogin::perfil')
+            ->with('templateincludes', ['formvalidation']);
+    }
 
-		if(Hash::check(Input::get($campopassword), Auth::user()->$campopassword)){
-			$userarray = array();
+    public function save()
+    {
+        if (Auth::guest()) {
+            dd('Usuario no autenticado');
+        }
+        $campopassword = config('csgtlogin.password.campo');
+        $campousuario  = config('csgtlogin.usuario.campo');
 
-			if(Input::get('newpassword') <> '') {
-				$newpwd = Input::get('newpassword');
+        if (Hash::check(Input::get($campopassword), Auth::user()->$campopassword)) {
+            $userarray = [];
 
-				if(config('csgtlogin.repetirpasswords.habilitado')) {
-					$historiales = DB::table(config('csgtlogin.repetirpasswords.tabla'))
-						->where(config('csgtlogin.repetirpasswords.campousuario'), Auth::id())
-						->lists(config('csgtlogin.repetirpasswords.campopassword'));
+            if (Input::get('newpassword') != '') {
+                $newpwd = Input::get('newpassword');
 
-					foreach($historiales as $historial) {
-						if(Hash::check($newpwd, $historial)) {
-							Session::flash('message', trans('csgtlogin::reinicio.repetida'));
-							Session::flash('type', 'danger');
-							return Redirect::to(Config::get('csgtlogin.redirecteditarperfil'));	
-						}
-					}
-				}
+                if (config('csgtlogin.repetirpasswords.habilitado')) {
+                    $historiales = DB::table(config('csgtlogin.repetirpasswords.tabla'))
+                        ->where(config('csgtlogin.repetirpasswords.campousuario'), Auth::id())
+                        ->lists(config('csgtlogin.repetirpasswords.campopassword'));
 
-				$userarray[$campopassword] = Hash::make($newpwd);
+                    foreach ($historiales as $historial) {
+                        if (Hash::check($newpwd, $historial)) {
+                            Session::flash('message', trans('csgtlogin::reinicio.repetida'));
+                            Session::flash('type', 'danger');
 
-				//Si tienen vencimiento las passwords, se lo asignamos
-				if(config('csgtlogin.vencimiento.habilitado')) {
-						$dias = (int)config('csgtlogin.vencimiento.dias');
-				 		if ($dias == 0) {
-				 			$fecha = null;
-				 		}
-				 		else {
-							$fecha = Carbon::now('America/Guatemala')->addDays($dias);
-						}
-						$userarray[config('csgtlogin.vencimiento.campo')] = $fecha;
-				}
-			}
+                            return Redirect::to(Config::get('csgtlogin.redirecteditarperfil'));
+                        }
+                    }
+                }
 
-			if(config('csgtlogin.usuario.editable'))
-				$userarray[$campousuario] = Input::get($campousuario);
-			
-			foreach(config('csgtlogin.camposeditarperfil') as $campo)
-				$userarray[$campo['campo']] = Input::get($campo['campo']);
+                $userarray[$campopassword] = Hash::make($newpwd);
 
-			$userarray['updated_at'] = Carbon::now('America/Guatemala');
-			//dd($userarray);
-			DB::table(config('csgtlogin.tabla'))
-				->where(config('csgtlogin.tablaid'), Auth::id())
-				->update($userarray);
+                //Si tienen vencimiento las passwords, se lo asignamos
+                if (config('csgtlogin.vencimiento.habilitado')) {
+                    $dias = (int) config('csgtlogin.vencimiento.dias');
+                    if ($dias == 0) {
+                        $fecha = null;
+                    } else {
+                        $fecha = Carbon::now('America/Guatemala')->addDays($dias);
+                    }
+                    $userarray[config('csgtlogin.vencimiento.campo')] = $fecha;
+                }
+            }
 
-			if(config('csgtlogin.vencimiento.habilitado')) {
-				if(isset($userarray[$campopassword])) {
-					DB::table(config('csgtlogin.repetirpasswords.tabla'))->insert([
-						config('csgtlogin.repetirpasswords.campousuario')  => Auth::id(),
-						config('csgtlogin.repetirpasswords.campopassword') => $userarray[$campopassword],
-						'created_at'                                       => date_create(),
-						'updated_at'                                       => date_create(),
-					]);
-				}
-			}
+            if (config('csgtlogin.usuario.editable')) {
+                $userarray[$campousuario] = Input::get($campousuario);
+            }
 
-			Session::flash('message', trans('csgtlogin::registro.exito'));
-			Session::flash('type', 'success');
-			return Redirect::to(Config::get('csgtlogin.redirecteditarperfil'));
-		}
+            foreach (config('csgtlogin.camposeditarperfil') as $campo) {
+                $userarray[$campo['campo']] = Input::get($campo['campo']);
+            }
 
-		else {
-			Session::flash('message', trans('csgtlogin::registro.errorpwdvieja'));
-			Session::flash('type', 'danger');
-			return Redirect::to(Config::get('csgtlogin.redirecteditarperfil'));
-		}
-	}
+            $userarray['updated_at'] = Carbon::now('America/Guatemala');
+            //dd($userarray);
+            DB::table(config('csgtlogin.tabla'))
+                ->where(config('csgtlogin.tablaid'), Auth::id())
+                ->update($userarray);
+
+            if (config('csgtlogin.vencimiento.habilitado')) {
+                if (isset($userarray[$campopassword])) {
+                    DB::table(config('csgtlogin.repetirpasswords.tabla'))->insert([
+                        config('csgtlogin.repetirpasswords.campousuario')  => Auth::id(),
+                        config('csgtlogin.repetirpasswords.campopassword') => $userarray[$campopassword],
+                        'created_at'                                       => date_create(),
+                        'updated_at'                                       => date_create(),
+                    ]);
+                }
+            }
+
+            Session::flash('message', trans('csgtlogin::registro.exito'));
+            Session::flash('type', 'success');
+
+            return Redirect::to(Config::get('csgtlogin.redirecteditarperfil'));
+        } else {
+            Session::flash('message', trans('csgtlogin::registro.errorpwdvieja'));
+            Session::flash('type', 'danger');
+
+            return Redirect::to(Config::get('csgtlogin.redirecteditarperfil'));
+        }
+    }
 
 }
