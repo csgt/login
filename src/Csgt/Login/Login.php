@@ -1,10 +1,10 @@
 <?php
 namespace Csgt\Login;
 
-use \URL;
-use \Config;
-use \OAuth\ServiceFactory;
-use \OAuth\Common\Consumer\Credentials;
+use URL;
+use Config;
+use OAuth\ServiceFactory;
+use OAuth\Common\Consumer\Credentials;
 
 class Login
 {
