@@ -11,7 +11,7 @@ All Notable changes to `:package_name` will be documented in this file
 - Nothing
 
 ### Fixed
-- Nothing
+- Removed the unused `DetectsApplicationNamespace` trait dependency from the auth command for compatibility with Laravel versions that do not provide it.
 
 ### Removed
 - Nothing
