@@ -5,6 +5,8 @@ return [
 
 	'redirectto' => '/',
 
+	'redirect_after_logout' => '/',
+
 	'redirecteditarperfil' => 'perfil/editar',
 
 	/*
@@ -106,8 +108,9 @@ return [
 		'habilitado'   => false,
 		'campo'				 => 'facebookid',
 		'titulo'       => 'Login con Facebook',
-		'clientid'     => '1515160888729586',
-		'clientsecret' => '73cd14d425a1b75aeebfb556c78418e6',
+		'clientid'     => env('FACEBOOK_CLIENT_ID'),
+		'clientsecret' => env('FACEBOOK_CLIENT_SECRET'),
+		'redirect'     => env('FACEBOOK_REDIRECT_URI'),
 		'scope'        => ['email']
 	],
 
@@ -124,8 +127,9 @@ return [
 		'habilitado'   => false,
 		'campo'				 => 'googleid',
 		'titulo'       => 'Login con Google',
-		'clientid'     => '206429563319-epdrl3bpl4bftb53p0u7rrcis4uu4buj.apps.googleusercontent.com',
-		'clientsecret' => 'W2bMychWdiD8MFJEwipf5reC',
+		'clientid'     => env('GOOGLE_CLIENT_ID'),
+		'clientsecret' => env('GOOGLE_CLIENT_SECRET'),
+		'redirect'     => env('GOOGLE_REDIRECT_URI'),
 		'scope'        =>  ['userinfo_email']
 	],
 
@@ -196,6 +200,7 @@ return [
 
 	'twostep' => [
 		'habilitado' => false,
+		'secret_field' => 'twostepsecret',
 		'titulo'     => 'Escribe el c&oacute;digo de verificaci&oacute;n generado por tu aplicaci&oacute;n para dispositivos m&oacute;viles de dos pasos.<br> (Google Authenticator)',
 		'boton'      => 'Verificar'
 	],
@@ -291,6 +296,15 @@ return [
 	|
 	*/
 	'routeextras' => [],
+
+	'throttle' => [
+		'max_attempts' => 5,
+		'decay_minutes' => 1,
+	],
+
+	'oauth' => [
+		'name_field' => 'nombre',
+	],
 
 	/*
 	|--------------------------------------------------------------------------

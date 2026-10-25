@@ -20,7 +20,8 @@
       }
 
     ?>
-    {!! Form::text(config('csgtlogin.usuario.campo'), '', $dataArray) !!}
+    <input type="text" name="{{ config('csgtlogin.usuario.campo') }}" value="{{ old(config('csgtlogin.usuario.campo')) }}"
+      @foreach($dataArray as $attribute => $value) {{ $attribute }}="{{ $value }}" @endforeach>
   </div>
   @if(Session::has('status'))
     <div class="alert alert-{!! (Session::get('flag') == 'error') ? 'danger':'success' !!} alert-dismissable">

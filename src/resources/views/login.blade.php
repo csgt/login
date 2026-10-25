@@ -1,10 +1,10 @@
 @if(config('csgtlogin.facebook.habilitado')) 
-  <a href="login/facebook" class="btn btn-social btn-block btn-facebook">
+  <a href="{{ url('oauth/facebook') }}" class="btn btn-social btn-block btn-facebook">
     <i class="fa fa-facebook"></i>{!!config('csgtlogin.facebook.titulo')!!}
   </a>
 @endif
 @if(config('csgtlogin.google.habilitado')) 
-  <a href="login/google" class="btn btn-social btn-block btn-google-plus">
+  <a href="{{ url('oauth/google') }}" class="btn btn-social btn-block btn-google-plus">
     <i class="fa fa-google-plus"></i>{!!config('csgtlogin.google.titulo')!!}
   </a>
 @endif
@@ -29,7 +29,8 @@
         }
 
       ?>
-      {!! Form::text(config('csgtlogin.usuario.campo'), '', $dataArray) !!}
+      <input type="text" name="{{ config('csgtlogin.usuario.campo') }}" value="{{ old(config('csgtlogin.usuario.campo')) }}"
+        @foreach($dataArray as $attribute => $value) {{ $attribute }}="{{ $value }}" @endforeach>
     </div>
   </div>
   <div class="form-group">

@@ -1,69 +1,68 @@
-<?php namespace Csgt\Login\Http\Controllers;
+<?php
 
-use Validator;
-use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+namespace Csgt\Login\Http\Controllers;
+
+use Carbon\Carbon;
+use Csgt\Login\Support\DatabaseCompatibility;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use DB, Input, Crypt, Carbon\Carbon, Hash, Redirect, Session;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
-class newpasswordController extends Controller {
+class newpasswordController extends Controller
+{
+  public function store(Request $request)
+  {
+    $passwordField = config('csgtlogin.password.campo', 'password');
+    $validator = Validator::make($request->all(), array(
+      'id' => 'required',
+      $passwordField => 'required|confirmed|min:6',
+    ));
+    if ($validator->fails()) {
+      return redirect()->back()->withErrors($validator);
+    }
 
-	public function store(){
-		$userarray = [];
-		
-		// $id = DB::table(config('csgtlogin.tabla'))
-		// 	->where('email', Input::get('email'))
-		// 	->pluck(config('csgtlogin.tablaid'));
+    try {
+      $id = Crypt::decrypt($request->input('id'));
+    } catch (\Exception $exception) {
+      return redirect('login');
+    }
 
-		$id = Input::get('id');
-		try {
-			$id = Crypt::decrypt($id);
-		} 
-		catch (Exception $e) {
-			return Redirect::to('login');	
-		}
- 
- 		$dias = (int)config('csgtlogin.vencimiento.dias');
- 		if ($dias == 0) {
- 			$fecha = null;
- 		}
- 		else {
-			$fecha = Carbon::now('America/Guatemala')->addDays($dias);
-		}
+    $password = $request->input($passwordField);
+    if (config('csgtlogin.repetirpasswords.habilitado')) {
+      $history = DatabaseCompatibility::column(
+        DB::table(config('csgtlogin.repetirpasswords.tabla'))
+          ->where(config('csgtlogin.repetirpasswords.campousuario'), $id),
+        config('csgtlogin.repetirpasswords.campopassword')
+      );
+      foreach ($history as $oldPassword) {
+        if (Hash::check($password, $oldPassword)) {
+          return redirect('login')->withErrors(array(trans('csgtlogin::reinicio.repetida')));
+        }
+      }
+    }
 
-		$password = Input::get('password');
+    $hash = Hash::make($password);
+    $changes = array($passwordField => $hash);
+    if (config('csgtlogin.vencimiento.habilitado')) {
+      $days = (int) config('csgtlogin.vencimiento.dias');
+      $changes[config('csgtlogin.vencimiento.campo')] = $days ? Carbon::now()->addDays($days) : null;
+    }
+    DB::table(config('csgtlogin.tabla'))->where(config('csgtlogin.tablaid'), $id)->update($changes);
 
-		if(config('csgtlogin.repetirpasswords.habilitado')) {
-			$historiales = DB::table(config('csgtlogin.repetirpasswords.tabla'))
-				->where(config('csgtlogin.repetirpasswords.campousuario'), $id)
-				->lists(config('csgtlogin.repetirpasswords.campopassword'));
+    if (config('csgtlogin.repetirpasswords.habilitado')) {
+      DB::table(config('csgtlogin.repetirpasswords.tabla'))->insert(array(
+        config('csgtlogin.repetirpasswords.campousuario') => $id,
+        config('csgtlogin.repetirpasswords.campopassword') => $hash,
+        'created_at' => Carbon::now(),
+        'updated_at' => Carbon::now(),
+      ));
+    }
 
-			foreach($historiales as $historial) {
-				if(Hash::check($password, $historial)) {
-					return Redirect::to('login')
-						->withErrors([trans('csgtlogin::reinicio.repetida')]);	
-				}
-			}
-		}
-
-		$userarray['password'] = Hash::make($password);
-		$userarray[config('csgtlogin.vencimiento.campo')] = $fecha;
-
-		DB::table(config('csgtlogin.tabla'))
-			->where(config('csgtlogin.tablaid'), $id)
-			->update($userarray);
-
-		DB::table(config('csgtlogin.repetirpasswords.tabla'))->insert([
-			config('csgtlogin.repetirpasswords.campousuario')  => $id,
-			config('csgtlogin.repetirpasswords.campopassword') => $userarray['password'],
-			'created_at'                                       => date_create(),
-			'updated_at'                                       => date_create(),
-		]);
-
-		Auth::loginUsingId($id);
-		return Redirect::to('/');
-	}
+    Auth::loginUsingId($id);
+    return redirect(config('csgtlogin.redirectto', '/'));
+  }
 }

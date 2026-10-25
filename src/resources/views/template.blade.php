@@ -6,14 +6,6 @@
     .form-signin { max-width: 400px;margin: 0 auto;display: block;margin-top: 30px; }
     .form-control-feedback{ z-index: 2000; }
   </style>
-  <body>
-    <?php
-      $params = ['id'=>'frmLogin'];
-      if ($act) {
-          $params['url'] = $act;
-      }
-    ?>
-
     <form class="form-horizontal" role="form" method="POST" action="{{ $act }}">
       {!! csrf_field() !!}
       <div class="panel panel-default form-signin">
@@ -23,7 +15,7 @@
               <img src="{!!config('csgtlogin.logo.path')!!}" alt="{{trans('csgtlogin::login.logoalt')}}">
             </div>
           @else
-            <h3>{{lang('csgtmenu::login.logoalt')}}</h3>
+            <h3>{{ trans('csgtlogin::login.logoalt') }}</h3>
           @endif
           <br />
           @if(isset($extraFields))
@@ -31,7 +23,7 @@
           @else
             @include('csgtlogin::'.$mainPartial)
           @endif
-          @if (count($errors)>0)
+          @if (isset($errors) && count($errors)>0)
             <div class="alert alert-danger">
               <ul>
                 @foreach ($errors->all() as $error)

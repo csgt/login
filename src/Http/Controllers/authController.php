@@ -1,225 +1,190 @@
-<?php namespace Csgt\Login\Http\Controllers;
+<?php
 
-use Validator;
-use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
-use Illuminate\Cache\RateLimiter;
+namespace Csgt\Login\Http\Controllers;
+
+use Carbon\Carbon;
+use Csgt\Login\Support\LoginRateLimiter;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use DB, Config, Session, DateTime, DateTimeZone, Crypt;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
-class authController extends Controller {
-  protected $table = 'authusuarios';
-  protected $redirectPath = '/';
-
-  /*
-  |--------------------------------------------------------------------------
-  | Registration & Login Controller
-  |--------------------------------------------------------------------------
-  |
-  | This controller handles the registration of new users, as well as the
-  | authentication of existing users. By default, this controller uses
-  | a simple trait to add these behaviors. Why don't you explore it?
-  |
-  */
-
-  use AuthenticatesAndRegistersUsers, ThrottlesLogins;
-
-  //Override para enviar vista correcta
-  public function getLogin() {
-    return view('csgtlogin::template')
-      ->with('templateincludes', ['formvalidation'])
-      ->with('act', '/auth/login')
-      ->with('mainPartial', 'login')
-      ->with('footerPartial', 'loginFooter');
+class authController extends Controller
+{
+  public function __construct()
+  {
+    $this->middleware('guest', array('except' => array('getLogout')));
   }
 
-  //Override para operar el login
-  public function postLogin(Request $request) {
-    $this->validate($request, [
-      $this->loginUsername() => 'required', 'password' => 'required',
-    ]);
+  public function getLogin()
+  {
+    return view('csgtlogin::template', array(
+      'act' => url('auth/login'),
+      'templateincludes' => array('formvalidation'),
+      'mainPartial' => 'login',
+      'footerPartial' => 'loginFooter',
+    ));
+  }
 
-    // If the class is using the ThrottlesLogins trait, we can automatically throttle
-    // the login attempts for this application. We'll key this by the username and
-    // the IP address of the client making these requests into this application.
-    $throttles = $this->isUsingThrottlesLoginsTrait();
+  public function postLogin(Request $request)
+  {
+    $username = config('csgtlogin.usuario.campo', 'email');
+    $passwordField = config('csgtlogin.password.campo', 'password');
+    $validator = Validator::make($request->all(), array(
+      $username => 'required',
+      $passwordField => 'required',
+    ));
 
-    if ($throttles && $this->hasTooManyLoginAttempts($request)) {
-      return $this->sendLockoutResponse($request);
+    if ($validator->fails()) {
+      return redirect()->back()->withInput($request->except($passwordField))->withErrors($validator);
     }
 
-    $credentials = $this->getCredentials($request);
+    $limiter = new LoginRateLimiter(app('cache')->driver());
+    $key = $this->throttleKey($request, $username);
+    $maxAttempts = (int) config('csgtlogin.throttle.max_attempts', 5);
+    $decay = (int) config('csgtlogin.throttle.decay_minutes', 1);
 
-    if (Auth::attempt($credentials, $request->has('remember'))) {
-      if (config('csgtlogin.vencimiento.habilitado')) {
-        $campo = Auth::user()->{config('csgtlogin.vencimiento.campo')};
-        if ($campo == '') return $this->handleUserWasAuthenticated($request, $throttles);
-
-        $email = Auth::user()->email;
-
-        $tz    = new DateTimeZone('America/Guatemala');
-        $fecha = DateTime::createFromFormat('Y-m-d H:i:s', $campo, $tz);
-
-        $ahora = new DateTime;
-        $ahora->setTimezone($tz);
-
-        if ($fecha>$ahora) return $this->handleUserWasAuthenticated($request, $throttles);
-
-        $id = Crypt::encrypt(Auth::id());
-        Auth::logout();
-
-        return view('csgtlogin::template')
-          ->with('templateincludes', ['formvalidation'])
-          ->with('act', '/newpassword/store')
-          ->with('mainPartial', 'nuevaPassword')
-          ->with('footerPartial', 'nuevaPasswordFooter')
-          ->with('email', $email)
-          ->with('id', $id);
-      }
-
-      foreach (config('csgtlogin.camposextras') as $campo => $valor) {
-          if (Auth::user()->{$campo} != $valor) {
-              Session::flush();
-              Auth::logout();
-          }
-      }
-
-      return $this->handleUserWasAuthenticated($request, $throttles);
+    if ($limiter->tooManyAttempts($key, $maxAttempts)) {
+      $seconds = $limiter->availableIn($key);
+      return redirect()->back()
+        ->withInput($request->except($passwordField))
+        ->withErrors(array($username => trans('csgtlogin::validacion.throttle', array('segundos' => $seconds))));
     }
 
-    // If the login attempt was unsuccessful we will increment the number of attempts
-    // to login and redirect the user back to the login form. Of course, when this
-    // user surpasses their maximum number of attempts they will get locked out.
-    if ($throttles) {
-      $this->incrementLoginAttempts($request);
-    }
-
-    return redirect($this->loginPath())
-      ->withInput($request->only($this->loginUsername(), 'remember'))
-      ->withErrors([
-        $this->loginUsername() => $this->getFailedLoginMessage(),
-      ]);
-  }
-
-  public function getLogout() {
-    Session::flush();
-    Auth::logout();
-    return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/');
-  }
-
-  //Override para mandar mensaje correcto de login failed
-  protected function getFailedLoginMessage() {
-    return trans('csgtlogin::validacion.invalida');
-  }
-
-  //Override para mandar mensaje correcto de error
-  protected function sendLockoutResponse(Request $request) {
-    $seconds = app(RateLimiter::class)->availableIn(
-      $this->getThrottleKey($request)
+    $credentials = array(
+      $username => $request->input($username),
+      'password' => $request->input($passwordField),
     );
 
-    $message = trans('csgtlogin::validacion.throttle', ['segundos' => $seconds]);
-    $errors = [$this->loginUsername() => $message];
+    if (!Auth::attempt($credentials, $request->has('remember'))) {
+      $limiter->hit($key, $decay * 60);
+      return redirect()->back()
+        ->withInput($request->except($passwordField))
+        ->withErrors(array($username => trans('csgtlogin::validacion.invalida')));
+    }
 
-    //No funciona expectsJson()
-   /* if ($request->expectsJson()) {
-      return response()->json($errors, 423);
-    } */
+    $limiter->clear($key);
+    if ($request->hasSession()) {
+      $request->session()->regenerate();
+    }
 
-    return redirect($this->loginPath())
-        ->withInput($request->only($this->loginUsername(), 'remember'))
-        ->withErrors($errors);
-  }
+    $expiryResponse = $this->passwordExpiryResponse();
+    if ($expiryResponse) {
+      return $expiryResponse;
+    }
 
-  //Override para vista correcta de registro
-  public function getRegister(){
-    $camposExtra = config('csgtlogin.camposextraregistro');
-    $camposHTML  = '';
-
-    foreach($camposExtra as $campo => $values) {
-      switch($values['tipo']) {
-        case 'string':
-          $camposHTML .= '<div class="form-group"><div class="input-group"><span class="input-group-addon"><span class="'.$values['icono'].'"></span></span><input type="text" id="'.$campo.'" name="'.$campo.'" class="form-control" placeholder="'.$values['titulo'].'" ></div></div>';
-          break;
-        case 'combobox':
-          $camposHTML .= '<div class="form-group"><label><span class="'.$values['icono'].'"></span>'.$values['titulo'].'</label><select id="'.$campo.'" name="'.$campo.'" class="form-control">';
-          $data = DB::table($values['combotabla']);
-          if($values['combowhere'] <> '')
-            $data->whereRaw($values['combowhere']);
-          $data = $data->get();
-          foreach ($data as $d){
-            $camposHTML .= '<option value="'.$d->{$values['combokey']}.'">'.$d->{$values['comboval']}.'</option>';
-          }
-          $camposHTML .= "</select></div>";
-          break;
-        case 'tinyint':
-          $camposHTML .= '<div class="checkbox"><label><input type="checkbox" name="'.$campo.'" id="'.$campo.'" /> '.$values['titulo'].'</label></div>';
-          break;
-        case 'lista':
-          $camposHTML .= '<div class="form-group"><label><span class="'.$values['icono'].'"></span>'.$values['titulo'].'</label><select id="'.$campo.'" name="'.$campo.'" class="form-control">';
-          foreach($values['valores'] as $key => $val)
-            $camposHTML .= '<option value="'.$key.'">'.$val.'</option>';
-          $camposHTML .= "</select></div>";
-          break;
+    foreach ((array) config('csgtlogin.camposextras', array()) as $field => $expected) {
+      if (Auth::user()->{$field} != $expected) {
+        Auth::logout();
+        $request->session()->flush();
+        return redirect()->back()
+          ->withInput($request->except($passwordField))
+          ->withErrors(array($username => trans('csgtlogin::validacion.invalida')));
       }
     }
 
-    return view('csgtlogin::template')
-      ->with('templateincludes', ['formvalidation'])
-      ->with('act', '/auth/register')
-      ->with('mainPartial', 'registro')
-      ->with('footerPartial', 'registroFooter')
-      ->with('extraFields', $camposHTML);
+    return config('csgtlogin.redirectintended', true)
+      ? redirect()->intended(config('csgtlogin.redirectto', '/'))
+      : redirect(config('csgtlogin.redirectto', '/'));
   }
 
-  public function redirectToProvider($aProvider) {
-    return Socialite::driver($aProvider)->redirect();
-  }
-
-  /**
-   * Create a new authentication controller instance.
-   *
-   * @return void
-   */
-  public function __construct() {
-    $this->middleware('guest', ['except' => 'getLogout']);
-  }
-
-  /**
-   * Get a validator for an incoming registration request.
-   *
-   * @param  array  $data
-   * @return \Illuminate\Contracts\Validation\Validator
-   */
-  protected function validator(array $data) {
-    return Validator::make($data, [
-      'email' => 'required|email|max:255|unique:' . $this->table,
-      'password' => 'required|confirmed|min:6',
-    ]);
-  }
-
-  /**
-   * Create a new user instance after a valid registration.
-   *
-   * @param  array  $data
-   * @return User
-   */
-  protected function create(array $data) {
-    $arr = [
-        config('csgtlogin.usuario.campo')  => $data[config('csgtlogin.usuario.campo')],
-        config('csgtlogin.password.campo') => bcrypt($data[config('csgtlogin.password.campo')])];
-
-    $camposExtra = config('csgtlogin.camposextraregistro');
-    foreach($camposExtra as $campo => $values) {
-      if (array_key_exists($campo, $data)) {
-        $arr[$campo] = $data[$campo];
+  public function getLogout(Request $request)
+  {
+    Auth::logout();
+    if ($request->hasSession()) {
+      $request->session()->flush();
+      if (method_exists($request->session(), 'invalidate')) {
+        $request->session()->invalidate();
+      }
+      if (method_exists($request->session(), 'regenerateToken')) {
+        $request->session()->regenerateToken();
       }
     }
-    $nombre = '\Csgt\Components\Authusuario';
-    $clase = Config::get('auth.model');
-    return $clase::create($arr);
+    return redirect(config('csgtlogin.redirect_after_logout', '/'));
+  }
+
+  public function getRegister()
+  {
+    return view('csgtlogin::template', array(
+      'act' => url('auth/register'),
+      'templateincludes' => array('formvalidation'),
+      'mainPartial' => 'registro',
+      'footerPartial' => 'registroFooter',
+      'extraFields' => (array) config('csgtlogin.camposextraregistro', array()),
+    ));
+  }
+
+  public function postRegister(Request $request)
+  {
+    $username = config('csgtlogin.usuario.campo', 'email');
+    $passwordField = config('csgtlogin.password.campo', 'password');
+    $rules = array(
+      $username => 'required|max:255|unique:'.config('csgtlogin.tabla').','.$username,
+      $passwordField => 'required|confirmed|min:6',
+    );
+    if (config('csgtlogin.usuario.tipo') === 'email') {
+      $rules[$username] .= '|email';
+    }
+
+    $validator = Validator::make($request->all(), $rules);
+    if ($validator->fails()) {
+      return redirect()->back()->withInput($request->except($passwordField))->withErrors($validator);
+    }
+
+    $attributes = array(
+      $username => $request->input($username),
+      $passwordField => Hash::make($request->input($passwordField)),
+    );
+    foreach ((array) config('csgtlogin.camposextraregistro', array()) as $field => $options) {
+      if ($request->has($field)) {
+        $attributes[$field] = $options['tipo'] === 'tinyint' ? 1 : $request->input($field);
+      } elseif (isset($options['tipo']) && $options['tipo'] === 'tinyint') {
+        $attributes[$field] = 0;
+      }
+    }
+
+    $model = Config::get('auth.providers.users.model', Config::get('auth.model'));
+    if (!$model || !class_exists($model)) {
+      throw new \RuntimeException('The authentication user model is not configured.');
+    }
+
+    $user = $model::create($attributes);
+    Auth::login($user);
+    return redirect(config('csgtlogin.redirectto', '/'));
+  }
+
+  protected function throttleKey(Request $request, $username)
+  {
+    return 'csgtlogin|'.strtolower((string) $request->input($username)).'|'.$request->ip();
+  }
+
+  protected function passwordExpiryResponse()
+  {
+    if (!config('csgtlogin.vencimiento.habilitado')) {
+      return null;
+    }
+
+    $field = config('csgtlogin.vencimiento.campo');
+    $expiresAt = Auth::user()->{$field};
+    if (!$expiresAt || Carbon::parse($expiresAt)->isFuture()) {
+      return null;
+    }
+
+    $email = Auth::user()->{config('csgtlogin.usuario.campo', 'email')};
+    $id = Crypt::encrypt(Auth::id());
+    Auth::logout();
+
+    return view('csgtlogin::template', array(
+      'act' => url('newpassword/store'),
+      'templateincludes' => array('formvalidation'),
+      'mainPartial' => 'nuevaPassword',
+      'footerPartial' => 'nuevaPasswordFooter',
+      'email' => $email,
+      'id' => $id,
+    ));
   }
 }

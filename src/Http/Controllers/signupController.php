@@ -1,14 +1,17 @@
-<?php namespace Csgt\Login\Http\Controllers;
+<?php
 
-use Illuminate\Routing\Controller, View, Auth, Redirect, Config, 
-Validator, Input, Password, Session, Hash, DB;
+namespace Csgt\Login\Http\Controllers;
 
-class signupController extends Controller {
-  public function validateEmail() {
-    $aEmail = Input::get(config('csgtlogin.usuario.campo'));
-    $result = DB::table(config('csgtlogin.tabla'))->where('email', $aEmail)->first();
-    if ($result) $val='false';
-    else $val='true';
-    return json_encode(array('valid'=>$val));
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
+
+class signupController extends Controller
+{
+  public function validateEmail(Request $request)
+  {
+    $field = config('csgtlogin.usuario.campo', 'email');
+    $exists = DB::table(config('csgtlogin.tabla'))->where($field, $request->input($field))->exists();
+    return response()->json(array('valid' => !$exists));
   }
 }

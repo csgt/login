@@ -8,7 +8,8 @@
 			{!! Session::get('message') !!}
 		</div>
 	@endif
-	{!! Form::open(array('url' => 'perfil/save', 'method' => 'POST', 'class'=>'form-horizontal', 'role'=>'form', 'id'=>'frmPerfil')) !!}
+	<form action="{{ url('perfil/save') }}" method="POST" class="form-horizontal" role="form" id="frmPerfil">
+		{!! csrf_field() !!}
 		@foreach(config('csgtlogin.camposeditarperfil') as $campos)
 			<div class="form-group">
 				<label for="password" class="col-sm-2 control-label">{!! trans('csgtlogin::login.nombre') !!}</label>
@@ -94,10 +95,10 @@
     <div class="form-group">
 	    <div class="col-sm-2">&nbsp;</div>
 	    <div class="col-sm-10">
-	      {!! Form::submit(trans('csgtlogin::login.guardar'), array('class' => 'btn btn-primary')) !!}
+	      <button type="submit" class="btn btn-primary">{{ trans('csgtlogin::login.guardar') }}</button>
 	    </div>
 	  </div>
-	{!! Form::close() !!}
+	</form>
 	<script type="text/javascript">
 		$(function() {
 			$('#frmPerfil').formValidation({

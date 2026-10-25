@@ -1,7 +1,6 @@
 
   {{trans('csgtlogin::reinicio.cambiopass')}}
   <br><br>
-  {!!config('csgtlogin.vencimiento.regex')!!}
   <div class="form-group">
     <div class="input-group">
       <span class="input-group-addon">

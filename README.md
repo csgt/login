@@ -1,70 +1,89 @@
-# :package_name
+# CSGT Login
 
-[![Latest Version on Packagist][ico-version]][link-packagist]
-[![Software License][ico-license]](LICENSE.md)
-[![Build Status][ico-travis]][link-travis]
-[![Coverage Status][ico-scrutinizer]][link-scrutinizer]
-[![Quality Score][ico-code-quality]][link-code-quality]
-[![Total Downloads][ico-downloads]][link-downloads]
+Configurable login, registration, password reset, social login, profile, password-expiration, and TOTP screens for Laravel applications.
 
-**Note:** Replace ```:author_name``` ```:author_username``` ```:author_website``` ```:author_email``` ```:package_name``` ```:package_description``` with their correct values in [README.md](README.md), [CHANGELOG.md](CHANGELOG.md), [CONTRIBUTING.md](CONTRIBUTING.md), [LICENSE.md](LICENSE.md) and [composer.json](composer.json) files, then delete this line.
+## Compatibility
 
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what
-PSRs you support to avoid any confusion with users and contributors.
+This release supports Laravel 5.x through Laravel 13.x. The PHP version is determined by the Laravel release used by the host application; the package itself uses PHP 5.5-compatible syntax.
 
-## Install
+| Laravel | Typical PHP range | Socialite |
+|---|---|---|
+| 5.x | 5.5.9+ (subject to the selected 5.x release) | 1.x–4.x |
+| 6.x–8.x | Framework-supported versions | 5.x |
+| 9.x–12.x | Framework-supported versions | 5.x |
+| 13.x | 8.3+ | 5.23.1+ |
 
-Via Composer
+Laravel 5–10 are no longer supported upstream. Compatibility is retained for existing applications, but those applications should be isolated and upgraded because they no longer receive framework security fixes.
 
-``` bash
-$ composer require league/:package_name
+## Installation
+
+```bash
+composer require csgt/login
 ```
 
-## Usage
+Laravel 5.5 and newer discover the service provider and `Login` alias automatically. On Laravel 5.0–5.4, add these entries to `config/app.php`:
 
-``` php
-$skeleton = new League\Skeleton();
-echo $skeleton->echoPhrase('Hello, League!');
+```php
+'providers' => array(
+    Csgt\Login\LoginServiceProvider::class,
+),
+
+'aliases' => array(
+    'Login' => Csgt\Login\Login::class,
+),
 ```
 
-## Change log
+Publish the configuration and translations:
 
-Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
+```bash
+php artisan vendor:publish --provider="Csgt\Login\LoginServiceProvider"
+```
+
+The package expects the application to provide an authenticatable user model and the tables named in `config/csgtlogin.php`. It does not run or publish destructive database migrations.
+
+## Configuration
+
+The default user table is `authusuarios`, with `usuarioid` as its key and `email` as its login field. Change those values in `config/csgtlogin.php` to match the host application.
+
+For OAuth, set provider credentials through environment variables:
+
+```dotenv
+FACEBOOK_CLIENT_ID=
+FACEBOOK_CLIENT_SECRET=
+FACEBOOK_REDIRECT_URI=https://example.test/oauth/facebook/callback
+
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+GOOGLE_REDIRECT_URI=https://example.test/oauth/google/callback
+```
+
+The standard Laravel `services.facebook` and `services.google` configuration is also honored. OAuth providers are disabled by default.
+
+Registration uses the model configured at `auth.providers.users.model` (or the legacy Laravel 5 `auth.model` key). Its fillable attributes must include the fields enabled for registration.
+
+The profile view extends `template/template`, preserving the package's historical host-layout contract. Applications may publish and override the package views when using another layout.
+
+## Routes
+
+The package registers the historical endpoints, including:
+
+- `GET /login` and `POST /auth/login`
+- `GET|POST /auth/register`
+- `GET /logout`
+- `GET /password/email`, `POST /password/email`, and password reset routes
+- `GET /oauth/{provider}` and its callback
+- authenticated profile and two-step routes
+
+Use `csgtlogin.routeextras` to add a prefix, domain, or middleware to the complete route group.
 
 ## Testing
 
-``` bash
-$ composer test
+```bash
+composer test
 ```
 
-## Contributing
-
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
-
-## Security
-
-If you discover any security related issues, please email :author_email instead of using the issue tracker.
-
-## Credits
-
-- [:author_name][link-author]
-- [All Contributors][link-contributors]
+The CI matrix resolves and tests the package against Laravel 5, 6, 7, 8, 9, 10, 11, 12, and 13.
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
-
-[ico-version]: https://img.shields.io/packagist/v/league/:package_name.svg?style=flat-square
-[ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/thephpleague/:package_name/master.svg?style=flat-square
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/thephpleague/:package_name.svg?style=flat-square
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/thephpleague/:package_name.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/league/:package_name.svg?style=flat-square
-
-[link-packagist]: https://packagist.org/packages/league/:package_name
-[link-travis]: https://travis-ci.org/thephpleague/:package_name
-[link-scrutinizer]: https://scrutinizer-ci.com/g/thephpleague/:package_name/code-structure
-[link-code-quality]: https://scrutinizer-ci.com/g/thephpleague/:package_name
-[link-downloads]: https://packagist.org/packages/league/:package_name
-[link-author]: https://github.com/:author_username
-[link-contributors]: ../../contributors
+MIT. See [LICENSE.md](LICENSE.md).
