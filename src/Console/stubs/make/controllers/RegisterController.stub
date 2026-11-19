@@ -25,12 +25,14 @@ class RegisterController extends Controller {
 
   public function __construct() {
     $this->middleware('guest');
+    $this->middleware(function ($request, $next) {
+      abort_unless(config('csgtlogin.registro.habilitado', false), 404);
+
+      return $next($request);
+    });
   }
 
   public function showRegistrationForm() {
-    if (config('csgtlogin.registro.habilitado', false) == false) {
-      dd('Registro no habilitado.');
-    }
     return view('auth.register')
       ->with('icon','user-plus');
   }
@@ -44,10 +46,6 @@ class RegisterController extends Controller {
   }
 
   protected function create(array $data) {
-    if (config('csgtlogin.registro.habilitado', false) == false) {
-      dd('Registro no habilitado.');
-    }
-    
     return User::create([
         'nombre'   => $data['nombre'],
         'email'    => $data['email'],
