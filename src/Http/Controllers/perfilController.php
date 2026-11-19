@@ -4,7 +4,6 @@ namespace Csgt\Login\Http\Controllers;
 use DB;
 use Auth;
 use Hash;
-use View;
 use Input;
 use Config;
 use Session;
