@@ -41,6 +41,11 @@
   "scripts": {
     "test": "phpunit"
   },
+  "config": {
+    "allow-plugins": {
+      "kylekatarnls/update-helper": false
+    }
+  },
   "minimum-stability": "stable",
   "prefer-stable": true
 }
