@@ -1,0 +1,11 @@
+{
+    "laravel-pint.enable": false,
+    "phpfmt.enable_auto_align": false,
+    "phpfmt.exclude": ["AlignEquals", "AlignDoubleArrow", "AlignSuperEquals", "AlignConstVisibilityEquals"],
+    "[php]": {
+        "editor.defaultFormatter": "kokororin.vscode-phpfmt"
+    },
+    "[json]": {
+        "editor.formatOnSave": false
+    }
+}
